@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Recipe Finder</string>
+    <string name="api_key">a6666c7409514392aa1bff7004522f6f</string>
+
+    <!-- Main Fragment -->
+    <string name="your_gateway_to_culinary_delights">Your gateway to culinary delights</string>
+    <string name="find_a_recipe">Find a recipe</string>
+    <string name="categories">Categories</string>
+    <string name="recipes">Recipes</string>
+    <string name="no_recipes_found_for_this_category">No recipes found for this category :(</string>
+</resources>
