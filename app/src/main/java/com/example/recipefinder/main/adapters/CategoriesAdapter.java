@@ -15,11 +15,19 @@ import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder> {
 
-    private final List<CategoriesData> categoriesData = new ArrayList<>();
+    private List<CategoriesData> categoriesData = new ArrayList<>();
+    private OnCategoryClickListener listener;
+
+    public interface OnCategoryClickListener {
+        void onCategoryClick(String category);
+    }
+
+    public CategoriesAdapter(OnCategoryClickListener listener) {
+        this.listener = listener;
+    }
 
     public void setData(List<CategoriesData> categoriesData) {
-        this.categoriesData.clear();
-        this.categoriesData.addAll(categoriesData);
+        this.categoriesData = categoriesData;
         notifyDataSetChanged();
     }
 
@@ -31,9 +39,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesViewHolder holder, int position) {
-        CategoriesData category = categoriesData.get(position);
-        holder.binding.tvTitle.setText(category.getTitle());
-        holder.binding.ivImage.setImageResource(category.getImage());
+        String categoriesTitle = categoriesData.get(position).getTitle();
+        holder.biding.tvTitle.setText(categoriesTitle);
+        holder.biding.ivImage.setImageResource(categoriesData.get(position).getImage());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onCategoryClick(categoriesTitle);
+            }
+        });
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.example.recipefinder.main.adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,8 +17,8 @@ import java.util.List;
 
 public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
 
-    private final Context context;
-    private final List<Recipe> recipeList;
+    Context context;
+    List<Recipe> recipeList;
 
     public RecipiesAdapter(Context context, List<Recipe> recipeList) {
         this.context = context;
@@ -29,36 +28,37 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
     @NonNull
     @Override
     public RecipiesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ListItemMainRecipesBinding binding = ListItemMainRecipesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new RecipiesViewHolder(binding);
+        return new RecipiesViewHolder(ListItemMainRecipesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecipiesViewHolder holder, int position) {
         Recipe recipe = recipeList.get(position);
-        holder.biding.tvTitle.setText(truncateTitle(recipe.title));
-        holder.biding.tvLikes.setText(String.format("%d Likes", recipe.aggregateLikes));
-        holder.biding.tvServings.setText(String.format("%d Servings", recipe.servings));
-        holder.biding.tvMinutes.setText(String.format("%d Minutes", recipe.readyInMinutes));
+        String title = truncateTitle(recipe.title);
 
-        loadImage(holder.biding.ivRecipeImage, recipe.image);
-    }
+        holder.biding.tvTitle.setText(title);
+        holder.biding.tvLikes.setText(recipe.aggregateLikes + " Likes");
+        holder.biding.tvServings.setText(recipe.servings + " Servings");
+        holder.biding.tvMinutes.setText(recipe.readyInMinutes + " Minutes");
 
-    private void loadImage(ImageView imageView, String imageUrl) {
-        if (imageUrl != null && !imageUrl.isEmpty()) {
+        if (recipe.image != null && !recipe.image.isEmpty()) {
             Picasso.get()
-                    .load(imageUrl)
+                    .load(recipe.image)
                     .error(R.drawable.png_image_not_found)
-                    .into(imageView);
+                    .into(holder.biding.ivRecipeImage);
         } else {
             Picasso.get()
                     .load(R.drawable.png_image_not_found)
-                    .into(imageView);
+                    .into(holder.biding.ivRecipeImage);
         }
     }
 
     private String truncateTitle(String title) {
-        return title.length() > 30 ? title.substring(0, 27) + "..." : title;
+        if (title.length() > 30) {
+            return title.substring(0, 30 - 3) + "...";
+        } else {
+            return title;
+        }
     }
 
     @Override

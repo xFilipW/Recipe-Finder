@@ -5,10 +5,10 @@ import com.example.recipefinder.databinding.ListItemMainCategoriesBinding;
 
 public class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
-    public final ListItemMainCategoriesBinding binding;
+    public final ListItemMainCategoriesBinding biding;
 
     public CategoriesViewHolder(ListItemMainCategoriesBinding itemView) {
         super(itemView.getRoot());
-        binding = itemView;
+        biding = itemView;
     }
 }
