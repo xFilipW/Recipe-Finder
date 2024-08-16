@@ -42,6 +42,6 @@ public class CacheRefreshWorker extends Worker {
             public void didError(String errorMessage) {
                 // Log error if needed
             }
-        });
+        }, null);
     }
 }

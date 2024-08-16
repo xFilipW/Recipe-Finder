@@ -29,30 +29,32 @@ public class MainHomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMainHomeBinding.inflate(inflater, container, false);
-
         setupCategoriesRecyclerView();
-        loadRandomRecipes();
-
+        loadRandomRecipes(null);
         return binding.getRoot();
     }
 
     private void setupCategoriesRecyclerView() {
         binding.rvCategories.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter();
+        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this::onCategoryClick);
         categoriesAdapter.setData(Repository.CATEGORIES_DATA_LIST);
         binding.rvCategories.setAdapter(categoriesAdapter);
     }
 
-    private void loadRandomRecipes() {
+    private void loadRandomRecipes(@Nullable String category) {
         showLoading(true);
         requestManager = new RequestManager(requireContext());
-        requestManager.getRandomRecipes(recipeResponseListener);
+        requestManager.getRandomRecipes(recipeResponseListener, category);
     }
 
     private final RandomRecipeResponseListener recipeResponseListener = new RandomRecipeResponseListener() {
         @Override
         public void didFetch(RandomRecipeApiResponse response, String message) {
-            setupRecipesRecyclerView(response);
+            if (response.recipes == null || response.recipes.isEmpty()) {
+                showNoRecipesFound();
+            } else {
+                setupRecipesRecyclerView(response);
+            }
             showLoading(false);
         }
 
@@ -63,9 +65,16 @@ public class MainHomeFragment extends Fragment {
     };
 
     private void setupRecipesRecyclerView(RandomRecipeApiResponse response) {
+        binding.tvNoRecipeFound.setVisibility(View.GONE);
         binding.rvRecipes.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         recipiesAdapter = new RecipiesAdapter(requireContext(), response.recipes);
         binding.rvRecipes.setAdapter(recipiesAdapter);
+        binding.rvRecipes.setVisibility(View.VISIBLE);
+    }
+
+    private void showNoRecipesFound() {
+        binding.rvRecipes.setVisibility(View.GONE);
+        binding.tvNoRecipeFound.setVisibility(View.VISIBLE);
     }
 
     private void showError(String message) {
@@ -73,9 +82,17 @@ public class MainHomeFragment extends Fragment {
         showLoading(false);
     }
 
+    private void onCategoryClick(String category) {
+        binding.rvRecipes.setVisibility(View.GONE);
+        loadRandomRecipes(category);
+    }
+
     private void showLoading(boolean isLoading) {
         binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        binding.rvRecipes.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        if (isLoading) {
+            binding.rvRecipes.setVisibility(View.GONE);
+            binding.tvNoRecipeFound.setVisibility(View.GONE);
+        }
     }
 
     @Override
