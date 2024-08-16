@@ -35,59 +35,7 @@
             android:textStyle="italic"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/llWelcome" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/llWelcome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/main_color"
-            app:layout_constraintBottom_toTopOf="@+id/etSearch"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/write"
-                android:includeFontPadding="false"
-                android:text="@string/app_name"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvSubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/inter"
-                android:includeFontPadding="false"
-                android:text="@string/your_gateway_to_culinary_delights"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/png_app_logo"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteY="16dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"
@@ -155,9 +103,9 @@
                 android:id="@+id/tvAmountOfRecipes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/inter"
                 android:includeFontPadding="false"
-                android:layout_marginTop="4dp"
                 android:text="100 random recipes each day"
                 android:textColor="@color/grey"
                 android:textSize="14sp"
@@ -169,12 +117,12 @@
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_centerInParent="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAmountOfRecipes"
                 app:lottie_autoPlay="true"
-                android:visibility="gone"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/loading" />
 
@@ -182,9 +130,9 @@
                 android:id="@+id/tvNoRecipeFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/inter"
                 android:includeFontPadding="false"
-                android:layout_marginTop="4dp"
                 android:text="@string/no_recipes_found_for_this_category"
                 android:textColor="@color/main_color"
                 android:textSize="18sp"
