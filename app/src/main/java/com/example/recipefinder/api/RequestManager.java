@@ -9,6 +9,8 @@ import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.api.models.Recipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +24,10 @@ public class RequestManager {
     private final Context context;
     private final Retrofit retrofit;
     private final CacheManager cacheManager;
+
+    private final List<String> excludedTags = Arrays.asList(
+            "side dish", "beverage", "marinade", "fingerfood"
+    );
 
     public RequestManager(Context context) {
         this.context = context;
@@ -37,9 +43,9 @@ public class RequestManager {
             RandomRecipeApiResponse cachedRecipes = cacheManager.getCachedRecipes();
             if (cachedRecipes != null) {
                 if (category == null || category.equals("All recipes")) {
-                    listener.didFetch(cachedRecipes, "Fetched from cache");
+                    listener.didFetch(filterExcludedTags(cachedRecipes), "Fetched from cache and filtered");
                 } else {
-                    listener.didFetch(filterRecipesByCategory(cachedRecipes, category), "Filtered recipes from cache");
+                    listener.didFetch(filterRecipesByCategoryAndExcludeTags(cachedRecipes, category), "Filtered recipes from cache");
                 }
                 return;
             }
@@ -58,8 +64,9 @@ public class RequestManager {
                     listener.didError(response.message());
                     return;
                 }
-                cacheManager.saveRecipes(response.body());
-                listener.didFetch(response.body(), response.message());
+                RandomRecipeApiResponse filteredResponse = filterExcludedTags(response.body());
+                cacheManager.saveRecipes(filteredResponse);
+                listener.didFetch(filteredResponse, response.message());
             }
 
             @Override
@@ -69,16 +76,38 @@ public class RequestManager {
         });
     }
 
-    private RandomRecipeApiResponse filterRecipesByCategory(RandomRecipeApiResponse response, String category) {
+    private RandomRecipeApiResponse filterRecipesByCategoryAndExcludeTags(RandomRecipeApiResponse response, String category) {
         RandomRecipeApiResponse filteredResponse = new RandomRecipeApiResponse();
         filteredResponse.recipes = new ArrayList<>();
 
         for (Recipe recipe : response.recipes) {
-            if (recipe.dishTypes != null && recipe.dishTypes.contains(category.toLowerCase())) {
+            if (recipe.dishTypes != null && recipe.dishTypes.contains(category.toLowerCase()) && !containsExcludedTags(recipe)) {
                 filteredResponse.recipes.add(recipe);
             }
         }
         return filteredResponse;
+    }
+
+    private RandomRecipeApiResponse filterExcludedTags(RandomRecipeApiResponse response) {
+        RandomRecipeApiResponse filteredResponse = new RandomRecipeApiResponse();
+        filteredResponse.recipes = new ArrayList<>();
+
+        for (Recipe recipe : response.recipes) {
+            if (!containsExcludedTags(recipe)) {
+                filteredResponse.recipes.add(recipe);
+            }
+        }
+        return filteredResponse;
+    }
+
+    private boolean containsExcludedTags(Recipe recipe) {
+        if (recipe.dishTypes == null) return false;
+        for (String tag : excludedTags) {
+            if (recipe.dishTypes.contains(tag)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private interface CallRandomRecipes {
