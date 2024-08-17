@@ -44,6 +44,22 @@ public class RequestManager {
                 return;
             }
         }
+        fetchRecipesInBatches(listener, category, 2);
+    }
+
+    private void fetchRecipesInBatches(RandomRecipeResponseListener listener, String category, int batchCount) {
+        ArrayList<Recipe> allRecipes = new ArrayList<>();
+        fetchBatch(listener, category, batchCount, 0, allRecipes);
+    }
+
+    private void fetchBatch(RandomRecipeResponseListener listener, String category, int batchCount, int currentBatch, ArrayList<Recipe> allRecipes) {
+        if (currentBatch >= batchCount) {
+            RandomRecipeApiResponse combinedResponse = new RandomRecipeApiResponse();
+            combinedResponse.recipes = allRecipes;
+            cacheManager.saveRecipes(combinedResponse);
+            listener.didFetch(combinedResponse, "Fetched " + allRecipes.size() + " recipes");
+            return;
+        }
 
         CallRandomRecipes callRandomRecipes = retrofit.create(CallRandomRecipes.class);
         Call<RandomRecipeApiResponse> call = callRandomRecipes.callRandomRecipe(
@@ -58,8 +74,10 @@ public class RequestManager {
                     listener.didError(response.message());
                     return;
                 }
-                cacheManager.saveRecipes(response.body());
-                listener.didFetch(response.body(), response.message());
+                if (response.body() != null && response.body().recipes != null) {
+                    allRecipes.addAll(response.body().recipes);
+                }
+                fetchBatch(listener, category, batchCount, currentBatch + 1, allRecipes);
             }
 
             @Override

@@ -8,4 +8,5 @@
     <string name="categories">Categories</string>
     <string name="recipes">Recipes</string>
     <string name="no_recipes_found_for_this_category">No recipes found for this category :(</string>
+    <string name="random_200_recipes_each_day">200 random recipes each day</string>
 </resources>

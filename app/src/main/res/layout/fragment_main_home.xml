@@ -106,7 +106,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/inter"
                 android:includeFontPadding="false"
-                android:text="100 random recipes each day"
+                android:text="@string/random_200_recipes_each_day"
                 android:textColor="@color/grey"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
