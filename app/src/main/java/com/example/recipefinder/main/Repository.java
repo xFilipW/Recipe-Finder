@@ -12,14 +12,16 @@ public class Repository {
             Arrays.asList(
                     new CategoriesData("All recipes", R.drawable.ic_all_recipes),
                     new CategoriesData("Main dish", R.drawable.ic_main_dish),
-                    new CategoriesData("Breakfast", R.drawable.ic_breakfast),
-                    new CategoriesData("Appetizer", R.drawable.ic_appetizer),
                     new CategoriesData("Dessert", R.drawable.ic_dessert),
+                    new CategoriesData("Appetizer", R.drawable.ic_appetizer),
+                    new CategoriesData("Breakfast", R.drawable.ic_breakfast),
+                    new CategoriesData("Side dish", R.drawable.ic_side_dish),
                     new CategoriesData("Salad", R.drawable.ic_salad),
-                    new CategoriesData("Bread", R.drawable.ic_bread),
                     new CategoriesData("Soup", R.drawable.ic_soup),
+                    new CategoriesData("Bread", R.drawable.ic_bread),
                     new CategoriesData("Sauce", R.drawable.ic_sauce),
                     new CategoriesData("Snack", R.drawable.ic_snack),
-                    new CategoriesData("Drink", R.drawable.ic_drink)
+                    new CategoriesData("Drink", R.drawable.ic_drink),
+                    new CategoriesData("Marinade", R.drawable.ic_marinade)
             );
 }
