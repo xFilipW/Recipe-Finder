@@ -16,9 +16,9 @@ import com.example.recipefinder.api.RequestManager;
 import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.databinding.FragmentMainHomeBinding;
-import com.example.recipefinder.main.Repository;
 import com.example.recipefinder.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.main.adapters.RecipiesAdapter;
+import com.example.recipefinder.main.repository.Repository;
 
 public class MainHomeFragment extends Fragment {
 

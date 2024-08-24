@@ -37,9 +37,6 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
     public void onBindViewHolder(@NonNull RecipiesViewHolder holder, int position) {
         Recipe recipe = recipeList.get(position);
         holder.biding.tvTitle.setText(truncateTitle(recipe.title));
-        holder.biding.tvLikes.setText(String.format("%d Likes", recipe.aggregateLikes));
-        holder.biding.tvServings.setText(String.format("%d Servings", recipe.servings));
-        holder.biding.tvMinutes.setText(String.format("%d Minutes", recipe.readyInMinutes));
 
         loadImage(holder.biding.ivRecipeImage, recipe.image);
     }

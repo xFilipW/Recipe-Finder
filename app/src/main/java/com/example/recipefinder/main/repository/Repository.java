@@ -1,4 +1,4 @@
-package com.example.recipefinder.main;
+package com.example.recipefinder.main.repository;
 
 import com.example.recipefinder.R;
 import com.example.recipefinder.main.models.CategoriesData;
