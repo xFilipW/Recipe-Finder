@@ -1,0 +1,34 @@
+package com.example.recipefinder.main.fragments.itemDecorators;
+
+import android.content.Context;
+import android.graphics.Rect;
+import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+    private int spanCount;
+    private int spacing;
+
+    public VerticalSpaceItemDecoration(int spanCount, int spacingInDp, Context context) {
+        this.spanCount = spanCount;
+        this.spacing = Math.round(spacingInDp * context.getResources().getDisplayMetrics().density);
+    }
+
+    @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        int position = parent.getChildAdapterPosition(view);
+        int row = position / spanCount;
+        int totalItems = state.getItemCount();
+        int totalRows = (totalItems + spanCount - 1) / spanCount;
+
+        if (row > 0) {
+            outRect.top = spacing;
+        }
+
+        if (row == totalRows - 1) {
+            outRect.bottom = spacing;
+        }
+    }
+}

@@ -10,8 +10,8 @@
     app:cardCornerRadius="14dp"
     app:cardUseCompatPadding="true"
     app:contentPaddingBottom="4dp"
-    app:contentPaddingLeft="8dp"
-    app:contentPaddingRight="8dp"
+    app:contentPaddingLeft="4dp"
+    app:contentPaddingRight="4dp"
     app:contentPaddingTop="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
