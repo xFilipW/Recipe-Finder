@@ -2,8 +2,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="158dp"
-    app:cardCornerRadius="10dp"
+    android:layout_height="142dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="12dp"
     app:cardPreventCornerOverlap="true"
     app:elevation="8dp">
 
@@ -14,7 +17,7 @@
         <ImageView
             android:id="@+id/ivRecipeImage"
             android:layout_width="match_parent"
-            android:layout_height="94dp"
+            android:layout_height="84dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_favourite"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -26,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:fontFamily="@font/inter"
             android:includeFontPadding="false"
             android:text="Title"
@@ -39,7 +42,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivRecipeImage" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

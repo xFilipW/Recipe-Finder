@@ -10,7 +10,7 @@
         android:id="@+id/llWelcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_color"
+        android:background="@color/mainColor"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -48,12 +48,11 @@
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/png_app_logo"
+            app:layout_constraintBottom_toBottomOf="@+id/tvSubtitle"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="16dp" />
+            app:layout_constraintTop_toTopOf="@+id/tvTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -73,8 +72,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:mbn_backgroundBottomColor="@color/main_color"
-        app:mbn_circleColor="@color/main_color"
+        app:mbn_backgroundBottomColor="@color/mainColor"
+        app:mbn_circleColor="@color/mainColor"
         app:mbn_defaultIconColor="@color/white"
         app:mbn_selectedIconColor="@color/white" />
 

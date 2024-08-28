@@ -4,5 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="whiteFrost">#FCFBFC</color>
     <color name="grey">#808080</color>
-    <color name="main_color">#68DAFF</color>
+    <color name="mainColor">#68DAFF</color>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.recipefinder.main.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,17 +13,12 @@ import com.example.recipefinder.databinding.ListItemMainRecipesBinding;
 import com.example.recipefinder.main.viewHolders.RecipiesViewHolder;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
 
-    private final Context context;
-    private final List<Recipe> recipeList;
-
-    public RecipiesAdapter(Context context, List<Recipe> recipeList) {
-        this.context = context;
-        this.recipeList = recipeList;
-    }
+    private final List<Recipe> recipeList = new ArrayList<Recipe>();
 
     @NonNull
     @Override
@@ -55,11 +49,19 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
     }
 
     private String truncateTitle(String title) {
-        return title.length() > 30 ? title.substring(0, 27) + "..." : title;
+        return title.length() > 25 ? title.substring(0, 20) + "..." : title;
     }
 
     @Override
     public int getItemCount() {
         return recipeList.size();
+    }
+
+    public void submitRecipes(ArrayList<Recipe> recipes) {
+        if (recipes != null) {
+            recipeList.clear();
+            recipeList.addAll(recipes);
+            notifyDataSetChanged();
+        }
     }
 }

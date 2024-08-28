@@ -18,6 +18,8 @@ import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.databinding.FragmentMainHomeBinding;
 import com.example.recipefinder.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.main.adapters.RecipiesAdapter;
+import com.example.recipefinder.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
+import com.example.recipefinder.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
 import com.example.recipefinder.main.repository.Repository;
 
 public class MainHomeFragment extends Fragment {
@@ -29,9 +31,16 @@ public class MainHomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMainHomeBinding.inflate(inflater, container, false);
-        setupCategoriesRecyclerView();
+        initializeUI();
+
         loadRandomRecipes(null);
         return binding.getRoot();
+    }
+
+    private void initializeUI() {
+        setupCategoriesRecyclerView();
+        setupRecipesRecyclerView();
+        setupRequestManager();
     }
 
     private void setupCategoriesRecyclerView() {
@@ -41,45 +50,58 @@ public class MainHomeFragment extends Fragment {
         binding.rvCategories.setAdapter(categoriesAdapter);
     }
 
-    private void loadRandomRecipes(@Nullable String category) {
-        showLoading(true);
+    private void setupRequestManager() {
         requestManager = new RequestManager(requireContext());
-        requestManager.getRandomRecipes(recipeResponseListener, category);
     }
 
-    private final RandomRecipeResponseListener recipeResponseListener = new RandomRecipeResponseListener() {
+    private void loadRandomRecipes(@Nullable String category) {
+        toggleLoadingState(true);
+        requestManager.getRandomRecipes(new RecipeResponseListener(), category);
+    }
+
+    private class RecipeResponseListener implements RandomRecipeResponseListener {
         @Override
         public void didFetch(RandomRecipeApiResponse response, String message) {
-            if (response.recipes == null || response.recipes.isEmpty()) {
-                showNoRecipesFound();
-            } else {
-                setupRecipesRecyclerView(response);
-            }
-            showLoading(false);
+            handleRecipeResponse(response);
+            toggleLoadingState(false);
         }
 
         @Override
         public void didError(String message) {
-            showError(message);
+            displayError(message);
+            toggleLoadingState(false);
         }
-    };
+    }
 
-    private void setupRecipesRecyclerView(RandomRecipeApiResponse response) {
+    private void handleRecipeResponse(RandomRecipeApiResponse response) {
+        if (response.recipes == null || response.recipes.isEmpty()) {
+            displayNoRecipesFound();
+        } else {
+            displayRecipes(response);
+        }
+    }
+
+    private void displayRecipes(RandomRecipeApiResponse response) {
         binding.tvNoRecipeFound.setVisibility(View.GONE);
-        binding.rvRecipes.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        recipiesAdapter = new RecipiesAdapter(requireContext(), response.recipes);
-        binding.rvRecipes.setAdapter(recipiesAdapter);
+        recipiesAdapter.submitRecipes(response.recipes);
         binding.rvRecipes.setVisibility(View.VISIBLE);
     }
 
-    private void showNoRecipesFound() {
+    private void setupRecipesRecyclerView() {
+        binding.rvRecipes.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        recipiesAdapter = new RecipiesAdapter();
+        binding.rvRecipes.setAdapter(recipiesAdapter);
+        binding.rvRecipes.addItemDecoration(new HorizontalSpaceItemDecoration(2, 16, requireContext()));
+        binding.rvRecipes.addItemDecoration(new VerticalSpaceItemDecoration(2, 16, requireContext()));
+    }
+
+    private void displayNoRecipesFound() {
         binding.rvRecipes.setVisibility(View.GONE);
         binding.tvNoRecipeFound.setVisibility(View.VISIBLE);
     }
 
-    private void showError(String message) {
+    private void displayError(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-        showLoading(false);
     }
 
     private void onCategoryClick(String category) {
@@ -87,10 +109,17 @@ public class MainHomeFragment extends Fragment {
         loadRandomRecipes(category);
     }
 
-    private void showLoading(boolean isLoading) {
+    private void toggleLoadingState(boolean isLoading) {
+        int visibility = isLoading ? View.GONE : View.VISIBLE;
+
+        binding.rvCategories.setVisibility(visibility);
+        binding.tvRecipes.setVisibility(visibility);
+        binding.tvCategories.setVisibility(visibility);
+        binding.etSearch.setVisibility(visibility);
+        binding.tvAmountOfRecipes.setVisibility(visibility);
+
         binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         if (isLoading) {
-            binding.rvRecipes.setVisibility(View.GONE);
             binding.tvNoRecipeFound.setVisibility(View.GONE);
         }
     }
