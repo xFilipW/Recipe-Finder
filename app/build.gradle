@@ -31,20 +31,20 @@ android {
 }
 
 dependencies {
+    implementation(name: 'meow-bottom-navigation-java-1.2.0', ext: 'aar')
 
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
 
-    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
-    implementation 'com.squareup.picasso:picasso:2.8'
-    implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
-    implementation 'com.airbnb.android:lottie:6.5.0'
+    implementation libs.retrofit
+    implementation libs.converter.gson
+    implementation libs.picasso
+    implementation libs.lottie
 
-    implementation 'androidx.work:work-runtime:2.7.1'
-    implementation 'androidx.concurrent:concurrent-futures:1.1.0'
+    implementation libs.work.runtime
+    implementation libs.concurrent.futures
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

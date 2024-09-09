@@ -27,7 +27,6 @@ public class MainHomeFragment extends Fragment {
     private FragmentMainHomeBinding binding;
     private RequestManager requestManager;
     private RecipiesAdapter recipiesAdapter;
-    private Thread handler = null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,45 +44,12 @@ public class MainHomeFragment extends Fragment {
     }
 
     private void setupCategoriesRecyclerView() {
-        binding.rvCategories.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(new CategoriesAdapter.OnCategoryClickListener() {
-            @Override
-            public void onCategoryClick(String category) {
-                loadRecipes(category);
-            }
-        });
+        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this::loadCategory);
         categoriesAdapter.setData(Repository.CATEGORIES_DATA_LIST);
         binding.rvCategories.setAdapter(categoriesAdapter);
+        binding.rvCategories.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.rvCategories.addItemDecoration(new HorizontalSpaceItemDecoration(categoriesAdapter.getItemCount(), 12, requireContext()));
     }
-
-//    private String category = null;
-
-//    private Runnable r = new Runnable() {
-//        @Override
-//        public void run() {
-//            requestManager.getRandomRecipes(new RecipeResponseListener(), category);
-//        }
-//    };
-
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        handler = new Thread(r);
-//    }
-
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//
-//        if (handler != null) {
-//            try {
-//                handler.join();
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
 
     private void setupRequestManager() {
         requestManager = new RequestManager(requireContext());
@@ -139,7 +105,7 @@ public class MainHomeFragment extends Fragment {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void loadRecipes(String category) {
+    private void loadCategory(String category) {
         binding.rvRecipes.setVisibility(View.GONE);
         loadRandomRecipes(category);
     }

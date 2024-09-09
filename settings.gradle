@@ -16,7 +16,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter()
+        flatDir {
+            dirs 'libs' // This is where your AAR file is located
+        }
     }
 }
 

@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
             if (fragment != null) {
                 loadFragment(fragment);
             }
-            return null;
         });
     }
 
