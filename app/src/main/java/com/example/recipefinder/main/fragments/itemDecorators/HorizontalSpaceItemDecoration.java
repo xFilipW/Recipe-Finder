@@ -8,10 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
 
-    private int spanCount;
+    private SpanCount spanCount;
     private int spacing;
 
-    public HorizontalSpaceItemDecoration(int spanCount, int spacingInDp, Context context) {
+    public enum SpanCount {
+        TWO,
+        MORE,
+    }
+
+    public HorizontalSpaceItemDecoration(SpanCount spanCount, int spacingInDp, Context context) {
         this.spanCount = spanCount;
         this.spacing = Math.round(spacingInDp * context.getResources().getDisplayMetrics().density);
     }
@@ -20,8 +25,8 @@ public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
 
-        if (spanCount == 2) {
-            int column = position % spanCount;
+        if (spanCount == SpanCount.TWO) {
+            int column = position % 2;
 
             if (column == 0) {
                 outRect.right = spacing / 2;
@@ -30,7 +35,7 @@ public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
             }
         } else {
             int totalItems = state.getItemCount();
-            int totalCols = (totalItems + spanCount - 1);
+            int totalCols = (totalItems + totalItems - 1);
             int column = position;
 
             if (column == 0) {

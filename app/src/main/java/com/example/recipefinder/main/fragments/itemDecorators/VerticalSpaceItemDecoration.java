@@ -8,10 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
 
-    private int spanCount;
+    private SpanCount spanCount;
     private int spacing;
 
-    public VerticalSpaceItemDecoration(int spanCount, int spacingInDp, Context context) {
+    public enum SpanCount {
+        TWO(2);
+
+        public final int value;
+
+        SpanCount(int value) {
+            this.value = value;
+        }
+    }
+
+    public VerticalSpaceItemDecoration(SpanCount spanCount, int spacingInDp, Context context) {
         this.spanCount = spanCount;
         this.spacing = Math.round(spacingInDp * context.getResources().getDisplayMetrics().density);
     }
@@ -19,9 +29,9 @@ public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
-        int row = position / spanCount;
+        int row = position / spanCount.value;
         int totalItems = state.getItemCount();
-        int totalRows = (totalItems + spanCount - 1) / spanCount;
+        int totalRows = (totalItems + spanCount.value - 1) / spanCount.value;
 
         if (row > 0) {
             outRect.top = spacing;

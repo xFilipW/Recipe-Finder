@@ -34,12 +34,12 @@ public class CacheRefreshWorker extends Worker {
         cacheManager.clearCache();
         requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
             @Override
-            public void didFetch(RandomRecipeApiResponse recipes, String message) {
+            public void onSuccess(RandomRecipeApiResponse recipes, String message) {
                 cacheManager.saveRecipes(recipes);
             }
 
             @Override
-            public void didError(String errorMessage) {
+            public void onError(String errorMessage) {
                 // Log error if needed
             }
         }, null);

@@ -37,9 +37,9 @@ public class RequestManager {
             RandomRecipeApiResponse cachedRecipes = cacheManager.getCachedRecipes();
             if (cachedRecipes != null) {
                 if (category == null || category.equals("All recipes")) {
-                    listener.didFetch(cachedRecipes, "Fetched from cache");
+                    listener.onSuccess(cachedRecipes, "Fetched from cache");
                 } else {
-                    listener.didFetch(filterRecipesByCategory(cachedRecipes, category), "Filtered recipes from cache");
+                    listener.onSuccess(filterRecipesByCategory(cachedRecipes, category), "Filtered recipes from cache");
                 }
                 return;
             }
@@ -57,7 +57,7 @@ public class RequestManager {
             RandomRecipeApiResponse combinedResponse = new RandomRecipeApiResponse();
             combinedResponse.recipes = allRecipes;
             cacheManager.saveRecipes(combinedResponse);
-            listener.didFetch(combinedResponse, "Fetched " + allRecipes.size() + " recipes");
+            listener.onSuccess(combinedResponse, "Fetched " + allRecipes.size() + " recipes");
             return;
         }
 
@@ -71,7 +71,7 @@ public class RequestManager {
             @Override
             public void onResponse(Call<RandomRecipeApiResponse> call, Response<RandomRecipeApiResponse> response) {
                 if (!response.isSuccessful()) {
-                    listener.didError(response.message());
+                    listener.onError(response.message());
                     return;
                 }
                 if (response.body() != null && response.body().recipes != null) {
@@ -82,7 +82,7 @@ public class RequestManager {
 
             @Override
             public void onFailure(Call<RandomRecipeApiResponse> call, Throwable throwable) {
-                listener.didError(throwable.getMessage());
+                listener.onError(throwable.getMessage());
             }
         });
     }

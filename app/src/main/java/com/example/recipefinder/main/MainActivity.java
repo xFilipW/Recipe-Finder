@@ -24,14 +24,22 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.bottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_random));
-        binding.bottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
-        binding.bottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_favourite));
-        binding.bottomNavigationView.show(2, true);
+        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_random));
+        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
+        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_favourite));
+        
+        binding.mewoBottomNavigationView.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item) {
+                // TODO: 09/09/2024  
+            }
+        });
+        
+        binding.mewoBottomNavigationView.show(2, true);
 
         loadFragment(new MainHomeFragment());
 
-        binding.bottomNavigationView.setOnClickMenuListener(model -> {
+        binding.mewoBottomNavigationView.setOnClickMenuListener(model -> {
             Fragment fragment = null;
             switch (model.getId()) {
                 case 1:

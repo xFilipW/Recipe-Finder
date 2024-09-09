@@ -43,12 +43,15 @@ public class MainHomeFragment extends Fragment {
         setupRequestManager();
     }
 
+    /**
+     * @noinspection DataFlowIssue
+     */
     private void setupCategoriesRecyclerView() {
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this::loadCategory);
-        categoriesAdapter.setData(Repository.CATEGORIES_DATA_LIST);
-        binding.rvCategories.setAdapter(categoriesAdapter);
         binding.rvCategories.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.rvCategories.addItemDecoration(new HorizontalSpaceItemDecoration(categoriesAdapter.getItemCount(), 12, requireContext()));
+        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this::loadCategory);
+        binding.rvCategories.setAdapter(categoriesAdapter);
+        binding.rvCategories.addItemDecoration(new HorizontalSpaceItemDecoration(HorizontalSpaceItemDecoration.SpanCount.MORE, 12, requireContext()));
+        ((CategoriesAdapter) binding.rvCategories.getAdapter()).setData(Repository.CATEGORIES_DATA_LIST);
     }
 
     private void setupRequestManager() {
@@ -57,21 +60,19 @@ public class MainHomeFragment extends Fragment {
 
     private void loadRandomRecipes(@Nullable String category) {
         toggleLoadingState(true);
-        requestManager.getRandomRecipes(new RecipeResponseListener(), category);
-    }
+        requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
+            @Override
+            public void onSuccess(RandomRecipeApiResponse response, String message) {
+                handleRecipeResponse(response);
+                toggleLoadingState(false);
+            }
 
-    private class RecipeResponseListener implements RandomRecipeResponseListener {
-        @Override
-        public void didFetch(RandomRecipeApiResponse response, String message) {
-            handleRecipeResponse(response);
-            toggleLoadingState(false);
-        }
-
-        @Override
-        public void didError(String message) {
-            displayError(message);
-            toggleLoadingState(false);
-        }
+            @Override
+            public void onError(String message) {
+                displayError(message);
+                toggleLoadingState(false);
+            }
+        }, category);
     }
 
     private void handleRecipeResponse(RandomRecipeApiResponse response) {
@@ -92,8 +93,8 @@ public class MainHomeFragment extends Fragment {
         binding.rvRecipes.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         recipiesAdapter = new RecipiesAdapter();
         binding.rvRecipes.setAdapter(recipiesAdapter);
-        binding.rvRecipes.addItemDecoration(new HorizontalSpaceItemDecoration(2, 16, requireContext()));
-        binding.rvRecipes.addItemDecoration(new VerticalSpaceItemDecoration(2, 16, requireContext()));
+        binding.rvRecipes.addItemDecoration(new HorizontalSpaceItemDecoration(HorizontalSpaceItemDecoration.SpanCount.TWO, 16, requireContext()));
+        binding.rvRecipes.addItemDecoration(new VerticalSpaceItemDecoration(VerticalSpaceItemDecoration.SpanCount.TWO, 16, requireContext()));
     }
 
     private void displayNoRecipesFound() {
