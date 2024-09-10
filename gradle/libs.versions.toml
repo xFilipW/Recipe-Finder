@@ -11,6 +11,7 @@ material = "1.12.0"
 activity = "1.9.2"
 constraintlayout = "2.1.4"
 picasso = "2.8"
+roomRuntime = "2.6.1"
 workRuntime = "2.9.1"
 
 [libraries]
@@ -26,6 +27,8 @@ activity = { group = "androidx.activity", name = "activity", version.ref = "acti
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
 
 [plugins]

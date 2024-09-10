@@ -33,6 +33,9 @@ android {
 dependencies {
     implementation(name: 'meow-bottom-navigation-java-1.2.0', ext: 'aar')
 
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
+
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity

@@ -9,6 +9,8 @@ import com.example.recipefinder.api.cache.CacheManager;
 import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.api.models.Recipe;
+import com.example.recipefinder.database.AppDatabase;
+import com.example.recipefinder.database.RecipeTable;
 
 import java.util.ArrayList;
 
@@ -66,16 +68,15 @@ public class RequestManager {
                 if (response.isSuccessful() && response.body() != null && response.body().recipes != null) {
                     ArrayList<Recipe> allRecipes = new ArrayList<>(response.body().recipes);
 
-                    RandomRecipeApiResponse combinedResponse = new RandomRecipeApiResponse();
-                    combinedResponse.recipes = allRecipes;
-                    cacheManager.saveRecipes(combinedResponse);
+                    AppDatabase.getDatabase(context).recipeTableDao().bulkInsert(
+                            RecipeUtils.mapList(allRecipes).toArray(new RecipeTable[0]));
+
+                    //RandomRecipeApiResponse combinedResponse = new RandomRecipeApiResponse();
+                    //combinedResponse.recipes = allRecipes;
+                    //cacheManager.saveRecipes(combinedResponse);
                     listener.onSuccess(combinedResponse, "Fetched " + allRecipes.size() + " recipes");
                 } else {
-                    if (!response.isSuccessful()) {
-                        listener.onError(response.message());
-                    } else {
-                        listener.onError("Response body or response body recipes is null");
-                    }
+                    listener.onError("Response body or response body recipes is null");
                 }
             }
 
