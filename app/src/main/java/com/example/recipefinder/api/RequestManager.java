@@ -74,6 +74,7 @@ public class RequestManager {
                     //RandomRecipeApiResponse combinedResponse = new RandomRecipeApiResponse();
                     //combinedResponse.recipes = allRecipes;
                     //cacheManager.saveRecipes(combinedResponse);
+                    // TODO: 10.09.2024  
                     listener.onSuccess(combinedResponse, "Fetched " + allRecipes.size() + " recipes");
                 } else {
                     listener.onError("Response body or response body recipes is null");
