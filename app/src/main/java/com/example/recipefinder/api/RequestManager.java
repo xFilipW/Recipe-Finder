@@ -70,7 +70,19 @@ public class RequestManager {
                     // cacheManager.saveRecipes(getApplicationContext(), allRecipes);
 
                     ArrayList<Recipe> allRecipes = new ArrayList<>(response.body().recipes);
+<<<<<<< HEAD
                     listener.onSuccess(RecipeUtils.mapList(allRecipes));
+=======
+
+                    AppDatabase.getDatabase(context).recipeTableDao().bulkInsert(
+                            RecipeUtils.mapList(allRecipes).toArray(new RecipeTable[0]));
+
+                    //RandomRecipeApiResponse combinedResponse = new RandomRecipeApiResponse();
+                    //combinedResponse.recipes = allRecipes;
+                    //cacheManager.saveRecipes(combinedResponse);
+                    // TODO: 10.09.2024  
+                    listener.onSuccess(combinedResponse, "Fetched " + allRecipes.size() + " recipes");
+>>>>>>> fd600ea97d5bce1c90f013a1c09c195ba74f0dc1
                 } else {
                     listener.onError("Response body or response body recipes is null");
                 }
