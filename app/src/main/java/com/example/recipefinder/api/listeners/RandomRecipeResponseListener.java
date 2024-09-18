@@ -1,8 +1,11 @@
 package com.example.recipefinder.api.listeners;
 
-import com.example.recipefinder.api.models.RandomRecipeApiResponse;
+import com.example.recipefinder.database.RecipeTable;
+
+import java.util.List;
 
 public interface RandomRecipeResponseListener {
-    void onSuccess(RandomRecipeApiResponse response, String message);
+    void onSuccess(List<RecipeTable> allRecipes);
+
     void onError(String message);
 }

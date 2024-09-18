@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.recipefinder.api.RequestManager;
 import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
+import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.FragmentMainHomeBinding;
 import com.example.recipefinder.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.main.adapters.RecipiesAdapter;
 import com.example.recipefinder.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
 import com.example.recipefinder.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
 import com.example.recipefinder.main.repository.Repository;
+
+import java.util.List;
 
 public class MainHomeFragment extends Fragment {
 
@@ -64,13 +67,13 @@ public class MainHomeFragment extends Fragment {
 
     private void loadRandomRecipes(@Nullable String category) {
         toggleLoadingState(true);
-        requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
+        requestManager.getRandomRecipes(requireContext(), new RandomRecipeResponseListener() {
             @Override
-            public void onSuccess(RandomRecipeApiResponse response, String message) {
-                if (response.recipes == null || response.recipes.isEmpty()) {
+            public void onSuccess(List<RecipeTable> allRecipes) {
+                if (allRecipes == null || allRecipes.isEmpty()) {
                     displayNoRecipesFound();
                 } else {
-                    displayRecipes(response);
+                    displayRecipes(allRecipes);
                 }
                 toggleLoadingState(false);
             }
@@ -83,9 +86,9 @@ public class MainHomeFragment extends Fragment {
         }, category);
     }
 
-    private void displayRecipes(RandomRecipeApiResponse response) {
+    private void displayRecipes(List<RecipeTable> recipes) {
         binding.tvNoRecipeFound.setVisibility(View.GONE);
-        recipiesAdapter.setData(response.recipes);
+        recipiesAdapter.setData(recipes);
         binding.rvRecipes.setVisibility(View.VISIBLE);
     }
 

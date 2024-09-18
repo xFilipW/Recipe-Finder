@@ -9,10 +9,10 @@ import com.example.recipefinder.api.cache.CacheManager;
 import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.api.models.Recipe;
-import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,14 +38,14 @@ public class RequestManager {
                 .build();
     }
 
-    public void getRandomRecipes(RandomRecipeResponseListener randomRecipeResponseListener, String category) {
+    public void getRandomRecipes(Context context, RandomRecipeResponseListener randomRecipeResponseListener, String category) {
         if (!cacheManager.isCacheExpired()) {
-            RandomRecipeApiResponse cachedRecipes = cacheManager.getCachedRecipes();
+            List<RecipeTable> cachedRecipes = cacheManager.getCachedRecipes(context);
             if (cachedRecipes != null) {
                 if (category == null || category.equals("All recipes")) {
-                    randomRecipeResponseListener.onSuccess(cachedRecipes, "Fetched from cache");
+                    randomRecipeResponseListener.onSuccess(cachedRecipes);
                 } else {
-                    randomRecipeResponseListener.onSuccess(filterRecipesByCategory(cachedRecipes, category), "Filtered recipes from cache");
+                    randomRecipeResponseListener.onSuccess(filterRecipesByCategory(cachedRecipes, category));
                 }
                 return;
             }
@@ -66,16 +66,11 @@ public class RequestManager {
             @Override
             public void onResponse(@NonNull Call<RandomRecipeApiResponse> call, @NonNull Response<RandomRecipeApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().recipes != null) {
+                    // TODO: 17.09.2024
+                    // cacheManager.saveRecipes(getApplicationContext(), allRecipes);
+
                     ArrayList<Recipe> allRecipes = new ArrayList<>(response.body().recipes);
-
-                    AppDatabase.getDatabase(context).recipeTableDao().bulkInsert(
-                            RecipeUtils.mapList(allRecipes).toArray(new RecipeTable[0]));
-
-                    //RandomRecipeApiResponse combinedResponse = new RandomRecipeApiResponse();
-                    //combinedResponse.recipes = allRecipes;
-                    //cacheManager.saveRecipes(combinedResponse);
-                    // TODO: 10.09.2024  
-                    listener.onSuccess(combinedResponse, "Fetched " + allRecipes.size() + " recipes");
+                    listener.onSuccess(RecipeUtils.mapList(allRecipes));
                 } else {
                     listener.onError("Response body or response body recipes is null");
                 }
@@ -88,16 +83,15 @@ public class RequestManager {
         });
     }
 
-    private RandomRecipeApiResponse filterRecipesByCategory(RandomRecipeApiResponse response, String category) {
-        RandomRecipeApiResponse filteredResponse = new RandomRecipeApiResponse();
-        filteredResponse.recipes = new ArrayList<>();
+    private List<RecipeTable> filterRecipesByCategory(List<RecipeTable> response, String category) {
+        List<RecipeTable> filteredRecipes = new ArrayList<>();
 
-        for (Recipe recipe : response.recipes) {
-            if (recipe.dishTypes != null && recipe.dishTypes.contains(category.toLowerCase())) {
-                filteredResponse.recipes.add(recipe);
+        for (RecipeTable recipe : response) {
+            if (recipe.getDishTypes() != null && recipe.getDishTypes().contains(category.toLowerCase())) {
+                filteredRecipes.add(recipe);
             }
         }
-        return filteredResponse;
+        return filteredRecipes;
     }
 
     private interface CallRandomRecipes {

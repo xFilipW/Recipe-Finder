@@ -2,11 +2,14 @@ package com.example.recipefinder.api.cache;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
-import com.example.recipefinder.api.models.RandomRecipeApiResponse;
+import com.example.recipefinder.database.AppDatabase;
+import com.example.recipefinder.database.RecipeTable;
 import com.google.gson.Gson;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class CacheManager {
     private static final String PREFS_NAME = "RecipeCache";
@@ -21,17 +24,26 @@ public class CacheManager {
         this.gson = new Gson();
     }
 
-    public void saveRecipes(RandomRecipeApiResponse recipes) {
-        String json = gson.toJson(recipes);
-        sharedPreferences.edit()
-                .putString(RECIPE_KEY, json)
-                .putLong(LAST_UPDATE_TIME_KEY, System.currentTimeMillis())
-                .apply();
+    private static final String TAG = "CacheManager";
+
+    public void saveRecipes(Context context, List<RecipeTable> recipes) {
+        Log.d(TAG, "saveRecipes() called with: context = [" + context + "], recipes = [" + recipes + "]");
+//        String json = gson.toJson(recipes);
+//        sharedPreferences.edit()
+//                .putString(RECIPE_KEY, json)
+//                .putLong(LAST_UPDATE_TIME_KEY, System.currentTimeMillis())
+//                .apply();
+        Long[] longs = AppDatabase.getDatabase(context).recipeTableDao().bulkInsert(
+                recipes.toArray(new RecipeTable[0])
+        );
+
+        Log.d(TAG, "saveRecipes() returned: " + longs);
     }
 
-    public RandomRecipeApiResponse getCachedRecipes() {
-        String json = sharedPreferences.getString(RECIPE_KEY, null);
-        return json != null ? gson.fromJson(json, RandomRecipeApiResponse.class) : null;
+    public List<RecipeTable> getCachedRecipes(Context context) {
+//        String json = sharedPreferences.getString(RECIPE_KEY, null);
+//        return json != null ? gson.fromJson(json, RandomRecipeApiResponse.class) : null;
+        return AppDatabase.getDatabase(context).recipeTableDao().queryAll();
     }
 
     public boolean isCacheExpired() {

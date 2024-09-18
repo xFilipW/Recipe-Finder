@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefinder.R;
 import com.example.recipefinder.api.models.Recipe;
+import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.ListItemMainRecipesBinding;
 import com.example.recipefinder.main.viewHolders.RecipiesViewHolder;
 import com.squareup.picasso.Picasso;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
 
-    private final List<Recipe> recipeList = new ArrayList<Recipe>();
+    private final List<RecipeTable> recipeList = new ArrayList<RecipeTable>();
 
     @NonNull
     @Override
@@ -29,10 +30,9 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecipiesViewHolder holder, int position) {
-        Recipe recipe = recipeList.get(position);
-        holder.biding.tvTitle.setText(truncateTitle(recipe.title));
-
-        loadImage(holder.biding.ivRecipeImage, recipe.image);
+        RecipeTable recipe = recipeList.get(position);
+        holder.biding.tvTitle.setText(truncateTitle(recipe.getTitle()));
+        loadImage(holder.biding.ivRecipeImage, recipe.getImage());
     }
 
     private void loadImage(ImageView imageView, String imageUrl) {
@@ -57,7 +57,7 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
         return recipeList.size();
     }
 
-    public void setData(ArrayList<Recipe> recipes) {
+    public void setData(List<RecipeTable> recipes) {
         if (recipes != null) {
             recipeList.clear();
             recipeList.addAll(recipes);

@@ -8,7 +8,11 @@ import androidx.work.WorkerParameters;
 
 import com.example.recipefinder.api.RequestManager;
 import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
-import com.example.recipefinder.api.models.RandomRecipeApiResponse;
+import com.example.recipefinder.api.models.Recipe;
+import com.example.recipefinder.database.RecipeTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CacheRefreshWorker extends Worker {
 
@@ -32,10 +36,10 @@ public class CacheRefreshWorker extends Worker {
 
     private void refreshCache() {
         cacheManager.clearCache();
-        requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
+        requestManager.getRandomRecipes(getApplicationContext(), new RandomRecipeResponseListener() {
             @Override
-            public void onSuccess(RandomRecipeApiResponse recipes, String message) {
-                cacheManager.saveRecipes(recipes);
+            public void onSuccess(List<RecipeTable> allRecipes) {
+                cacheManager.saveRecipes(getApplicationContext(), allRecipes);
             }
 
             @Override
