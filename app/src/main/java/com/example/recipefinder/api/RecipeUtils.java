@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RecipeUtils {
-    public static List<RecipeTable> mapList(ArrayList<Recipe> allRecipes) {
+    public static List<RecipeTable> mapList(List<Recipe> allRecipes) {
         Gson gson = new Gson();
 
         return allRecipes.stream()

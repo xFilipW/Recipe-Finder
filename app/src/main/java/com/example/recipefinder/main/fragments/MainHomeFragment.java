@@ -67,10 +67,11 @@ public class MainHomeFragment extends Fragment {
 
     private void loadRandomRecipes(@Nullable String category) {
         toggleLoadingState(true);
-        requestManager.getRandomRecipes(requireContext(), new RandomRecipeResponseListener() {
+
+        requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
             @Override
-            public void onSuccess(List<RecipeTable> allRecipes) {
-                if (allRecipes == null || allRecipes.isEmpty()) {
+            public void onComplete(@NonNull List<RecipeTable> allRecipes) {
+                if (allRecipes.isEmpty()) {
                     displayNoRecipesFound();
                 } else {
                     displayRecipes(allRecipes);
@@ -124,6 +125,7 @@ public class MainHomeFragment extends Fragment {
         binding.tvAmountOfRecipes.setVisibility(visibility);
 
         binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+
         if (isLoading) {
             binding.tvNoRecipeFound.setVisibility(View.GONE);
         }

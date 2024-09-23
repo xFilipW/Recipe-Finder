@@ -1,7 +1,9 @@
 package com.example.recipefinder.api.cache;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
@@ -19,6 +21,8 @@ public class CacheRefreshWorker extends Worker {
     private final CacheManager cacheManager;
     private final RequestManager requestManager;
 
+    private static final String TAG = "CacheRefreshWorker";
+
     public CacheRefreshWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         this.cacheManager = new CacheManager(context);
@@ -35,16 +39,15 @@ public class CacheRefreshWorker extends Worker {
     }
 
     private void refreshCache() {
-        cacheManager.clearCache();
-        requestManager.getRandomRecipes(getApplicationContext(), new RandomRecipeResponseListener() {
+        requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
             @Override
-            public void onSuccess(List<RecipeTable> allRecipes) {
-                cacheManager.saveRecipes(getApplicationContext(), allRecipes);
+            public void onComplete(@NonNull List<RecipeTable> allRecipes) {
+                // Left empty intentionally
             }
 
             @Override
             public void onError(String errorMessage) {
-                // Log error if needed
+                // Left empty intentionally
             }
         }, null);
     }

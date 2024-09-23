@@ -25,6 +25,9 @@ public interface RecipeTableDao {
     @Update(entity = RecipeTable.class)
     int update(RecipeTableUpdate RecipeTableUpdate);
 
+    @Query("DELETE FROM recipe")
+    int deleteRecipes();
+
     @Entity
     class RecipeTableUpdate {
         @ColumnInfo(name = "id")

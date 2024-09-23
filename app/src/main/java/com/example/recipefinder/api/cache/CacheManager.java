@@ -2,6 +2,8 @@ package com.example.recipefinder.api.cache;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.example.recipefinder.database.AppDatabase;
@@ -10,6 +12,8 @@ import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CacheManager {
     private static final String PREFS_NAME = "RecipeCache";
@@ -17,49 +21,75 @@ public class CacheManager {
     private static final String LAST_UPDATE_TIME_KEY = "LastUpdateTime";
 
     private final SharedPreferences sharedPreferences;
-    private final Gson gson;
+    private final Context context;
 
     public CacheManager(Context context) {
+        this.context = context;
         this.sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        this.gson = new Gson();
     }
 
     private static final String TAG = "CacheManager";
 
-    public void saveRecipes(Context context, List<RecipeTable> recipes) {
-        Log.d(TAG, "saveRecipes() called with: context = [" + context + "], recipes = [" + recipes + "]");
-//        String json = gson.toJson(recipes);
-//        sharedPreferences.edit()
-//                .putString(RECIPE_KEY, json)
-//                .putLong(LAST_UPDATE_TIME_KEY, System.currentTimeMillis())
-//                .apply();
-        Long[] longs = AppDatabase.getDatabase(context).recipeTableDao().bulkInsert(
-                recipes.toArray(new RecipeTable[0])
-        );
-
-        Log.d(TAG, "saveRecipes() returned: " + longs);
+    public void saveRecipes(List<RecipeTable> recipes, OnQueryCompleteListener<Long[]> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            Log.d(TAG, "saveRecipes: saving recipes (" + recipes.size() + ")");
+            Long[] longs = AppDatabase.getDatabase(context).recipeTableDao().bulkInsert(
+                    recipes.toArray(new RecipeTable[0])
+            );
+            Log.d(TAG, "saveRecipes: saved recipes (" + longs.length + ")");
+            handler.post(() -> {
+                listener.onComplete(longs);
+            });
+        });
     }
 
-    public List<RecipeTable> getCachedRecipes(Context context) {
-//        String json = sharedPreferences.getString(RECIPE_KEY, null);
-//        return json != null ? gson.fromJson(json, RandomRecipeApiResponse.class) : null;
-        return AppDatabase.getDatabase(context).recipeTableDao().queryAll();
+    public void removeRecipes(OnQueryCompleteListener<Integer> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            Log.d(TAG, "removeRecipes: removing recipes (all)");
+            int longs = AppDatabase.getDatabase(context).recipeTableDao().deleteRecipes();
+            Log.d(TAG, "removeRecipes: removed recipes (" + longs + ")");
+            handler.post(() -> {
+                listener.onComplete(longs);
+            });
+        });
+    }
+
+    public void getCachedRecipes(Context context, OnQueryCompleteListener<List<RecipeTable>> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            List<RecipeTable> recipeTables = AppDatabase.getDatabase(context).recipeTableDao().queryAll();
+            handler.post(() -> {
+                listener.onComplete(recipeTables);
+            });
+        });
     }
 
     public boolean isCacheExpired() {
         long lastUpdateTime = sharedPreferences.getLong(LAST_UPDATE_TIME_KEY, 0);
+
+        Calendar lastCalendar = Calendar.getInstance();
+        lastCalendar.setTimeInMillis(lastUpdateTime);
+        Log.d(TAG, "lastUpdateTime: " + lastCalendar.getTime());
+
         Calendar midnight = Calendar.getInstance();
         midnight.set(Calendar.HOUR_OF_DAY, 0);
         midnight.set(Calendar.MINUTE, 0);
         midnight.set(Calendar.SECOND, 0);
         midnight.set(Calendar.MILLISECOND, 0);
+        Log.d(TAG, "midnight: " + midnight.getTime());
+
         return lastUpdateTime < midnight.getTimeInMillis();
     }
 
-    public void clearCache() {
+    public void saveLastUpdate() {
+        Log.d(TAG, "saveLastUpdate: saving last update time");
         sharedPreferences.edit()
-                .remove(RECIPE_KEY)
-                .remove(LAST_UPDATE_TIME_KEY)
+                .putLong(LAST_UPDATE_TIME_KEY, System.currentTimeMillis())
                 .apply();
     }
 }
