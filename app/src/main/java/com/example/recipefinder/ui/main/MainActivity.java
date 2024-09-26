@@ -1,4 +1,4 @@
-package com.example.recipefinder.main;
+package com.example.recipefinder.ui.main;
 
 import android.os.Bundle;
 
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.recipefinder.R;
 import com.example.recipefinder.databinding.ActivityMainBinding;
-import com.example.recipefinder.main.fragments.MainFavouriteFragment;
-import com.example.recipefinder.main.fragments.MainHomeFragment;
-import com.example.recipefinder.main.fragments.MainRandomFragment;
+import com.example.recipefinder.ui.main.fragments.MainFavouriteFragment;
+import com.example.recipefinder.ui.main.fragments.MainHomeFragment;
+import com.example.recipefinder.ui.main.fragments.MainRandomFragment;
 
 public class MainActivity extends AppCompatActivity {
 

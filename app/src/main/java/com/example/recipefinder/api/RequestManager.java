@@ -8,10 +8,11 @@ import androidx.annotation.NonNull;
 import com.example.recipefinder.R;
 import com.example.recipefinder.api.cache.CacheManager;
 import com.example.recipefinder.api.cache.OnQueryCompleteListener;
-import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
+import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.api.models.Recipe;
 import com.example.recipefinder.database.RecipeTable;
+import com.example.recipefinder.utils.RecipeUtils;
 
 import java.util.ArrayList;
 import java.util.List;

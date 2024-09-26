@@ -1,4 +1,4 @@
-package com.example.recipefinder.api.listeners;
+package com.example.recipefinder.listeners;
 
 import androidx.annotation.NonNull;
 

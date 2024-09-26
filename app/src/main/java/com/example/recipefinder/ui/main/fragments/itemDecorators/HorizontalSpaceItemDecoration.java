@@ -1,4 +1,4 @@
-package com.example.recipefinder.main.fragments.itemDecorators;
+package com.example.recipefinder.ui.main.fragments.itemDecorators;
 
 import android.content.Context;
 import android.graphics.Rect;

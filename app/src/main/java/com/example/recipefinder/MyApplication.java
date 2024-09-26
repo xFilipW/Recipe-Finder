@@ -1,4 +1,4 @@
-package com.example.recipefinder.api;
+package com.example.recipefinder;
 
 import android.app.Application;
 

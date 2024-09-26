@@ -1,4 +1,4 @@
-package com.example.recipefinder.introductory;
+package com.example.recipefinder.ui.introductory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.recipefinder.R;
-import com.example.recipefinder.main.MainActivity;
+import com.example.recipefinder.ui.main.MainActivity;
 
 public class IntroductoryActivity extends AppCompatActivity {
 

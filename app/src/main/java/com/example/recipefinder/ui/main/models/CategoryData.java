@@ -1,4 +1,4 @@
-package com.example.recipefinder.main.models;
+package com.example.recipefinder.ui.main.models;
 
 public class CategoryData {
 

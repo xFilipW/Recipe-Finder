@@ -1,19 +1,15 @@
 package com.example.recipefinder.api.cache;
 
 import android.content.Context;
-import android.util.Log;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.recipefinder.api.RequestManager;
-import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
-import com.example.recipefinder.api.models.Recipe;
+import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.database.RecipeTable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CacheRefreshWorker extends Worker {

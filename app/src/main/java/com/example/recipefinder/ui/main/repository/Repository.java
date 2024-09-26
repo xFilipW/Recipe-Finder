@@ -1,7 +1,7 @@
-package com.example.recipefinder.main.repository;
+package com.example.recipefinder.ui.main.repository;
 
 import com.example.recipefinder.R;
-import com.example.recipefinder.main.models.CategoryData;
+import com.example.recipefinder.ui.main.models.CategoryData;
 
 import java.util.Arrays;
 import java.util.List;

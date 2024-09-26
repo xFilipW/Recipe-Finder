@@ -1,4 +1,4 @@
-package com.example.recipefinder.main.fragments;
+package com.example.recipefinder.ui.main.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,15 +13,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.recipefinder.api.RequestManager;
-import com.example.recipefinder.api.listeners.RandomRecipeResponseListener;
-import com.example.recipefinder.api.models.RandomRecipeApiResponse;
+import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.FragmentMainHomeBinding;
-import com.example.recipefinder.main.adapters.CategoriesAdapter;
-import com.example.recipefinder.main.adapters.RecipiesAdapter;
-import com.example.recipefinder.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
-import com.example.recipefinder.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
-import com.example.recipefinder.main.repository.Repository;
+import com.example.recipefinder.ui.main.adapters.CategoriesAdapter;
+import com.example.recipefinder.ui.main.adapters.RecipiesAdapter;
+import com.example.recipefinder.ui.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
+import com.example.recipefinder.ui.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
+import com.example.recipefinder.ui.main.repository.Repository;
 
 import java.util.List;
 

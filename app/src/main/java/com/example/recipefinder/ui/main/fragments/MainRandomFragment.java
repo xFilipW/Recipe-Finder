@@ -1,4 +1,4 @@
-package com.example.recipefinder.main.fragments;
+package com.example.recipefinder.ui.main.fragments;
 
 import android.os.Bundle;
 

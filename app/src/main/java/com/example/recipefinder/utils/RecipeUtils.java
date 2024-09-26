@@ -1,11 +1,9 @@
-package com.example.recipefinder.api;
+package com.example.recipefinder.utils;
 
 import com.example.recipefinder.api.models.Recipe;
 import com.example.recipefinder.database.RecipeTable;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

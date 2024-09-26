@@ -1,4 +1,4 @@
-package com.example.recipefinder.main.adapters;
+package com.example.recipefinder.ui.main.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefinder.databinding.ListItemMainCategoriesBinding;
-import com.example.recipefinder.main.models.CategoryData;
-import com.example.recipefinder.main.viewHolders.CategoriesViewHolder;
+import com.example.recipefinder.ui.main.models.CategoryData;
+import com.example.recipefinder.ui.main.viewHolders.CategoriesViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
