@@ -7,10 +7,11 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.recipefinder.api.RequestManager;
-import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.database.RecipeTable;
+import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class CacheRefreshWorker extends Worker {
 
@@ -28,9 +29,21 @@ public class CacheRefreshWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        if (cacheManager.isCacheExpired()) {
-            refreshCache();
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        cacheManager.isCacheExpired(expired -> {
+            if (expired) {
+                refreshCache();
+            }
+            countDownLatch.countDown();
+        });
+
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+
         return Result.success();
     }
 

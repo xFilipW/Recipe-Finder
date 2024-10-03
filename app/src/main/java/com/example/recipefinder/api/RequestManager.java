@@ -8,10 +8,10 @@ import androidx.annotation.NonNull;
 import com.example.recipefinder.R;
 import com.example.recipefinder.api.cache.CacheManager;
 import com.example.recipefinder.api.cache.OnQueryCompleteListener;
-import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.api.models.Recipe;
 import com.example.recipefinder.database.RecipeTable;
+import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.utils.RecipeUtils;
 
 import java.util.ArrayList;
@@ -45,24 +45,28 @@ public class RequestManager {
     }
 
     public void getRandomRecipes(RandomRecipeResponseListener listener, String category) {
-        Log.d(TAG, "getRandomRecipes: fetching recipes");
+        Log.d(TAG, "getRandomRecipes: fetching recipes, category=[" + category + "]");
         getCachedRecipes(cachedRecipes -> {
             Log.d(TAG, "getRandomRecipes: cached recipes size: " + cachedRecipes.size());
 
-            if (cacheManager.isCacheExpired()) {
-                Log.d(TAG, "getRandomRecipes: cache expired, fetching from API");
-                fetchRecipesFromApi(category, listener);
-            } else if (cachedRecipes.isEmpty()) {
-                Log.d(TAG, "getRandomRecipes: cache empty, fetching from API");
-                fetchRecipesFromApi(category, listener);
-            } else {
-                Log.d(TAG, "getRandomRecipes: cache not expired, fetching from cache");
-                if (category == null || category.equals(ALL_RECIPES)) {
-                    listener.onComplete(cachedRecipes);
-                } else {
-                    listener.onComplete(filterRecipesByCategory(cachedRecipes, category));
-                }
-            }
+            cacheManager.isCacheExpired(
+                    expired -> {
+                        if (expired) {
+                            Log.d(TAG, "getRandomRecipes: cache expired, fetching from API");
+                            fetchRecipesFromApi(category, listener);
+                        } else if (cachedRecipes.isEmpty()) {
+                            Log.d(TAG, "getRandomRecipes: cache empty, fetching from API");
+                            fetchRecipesFromApi(category, listener);
+                        } else {
+                            Log.d(TAG, "getRandomRecipes: cache not expired, fetching from cache");
+                            if (category == null || category.equals(ALL_RECIPES)) {
+                                listener.onComplete(cachedRecipes);
+                            } else {
+                                listener.onComplete(filterRecipesByCategory(cachedRecipes, category));
+                            }
+                        }
+                    }
+            );
         });
     }
 

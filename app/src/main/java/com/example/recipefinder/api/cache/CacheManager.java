@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
-import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.List;
@@ -69,21 +68,27 @@ public class CacheManager {
         });
     }
 
-    public boolean isCacheExpired() {
-        long lastUpdateTime = sharedPreferences.getLong(LAST_UPDATE_TIME_KEY, 0);
+    public void isCacheExpired(OnServiceCompleteListener<Boolean> onServiceCompleteListener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            long lastUpdateTime = sharedPreferences.getLong(LAST_UPDATE_TIME_KEY, 0);
 
-        Calendar lastCalendar = Calendar.getInstance();
-        lastCalendar.setTimeInMillis(lastUpdateTime);
-        Log.d(TAG, "lastUpdateTime: " + lastCalendar.getTime());
+            Calendar lastCalendar = Calendar.getInstance();
+            lastCalendar.setTimeInMillis(lastUpdateTime);
+            Log.d(TAG, "lastUpdateTime: " + lastCalendar.getTime());
 
-        Calendar midnight = Calendar.getInstance();
-        midnight.set(Calendar.HOUR_OF_DAY, 0);
-        midnight.set(Calendar.MINUTE, 0);
-        midnight.set(Calendar.SECOND, 0);
-        midnight.set(Calendar.MILLISECOND, 0);
-        Log.d(TAG, "midnight: " + midnight.getTime());
+            Calendar midnight = Calendar.getInstance();
+            midnight.set(Calendar.HOUR_OF_DAY, 0);
+            midnight.set(Calendar.MINUTE, 0);
+            midnight.set(Calendar.SECOND, 0);
+            midnight.set(Calendar.MILLISECOND, 0);
+            Log.d(TAG, "midnight: " + midnight.getTime());
 
-        return lastUpdateTime < midnight.getTimeInMillis();
+            handler.post(() -> onServiceCompleteListener.onComplete(
+                    lastUpdateTime < midnight.getTimeInMillis()
+            ));
+        });
     }
 
     public void saveLastUpdate() {

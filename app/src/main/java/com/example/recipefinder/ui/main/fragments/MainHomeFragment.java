@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.recipefinder.api.RequestManager;
-import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.FragmentMainHomeBinding;
+import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.ui.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.ui.main.adapters.RecipiesAdapter;
 import com.example.recipefinder.ui.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
@@ -40,7 +40,7 @@ public class MainHomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadRandomRecipes(null);
+        loadRandomRecipes(null, true);
     }
 
     private void initializeUI() {
@@ -54,7 +54,9 @@ public class MainHomeFragment extends Fragment {
      */
     private void setupCategoriesRecyclerView() {
         binding.rvCategories.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this::loadCategory);
+        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(category -> {
+            loadCategory(category, false);
+        });
         binding.rvCategories.setAdapter(categoriesAdapter);
         binding.rvCategories.addItemDecoration(new HorizontalSpaceItemDecoration(HorizontalSpaceItemDecoration.SpanCount.MORE, 12, requireContext()));
         ((CategoriesAdapter) binding.rvCategories.getAdapter()).setData(Repository.CATEGORIES_DATA_LIST);
@@ -64,8 +66,8 @@ public class MainHomeFragment extends Fragment {
         requestManager = new RequestManager(requireContext());
     }
 
-    private void loadRandomRecipes(@Nullable String category) {
-        toggleLoadingState(true);
+    private void loadRandomRecipes(@Nullable String category, boolean isInitial) {
+        toggleLoadingState(true, isInitial);
 
         requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
             @Override
@@ -75,13 +77,13 @@ public class MainHomeFragment extends Fragment {
                 } else {
                     displayRecipes(allRecipes);
                 }
-                toggleLoadingState(false);
+                toggleLoadingState(false, isInitial);
             }
 
             @Override
             public void onError(String message) {
                 displayError(message);
-                toggleLoadingState(false);
+                toggleLoadingState(false, isInitial);
             }
         }, category);
     }
@@ -109,24 +111,29 @@ public class MainHomeFragment extends Fragment {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void loadCategory(String category) {
+    private void loadCategory(String category, boolean isInitialize) {
         binding.rvRecipes.setVisibility(View.GONE);
-        loadRandomRecipes(category);
+        loadRandomRecipes(category, isInitialize);
     }
 
-    private void toggleLoadingState(boolean isLoading) {
+    private void toggleLoadingState(boolean isLoading, boolean isInitial) {
         int visibility = isLoading ? View.GONE : View.VISIBLE;
+        if (isInitial) {
 
-        binding.rvCategories.setVisibility(visibility);
-        binding.tvRecipes.setVisibility(visibility);
-        binding.tvCategories.setVisibility(visibility);
-        binding.etSearch.setVisibility(visibility);
-        binding.tvAmountOfRecipes.setVisibility(visibility);
+            binding.rvCategories.setVisibility(visibility);
+            binding.tvRecipes.setVisibility(visibility);
+            binding.tvCategories.setVisibility(visibility);
+            binding.etSearch.setVisibility(visibility);
+            binding.tvAmountOfRecipes.setVisibility(visibility);
 
-        binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
 
-        if (isLoading) {
-            binding.tvNoRecipeFound.setVisibility(View.GONE);
+            if (isLoading) {
+                binding.tvNoRecipeFound.setVisibility(View.GONE);
+            }
+        } else {
+            binding.rvRecipes.setVisibility(visibility);
+            binding.progressBarRecipes.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         }
     }
 
