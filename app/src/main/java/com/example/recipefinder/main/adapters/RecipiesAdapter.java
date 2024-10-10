@@ -57,7 +57,7 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
         return recipeList.size();
     }
 
-    public void submitRecipes(ArrayList<Recipe> recipes) {
+    public void setData(ArrayList<Recipe> recipes) {
         if (recipes != null) {
             recipeList.clear();
             recipeList.addAll(recipes);

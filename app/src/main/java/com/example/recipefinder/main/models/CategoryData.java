@@ -1,11 +1,11 @@
 package com.example.recipefinder.main.models;
 
-public class CategoriesData {
+public class CategoryData {
 
     private final String title;
     private final int image;
 
-    public CategoriesData(String title, int image) {
+    public CategoryData(String title, int image) {
         this.title = title;
         this.image = image;
     }

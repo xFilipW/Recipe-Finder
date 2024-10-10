@@ -32,9 +32,13 @@ public class MainHomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMainHomeBinding.inflate(inflater, container, false);
         initializeUI();
-
-        loadRandomRecipes(null);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        loadRandomRecipes(null);
     }
 
     private void initializeUI() {
@@ -63,7 +67,11 @@ public class MainHomeFragment extends Fragment {
         requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
             @Override
             public void onSuccess(RandomRecipeApiResponse response, String message) {
-                handleRecipeResponse(response);
+                if (response.recipes == null || response.recipes.isEmpty()) {
+                    displayNoRecipesFound();
+                } else {
+                    displayRecipes(response);
+                }
                 toggleLoadingState(false);
             }
 
@@ -75,17 +83,9 @@ public class MainHomeFragment extends Fragment {
         }, category);
     }
 
-    private void handleRecipeResponse(RandomRecipeApiResponse response) {
-        if (response.recipes == null || response.recipes.isEmpty()) {
-            displayNoRecipesFound();
-        } else {
-            displayRecipes(response);
-        }
-    }
-
     private void displayRecipes(RandomRecipeApiResponse response) {
         binding.tvNoRecipeFound.setVisibility(View.GONE);
-        recipiesAdapter.submitRecipes(response.recipes);
+        recipiesAdapter.setData(response.recipes);
         binding.rvRecipes.setVisibility(View.VISIBLE);
     }
 
