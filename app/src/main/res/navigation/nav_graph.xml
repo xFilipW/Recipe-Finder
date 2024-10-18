@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mainHomeFragment">
+
+    <fragment
+        android:id="@+id/mainHomeFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.MainHomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_main_home">
+        <action
+            android:id="@+id/action_mainHomeFragment_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/searchResultsFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.SearchResultsFragment"
+        android:label="Search Results"
+        tools:layout="@layout/fragment_search_results">
+        <argument
+            android:name="searchQuery"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainRandomFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.MainRandomFragment"
+        android:label="Random"
+        tools:layout="@layout/fragment_main_random" />
+
+    <fragment
+        android:id="@+id/mainFavouriteFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.MainFavouriteFragment"
+        android:label="Favourite"
+        tools:layout="@layout/fragment_main_favourite" />
+</navigation>

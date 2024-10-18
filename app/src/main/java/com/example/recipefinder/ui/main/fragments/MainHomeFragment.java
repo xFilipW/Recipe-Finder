@@ -1,23 +1,29 @@
 package com.example.recipefinder.ui.main.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.recipefinder.api.RequestManager;
+import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.FragmentMainHomeBinding;
 import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.ui.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.ui.main.adapters.RecipiesAdapter;
+import com.example.recipefinder.ui.main.fragments.MainHomeFragmentDirections.ActionMainHomeFragmentToSearchResultsFragment;
 import com.example.recipefinder.ui.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
 import com.example.recipefinder.ui.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
 import com.example.recipefinder.ui.main.repository.Repository;
@@ -27,26 +33,52 @@ import java.util.List;
 public class MainHomeFragment extends Fragment {
 
     private FragmentMainHomeBinding binding;
-    private RequestManager requestManager;
+    private RepositoryUseCase repositoryUseCase;
     private RecipiesAdapter recipiesAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMainHomeBinding.inflate(inflater, container, false);
-        initializeUI();
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initializeUI();
         loadRandomRecipes(null, true);
     }
 
     private void initializeUI() {
+        setupSearchView();
         setupCategoriesRecyclerView();
         setupRecipesRecyclerView();
-        setupRequestManager();
+        setupRepository();
+    }
+
+    private void setupSearchView() {
+        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String searchQuery = binding.etSearch.getText().toString();
+
+                NavController navController = NavHostFragment.findNavController(this);
+                ActionMainHomeFragmentToSearchResultsFragment navDirections = MainHomeFragmentDirections.actionMainHomeFragmentToSearchResultsFragment();
+                navDirections.setSearchQuery(searchQuery);
+                navController.navigate(navDirections);
+
+                hideKeyboard();
+            }
+
+            return true;
+        });
+    }
+
+    private void hideKeyboard() {
+        View view = requireActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     /**
@@ -62,14 +94,14 @@ public class MainHomeFragment extends Fragment {
         ((CategoriesAdapter) binding.rvCategories.getAdapter()).setData(Repository.CATEGORIES_DATA_LIST);
     }
 
-    private void setupRequestManager() {
-        requestManager = new RequestManager(requireContext());
+    private void setupRepository() {
+        repositoryUseCase = new RepositoryUseCase(requireContext());
     }
 
     private void loadRandomRecipes(@Nullable String category, boolean isInitial) {
         toggleLoadingState(true, isInitial);
 
-        requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
+        repositoryUseCase.getRecipes(new RandomRecipeResponseListener() {
             @Override
             public void onComplete(@NonNull List<RecipeTable> allRecipes) {
                 if (allRecipes.isEmpty()) {

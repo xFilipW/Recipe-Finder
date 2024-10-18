@@ -13,6 +13,8 @@ constraintlayout = "2.1.4"
 picasso = "2.8"
 roomRuntime = "2.6.1"
 workRuntime = "2.9.1"
+navigationFragment = "2.7.7"
+safeargs = "2.8.3"
 
 [libraries]
 concurrent-futures = { module = "androidx.concurrent:concurrent-futures", version.ref = "concurrentFutures" }
@@ -25,12 +27,14 @@ lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin",  version.ref = "safeargs" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
+navigation-safeargs = { id = 'androidx.navigation.safeargs', version.ref = "safeargs" }

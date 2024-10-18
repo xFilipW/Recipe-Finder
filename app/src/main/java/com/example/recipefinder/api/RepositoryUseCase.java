@@ -1,15 +1,18 @@
 package com.example.recipefinder.api;
 
+import static com.example.recipefinder.api.cache.DatabaseUseCase.PREFS_NAME;
+
 import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.recipefinder.R;
-import com.example.recipefinder.api.cache.CacheManager;
+import com.example.recipefinder.api.cache.DatabaseUseCase;
 import com.example.recipefinder.api.cache.OnQueryCompleteListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.api.models.Recipe;
+import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.utils.RecipeUtils;
@@ -25,31 +28,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public class RequestManager {
+public class RepositoryUseCase {
     private static final String FETCH_RECIPES_COUNT = "100";
     private static final String ALL_RECIPES = "All recipes";
 
     private final Context context;
     private final Retrofit retrofit;
-    private final CacheManager cacheManager;
+    private final DatabaseUseCase databaseUseCase;
 
     private static final String TAG = "RequestManager";
 
-    public RequestManager(Context context) {
+    public RepositoryUseCase(Context context) {
         this.context = context;
-        this.cacheManager = new CacheManager(context);
+        this.databaseUseCase = new DatabaseUseCase(
+                AppDatabase.getDatabase(context),
+                context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        );
         this.retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.spoonacular.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    public void getRandomRecipes(RandomRecipeResponseListener listener, String category) {
+    public void getRecipes(RandomRecipeResponseListener listener, String category) {
         Log.d(TAG, "getRandomRecipes: fetching recipes, category=[" + category + "]");
-        getCachedRecipes(cachedRecipes -> {
+        querySelectRecipesAll(cachedRecipes -> {
             Log.d(TAG, "getRandomRecipes: cached recipes size: " + cachedRecipes.size());
 
-            cacheManager.isCacheExpired(
+            databaseUseCase.isCacheExpired(
                     expired -> {
                         if (expired) {
                             Log.d(TAG, "getRandomRecipes: cache expired, fetching from API");
@@ -70,8 +76,12 @@ public class RequestManager {
         });
     }
 
-    private void getCachedRecipes(OnQueryCompleteListener<List<RecipeTable>> listener) {
-        cacheManager.getCachedRecipes(context, listener);
+    private void querySelectRecipesAll(OnQueryCompleteListener<List<RecipeTable>> listener) {
+        databaseUseCase.querySelectRecipesAll(context, listener);
+    }
+
+    public void querySelectRecipesByTitle(String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
+        databaseUseCase.querySelectRecipesByTitle(context, phrase, listener);
     }
 
     private void fetchRecipesFromApi(String category, RandomRecipeResponseListener listener) {
@@ -85,9 +95,10 @@ public class RequestManager {
                     if (response.body().recipes != null) {
                         allRecipes.addAll(response.body().recipes);
                     }
+                    Log.d(TAG, "fetchRecipesFromApi: after response, got " + allRecipes.size() + " recipes");
 
-                    removeRecipesFromCache(data -> {
-                        saveRecipesToCache(allRecipes, listener);
+                    queryRemoveRecipes(data -> {
+                        queryInsertRecipes(allRecipes, listener);
                     });
                 } else {
                     listener.onError("Response body or response body recipes is null");
@@ -101,13 +112,13 @@ public class RequestManager {
         });
     }
 
-    private void removeRecipesFromCache(OnQueryCompleteListener<Integer> listener) {
-        cacheManager.removeRecipes(listener);
+    private void queryRemoveRecipes(OnQueryCompleteListener<Integer> listener) {
+        databaseUseCase.queryRemoveRecipes(listener);
     }
 
-    private void saveRecipesToCache(List<Recipe> recipes, RandomRecipeResponseListener listener) {
-        cacheManager.saveRecipes(RecipeUtils.mapList(recipes), longs -> {
-            cacheManager.saveLastUpdate();
+    private void queryInsertRecipes(List<Recipe> recipes, RandomRecipeResponseListener listener) {
+        databaseUseCase.queryInsertRecipes(RecipeUtils.mapList(recipes), longs -> {
+            databaseUseCase.saveLastUpdate();
             listener.onComplete(RecipeUtils.mapList(recipes));
         });
     }

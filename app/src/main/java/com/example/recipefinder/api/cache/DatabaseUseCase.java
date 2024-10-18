@@ -14,27 +14,27 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CacheManager {
-    private static final String PREFS_NAME = "RecipeCache";
-    private static final String RECIPE_KEY = "CachedRecipes";
+public class DatabaseUseCase {
+    public static final String PREFS_NAME = "RecipeCache";
+
     private static final String LAST_UPDATE_TIME_KEY = "LastUpdateTime";
 
     private final SharedPreferences sharedPreferences;
-    private final Context context;
+    private final AppDatabase appDatabase;
 
-    public CacheManager(Context context) {
-        this.context = context;
-        this.sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+    public DatabaseUseCase(AppDatabase appDatabase, SharedPreferences sharedPreferences) {
+        this.appDatabase = appDatabase;
+        this.sharedPreferences = sharedPreferences;
     }
 
     private static final String TAG = "CacheManager";
 
-    public void saveRecipes(List<RecipeTable> recipes, OnQueryCompleteListener<Long[]> listener) {
+    public void queryInsertRecipes(List<RecipeTable> recipes, OnQueryCompleteListener<Long[]> listener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             Log.d(TAG, "saveRecipes: saving recipes (" + recipes.size() + ")");
-            Long[] longs = AppDatabase.getDatabase(context).recipeTableDao().bulkInsert(
+            Long[] longs = appDatabase.recipeTableDao().insertRecipes(
                     recipes.toArray(new RecipeTable[0])
             );
             Log.d(TAG, "saveRecipes: saved recipes (" + longs.length + ")");
@@ -44,12 +44,12 @@ public class CacheManager {
         });
     }
 
-    public void removeRecipes(OnQueryCompleteListener<Integer> listener) {
+    public void queryRemoveRecipes(OnQueryCompleteListener<Integer> listener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             Log.d(TAG, "removeRecipes: removing recipes (all)");
-            int longs = AppDatabase.getDatabase(context).recipeTableDao().deleteRecipes();
+            int longs = appDatabase.recipeTableDao().deleteRecipes();
             Log.d(TAG, "removeRecipes: removed recipes (" + longs + ")");
             handler.post(() -> {
                 listener.onComplete(longs);
@@ -57,11 +57,22 @@ public class CacheManager {
         });
     }
 
-    public void getCachedRecipes(Context context, OnQueryCompleteListener<List<RecipeTable>> listener) {
+    public void querySelectRecipesAll(Context context, OnQueryCompleteListener<List<RecipeTable>> listener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
-            List<RecipeTable> recipeTables = AppDatabase.getDatabase(context).recipeTableDao().queryAll();
+            List<RecipeTable> recipeTables = appDatabase.recipeTableDao().queryAll();
+            handler.post(() -> {
+                listener.onComplete(recipeTables);
+            });
+        });
+    }
+
+    public void querySelectRecipesByTitle(Context context, String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            List<RecipeTable> recipeTables = appDatabase.recipeTableDao().queryRecipesByTitle(phrase);
             handler.post(() -> {
                 listener.onComplete(recipeTables);
             });

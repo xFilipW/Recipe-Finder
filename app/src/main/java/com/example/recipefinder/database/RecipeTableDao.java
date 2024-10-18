@@ -20,13 +20,16 @@ public interface RecipeTableDao {
     List<RecipeTable> queryAll();
 
     @Insert
-    Long[] bulkInsert(RecipeTable... RecipeTables);
+    Long[] insertRecipes(RecipeTable... RecipeTables);
 
     @Update(entity = RecipeTable.class)
     int update(RecipeTableUpdate RecipeTableUpdate);
 
     @Query("DELETE FROM recipe")
     int deleteRecipes();
+
+    @Query("SELECT * FROM recipe WHERE recipe.title LIKE '%' || :phrase || '%' ORDER BY recipe.title")
+    List<RecipeTable> queryRecipesByTitle(String phrase);
 
     @Entity
     class RecipeTableUpdate {

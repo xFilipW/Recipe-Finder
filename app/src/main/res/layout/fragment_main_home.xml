@@ -13,14 +13,14 @@
         android:layout_height="140dp"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading" />
+        app:lottie_rawRes="@raw/loading"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -39,6 +39,7 @@
             android:elevation="8dp"
             android:fontFamily="@font/inter"
             android:hint="@string/find_a_recipe"
+            android:imeOptions="actionSearch"
             android:includeFontPadding="false"
             android:inputType="text"
             android:paddingStart="16dp"
@@ -82,14 +83,14 @@
                 android:layout_height="140dp"
                 android:layout_centerInParent="true"
                 android:visibility="gone"
-                tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAmountOfRecipes"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/loading" />
+                app:lottie_rawRes="@raw/loading"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvCategories"

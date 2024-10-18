@@ -1,12 +1,15 @@
 package com.example.recipefinder.api.cache;
 
+import static com.example.recipefinder.api.cache.DatabaseUseCase.PREFS_NAME;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.example.recipefinder.api.RequestManager;
+import com.example.recipefinder.api.RepositoryUseCase;
+import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 
@@ -15,15 +18,18 @@ import java.util.concurrent.CountDownLatch;
 
 public class CacheRefreshWorker extends Worker {
 
-    private final CacheManager cacheManager;
-    private final RequestManager requestManager;
+    private final DatabaseUseCase cacheManager;
+    private final RepositoryUseCase repositoryUseCase;
 
     private static final String TAG = "CacheRefreshWorker";
 
     public CacheRefreshWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        this.cacheManager = new CacheManager(context);
-        this.requestManager = new RequestManager(context);
+        cacheManager = new DatabaseUseCase(
+                AppDatabase.getDatabase(context),
+                context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        );
+        repositoryUseCase = new RepositoryUseCase(context);
     }
 
     @NonNull
@@ -48,7 +54,7 @@ public class CacheRefreshWorker extends Worker {
     }
 
     private void refreshCache() {
-        requestManager.getRandomRecipes(new RandomRecipeResponseListener() {
+        repositoryUseCase.getRecipes(new RandomRecipeResponseListener() {
             @Override
             public void onComplete(@NonNull List<RecipeTable> allRecipes) {
                 // Left empty intentionally
