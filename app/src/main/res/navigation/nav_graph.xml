@@ -10,19 +10,19 @@
         android:label="Home"
         tools:layout="@layout/fragment_main_home">
         <action
-            android:id="@+id/action_mainHomeFragment_to_searchResultsFragment"
-            app:destination="@id/searchResultsFragment" />
+            android:id="@+id/action_mainHomeFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
 
-    <fragment android:id="@+id/searchResultsFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.SearchResultsFragment"
-        android:label="Search Results"
-        tools:layout="@layout/fragment_search_results">
+    <fragment android:id="@+id/recipeDetailsFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.RecipeDetailsFragment"
+        android:label="Recipe Details"
+        tools:layout="@layout/fragment_recipe_details">
         <argument
-            android:name="searchQuery"
-            app:argType="string"
-            android:defaultValue="" />
+            android:name="id"
+            app:argType="long" />
     </fragment>
+
 
     <fragment
         android:id="@+id/mainRandomFragment"

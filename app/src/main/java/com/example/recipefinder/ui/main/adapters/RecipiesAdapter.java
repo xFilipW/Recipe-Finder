@@ -2,6 +2,7 @@ package com.example.recipefinder.ui.main.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.recipefinder.R;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.ListItemMainRecipesBinding;
+import com.example.recipefinder.ui.main.listeners.OnItemClickListenerEx;
 import com.example.recipefinder.ui.main.viewHolders.RecipiesViewHolder;
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +31,11 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
         }
         return hasImage;
     };
+    private final OnItemClickListenerEx onItemClickListener;
+
+    public RecipiesAdapter(OnItemClickListenerEx onItemClickListenerEx) {
+        this.onItemClickListener = onItemClickListenerEx;
+    }
 
     @NonNull
     @Override
@@ -42,6 +49,13 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
         RecipeTable recipe = recipeList.get(position);
         holder.biding.tvTitle.setText(truncateTitle(recipe.getTitle()));
         loadImage(holder.biding.ivRecipeImage, recipe.getImage());
+        holder.biding.recipeCard.setClickable(true);
+        holder.biding.recipeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(recipe.getId());
+            }
+        });
     }
 
     /**
@@ -84,7 +98,8 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
                     .filter(notNullNorEmpty)
                     .forEach(recipeList::add);
 
-            notifyItemRangeChanged(0, recipeList.size());
+            //notifyItemRangeChanged(0, recipeList.size());
+            notifyDataSetChanged();
         }
     }
 }

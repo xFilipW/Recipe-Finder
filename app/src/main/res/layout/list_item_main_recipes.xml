@@ -8,6 +8,7 @@
     android:paddingVertical="2dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/recipeCard"
         android:layout_width="match_parent"
         android:layout_height="142dp"
         android:clickable="true"

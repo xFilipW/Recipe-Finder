@@ -1,12 +1,13 @@
 package com.example.recipefinder.ui.main.fragments;
 
-import android.content.Context;
+import static com.example.recipefinder.ui.main.fragments.MainHomeFragmentDirections.*;
+
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,24 +18,28 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.recipefinder.R;
 import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.FragmentMainHomeBinding;
 import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.ui.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.ui.main.adapters.RecipiesAdapter;
-import com.example.recipefinder.ui.main.fragments.MainHomeFragmentDirections.ActionMainHomeFragmentToSearchResultsFragment;
 import com.example.recipefinder.ui.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
 import com.example.recipefinder.ui.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
+import com.example.recipefinder.ui.main.listeners.OnItemClickListenerEx;
 import com.example.recipefinder.ui.main.repository.Repository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class MainHomeFragment extends Fragment {
 
     private FragmentMainHomeBinding binding;
     private RepositoryUseCase repositoryUseCase;
     private RecipiesAdapter recipiesAdapter;
+    private NavController navController;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class MainHomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
         initializeUI();
         loadRandomRecipes(null, true);
     }
@@ -57,28 +63,42 @@ public class MainHomeFragment extends Fragment {
     }
 
     private void setupSearchView() {
-        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                String searchQuery = binding.etSearch.getText().toString();
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                NavController navController = NavHostFragment.findNavController(this);
-                ActionMainHomeFragmentToSearchResultsFragment navDirections = MainHomeFragmentDirections.actionMainHomeFragmentToSearchResultsFragment();
-                navDirections.setSearchQuery(searchQuery);
-                navController.navigate(navDirections);
-
-                hideKeyboard();
             }
 
-            return true;
-        });
-    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-    private void hideKeyboard() {
-        View view = requireActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String query = s.toString();
+
+                if (query.isEmpty()) {
+                    binding.tvAmountOfRecipes.setText(getString(R.string.random_200_recipes_each_day));
+                }
+
+                repositoryUseCase.querySelectRecipesByTitle(
+                        query,
+                        data -> {
+                            recipiesAdapter.setData(data);
+
+                            String searchMessage = String.format(
+                                    Locale.getDefault(),
+                                    "Amount of recipes for \"%s\": %d",
+                                    query,
+                                    data.size()
+                            );
+
+                            binding.tvAmountOfRecipes.setText(searchMessage);
+                        }
+                );
+            }
+        });
     }
 
     /**
@@ -99,23 +119,24 @@ public class MainHomeFragment extends Fragment {
     }
 
     private void loadRandomRecipes(@Nullable String category, boolean isInitial) {
-        toggleLoadingState(true, isInitial);
+        toggleLoadingState(true, isInitial, false);
 
         repositoryUseCase.getRecipes(new RandomRecipeResponseListener() {
             @Override
             public void onComplete(@NonNull List<RecipeTable> allRecipes) {
                 if (allRecipes.isEmpty()) {
                     displayNoRecipesFound();
+                    toggleLoadingState(false, isInitial, true);
                 } else {
                     displayRecipes(allRecipes);
+                    toggleLoadingState(false, isInitial, false);
                 }
-                toggleLoadingState(false, isInitial);
             }
 
             @Override
             public void onError(String message) {
                 displayError(message);
-                toggleLoadingState(false, isInitial);
+                toggleLoadingState(false, isInitial, false);
             }
         }, category);
     }
@@ -128,7 +149,14 @@ public class MainHomeFragment extends Fragment {
 
     private void setupRecipesRecyclerView() {
         binding.rvRecipes.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        recipiesAdapter = new RecipiesAdapter();
+        recipiesAdapter = new RecipiesAdapter(new OnItemClickListenerEx() {
+            @Override
+            public void onItemClick(long id) {
+                ActionMainHomeFragmentToRecipeDetailsFragment navDirections = MainHomeFragmentDirections.actionMainHomeFragmentToRecipeDetailsFragment(id);
+                //navDirections.setId(id);
+                navController.navigate(navDirections);
+            }
+        });
         binding.rvRecipes.setAdapter(recipiesAdapter);
         binding.rvRecipes.addItemDecoration(new HorizontalSpaceItemDecoration(HorizontalSpaceItemDecoration.SpanCount.TWO, 16, requireContext()));
         binding.rvRecipes.addItemDecoration(new VerticalSpaceItemDecoration(VerticalSpaceItemDecoration.SpanCount.TWO, 16, requireContext()));
@@ -136,6 +164,7 @@ public class MainHomeFragment extends Fragment {
 
     private void displayNoRecipesFound() {
         binding.rvRecipes.setVisibility(View.GONE);
+        recipiesAdapter.setData(Collections.emptyList());
         binding.tvNoRecipeFound.setVisibility(View.VISIBLE);
     }
 
@@ -148,9 +177,9 @@ public class MainHomeFragment extends Fragment {
         loadRandomRecipes(category, isInitialize);
     }
 
-    private void toggleLoadingState(boolean isLoading, boolean isInitial) {
-        int visibility = isLoading ? View.GONE : View.VISIBLE;
+    private void toggleLoadingState(boolean isLoading, boolean isInitial, boolean isEmpty) {
         if (isInitial) {
+            int visibility = isLoading ? View.GONE : View.VISIBLE;
 
             binding.rvCategories.setVisibility(visibility);
             binding.tvRecipes.setVisibility(visibility);
@@ -163,9 +192,14 @@ public class MainHomeFragment extends Fragment {
             if (isLoading) {
                 binding.tvNoRecipeFound.setVisibility(View.GONE);
             }
-        } else {
-            binding.rvRecipes.setVisibility(visibility);
-            binding.progressBarRecipes.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        } else { // specific category
+            if (isLoading) {
+                binding.progressBarRecipes.setVisibility(View.VISIBLE);
+                binding.rvRecipes.setVisibility(View.GONE);
+            } else {
+                binding.progressBarRecipes.setVisibility(View.GONE);
+                binding.rvRecipes.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+            }
         }
     }
 
