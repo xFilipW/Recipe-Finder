@@ -30,7 +30,7 @@ import retrofit2.http.Query;
 
 public class RepositoryUseCase {
     private static final String FETCH_RECIPES_COUNT = "100";
-    private static final String ALL_RECIPES = "All recipes";
+    public static final String ALL_RECIPES = "All recipes";
 
     private final Context context;
     private final Retrofit retrofit;
@@ -52,7 +52,7 @@ public class RepositoryUseCase {
 
     public void getRecipes(RandomRecipeResponseListener listener, String category) {
         Log.d(TAG, "getRandomRecipes: fetching recipes, category=[" + category + "]");
-        querySelectRecipesAll(cachedRecipes -> {
+        queryRecipes(cachedRecipes -> {
             Log.d(TAG, "getRandomRecipes: cached recipes size: " + cachedRecipes.size());
 
             databaseUseCase.isCacheExpired(
@@ -76,12 +76,12 @@ public class RepositoryUseCase {
         });
     }
 
-    private void querySelectRecipesAll(OnQueryCompleteListener<List<RecipeTable>> listener) {
-        databaseUseCase.querySelectRecipesAll(context, listener);
+    public void queryRecipes(OnQueryCompleteListener<List<RecipeTable>> listener) {
+        databaseUseCase.queryRecipes(listener);
     }
 
-    public void querySelectRecipesByTitle(String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
-        databaseUseCase.querySelectRecipesByTitle(context, phrase, listener);
+    public void queryRecipesByPhraseAndCategory(String phrase, String category, OnQueryCompleteListener<List<RecipeTable>> listener) {
+        databaseUseCase.queryRecipesByPhraseAndCategory(phrase, category, listener);
     }
 
     private void fetchRecipesFromApi(String category, RandomRecipeResponseListener listener) {
@@ -97,9 +97,7 @@ public class RepositoryUseCase {
                     }
                     Log.d(TAG, "fetchRecipesFromApi: after response, got " + allRecipes.size() + " recipes");
 
-                    queryRemoveRecipes(data -> {
-                        queryInsertRecipes(allRecipes, listener);
-                    });
+                    queryRemoveRecipes(data -> queryInsertRecipes(allRecipes, listener));
                 } else {
                     listener.onError("Response body or response body recipes is null");
                 }

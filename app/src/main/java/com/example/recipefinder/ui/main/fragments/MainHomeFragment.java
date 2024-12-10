@@ -40,6 +40,7 @@ public class MainHomeFragment extends Fragment {
     private RepositoryUseCase repositoryUseCase;
     private RecipiesAdapter recipiesAdapter;
     private NavController navController;
+    private String activeCategory = "";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,39 +67,48 @@ public class MainHomeFragment extends Fragment {
         binding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                // left blank
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                // left blank
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                String query = s.toString();
-
-                if (query.isEmpty()) {
-                    binding.tvAmountOfRecipes.setText(getString(R.string.random_200_recipes_each_day));
-                }
-
-                repositoryUseCase.querySelectRecipesByTitle(
-                        query,
-                        data -> {
-                            recipiesAdapter.setData(data);
-
-                            String searchMessage = String.format(
-                                    Locale.getDefault(),
-                                    "Amount of recipes for \"%s\": %d",
-                                    query,
-                                    data.size()
-                            );
-
-                            binding.tvAmountOfRecipes.setText(searchMessage);
-                        }
-                );
+            public void afterTextChanged(Editable phrase) {
+                queryRecipesByPhraseAndCategory(activeCategory, phrase.toString());
             }
         });
+    }
+
+    private void queryRecipesByPhraseAndCategory(String category, String phrase) {
+        if (phrase.isEmpty()) {
+            repositoryUseCase.queryRecipesByPhraseAndCategory(
+                    category,
+                    phrase,
+                    data -> {
+                        recipiesAdapter.setData(data);
+                        String searchMessage = getString(R.string.random_200_recipes_each_day);
+                        binding.tvAmountOfRecipes.setText(searchMessage);
+                    }
+            );
+        } else {
+            repositoryUseCase.queryRecipesByPhraseAndCategory(
+                    category,
+                    phrase,
+                    data -> {
+                        recipiesAdapter.setData(data);
+                        String searchMessage = String.format(
+                                Locale.getDefault(),
+                                "Amount of recipes for \"%s\": %d",
+                                phrase,
+                                data.size()
+                        );
+                        binding.tvAmountOfRecipes.setText(searchMessage);
+                    }
+            );
+        }
     }
 
     /**
@@ -107,7 +117,8 @@ public class MainHomeFragment extends Fragment {
     private void setupCategoriesRecyclerView() {
         binding.rvCategories.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         CategoriesAdapter categoriesAdapter = new CategoriesAdapter(category -> {
-            loadCategory(category, false);
+            activeCategory = category.equals(RepositoryUseCase.ALL_RECIPES) ? "" : category;
+            queryRecipesByPhraseAndCategory(activeCategory, binding.etSearch.getText().toString());
         });
         binding.rvCategories.setAdapter(categoriesAdapter);
         binding.rvCategories.addItemDecoration(new HorizontalSpaceItemDecoration(HorizontalSpaceItemDecoration.SpanCount.MORE, 12, requireContext()));
@@ -118,25 +129,27 @@ public class MainHomeFragment extends Fragment {
         repositoryUseCase = new RepositoryUseCase(requireContext());
     }
 
-    private void loadRandomRecipes(@Nullable String category, boolean isInitial) {
-        toggleLoadingState(true, isInitial, false);
+    private void loadRandomRecipes(@Nullable String category, boolean initialRun) {
+        activeCategory = category;
+
+        toggleLoadingState(true, initialRun, false);
 
         repositoryUseCase.getRecipes(new RandomRecipeResponseListener() {
             @Override
             public void onComplete(@NonNull List<RecipeTable> allRecipes) {
                 if (allRecipes.isEmpty()) {
-                    displayNoRecipesFound();
-                    toggleLoadingState(false, isInitial, true);
+                    toggleLoadingState(false, initialRun, true);
+                    displayNoRecipes();
                 } else {
+                    toggleLoadingState(false, initialRun, false);
                     displayRecipes(allRecipes);
-                    toggleLoadingState(false, isInitial, false);
                 }
             }
 
             @Override
             public void onError(String message) {
                 displayError(message);
-                toggleLoadingState(false, isInitial, false);
+                toggleLoadingState(false, initialRun, false);
             }
         }, category);
     }
@@ -162,7 +175,7 @@ public class MainHomeFragment extends Fragment {
         binding.rvRecipes.addItemDecoration(new VerticalSpaceItemDecoration(VerticalSpaceItemDecoration.SpanCount.TWO, 16, requireContext()));
     }
 
-    private void displayNoRecipesFound() {
+    private void displayNoRecipes() {
         binding.rvRecipes.setVisibility(View.GONE);
         recipiesAdapter.setData(Collections.emptyList());
         binding.tvNoRecipeFound.setVisibility(View.VISIBLE);
@@ -170,11 +183,6 @@ public class MainHomeFragment extends Fragment {
 
     private void displayError(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void loadCategory(String category, boolean isInitialize) {
-        binding.rvRecipes.setVisibility(View.GONE);
-        loadRandomRecipes(category, isInitialize);
     }
 
     private void toggleLoadingState(boolean isLoading, boolean isInitial, boolean isEmpty) {

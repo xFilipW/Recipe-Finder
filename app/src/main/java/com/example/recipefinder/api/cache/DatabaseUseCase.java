@@ -1,6 +1,5 @@
 package com.example.recipefinder.api.cache;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
@@ -38,9 +37,7 @@ public class DatabaseUseCase {
                     recipes.toArray(new RecipeTable[0])
             );
             Log.d(TAG, "saveRecipes: saved recipes (" + longs.length + ")");
-            handler.post(() -> {
-                listener.onComplete(longs);
-            });
+            handler.post(() -> listener.onComplete(longs));
         });
     }
 
@@ -51,31 +48,34 @@ public class DatabaseUseCase {
             Log.d(TAG, "removeRecipes: removing recipes (all)");
             int longs = appDatabase.recipeTableDao().deleteRecipes();
             Log.d(TAG, "removeRecipes: removed recipes (" + longs + ")");
-            handler.post(() -> {
-                listener.onComplete(longs);
-            });
+            handler.post(() -> listener.onComplete(longs));
         });
     }
 
-    public void querySelectRecipesAll(Context context, OnQueryCompleteListener<List<RecipeTable>> listener) {
+    public void queryRecipes(OnQueryCompleteListener<List<RecipeTable>> listener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
-            List<RecipeTable> recipeTables = appDatabase.recipeTableDao().queryAll();
-            handler.post(() -> {
-                listener.onComplete(recipeTables);
-            });
+            List<RecipeTable> recipeTables = appDatabase.recipeTableDao().queryRecipes();
+            handler.post(() -> listener.onComplete(recipeTables));
         });
     }
 
-    public void querySelectRecipesByTitle(Context context, String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
+    public void querySelectRecipesByTitle(String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             List<RecipeTable> recipeTables = appDatabase.recipeTableDao().queryRecipesByTitle(phrase);
-            handler.post(() -> {
-                listener.onComplete(recipeTables);
-            });
+            handler.post(() -> listener.onComplete(recipeTables));
+        });
+    }
+
+    public void queryRecipesByPhraseAndCategory(String category, String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            List<RecipeTable> recipeTables = appDatabase.recipeTableDao().queryRecipesByPhraseAndCategory(phrase, category);
+            handler.post(() -> listener.onComplete(recipeTables));
         });
     }
 

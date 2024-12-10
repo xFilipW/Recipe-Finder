@@ -16,9 +16,6 @@ public interface RecipeTableDao {
     @Query("SELECT * FROM recipe where recipe.id = :id")
     LiveData<List<RecipeTable>> querySingleLive(long id);
 
-    @Query("SELECT * FROM recipe ORDER BY recipe.title")
-    List<RecipeTable> queryAll();
-
     @Insert
     Long[] insertRecipes(RecipeTable... RecipeTables);
 
@@ -30,6 +27,12 @@ public interface RecipeTableDao {
 
     @Query("SELECT * FROM recipe WHERE recipe.title LIKE '%' || :phrase || '%' ORDER BY recipe.title")
     List<RecipeTable> queryRecipesByTitle(String phrase);
+
+    @Query("SELECT * FROM recipe WHERE recipe.title LIKE '%' || :phrase || '%' AND recipe.dishTypes LIKE '%' || :category || '%' ORDER BY recipe.title")
+    List<RecipeTable> queryRecipesByPhraseAndCategory(String phrase, String category);
+
+    @Query("SELECT * FROM recipe ORDER BY recipe.title")
+    List<RecipeTable> queryRecipes();
 
     @Entity
     class RecipeTableUpdate {

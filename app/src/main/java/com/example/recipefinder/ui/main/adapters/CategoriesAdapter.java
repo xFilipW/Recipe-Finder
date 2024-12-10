@@ -27,7 +27,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
     }
 
     public void setData(List<CategoryData> data) {
-        if(data != null) {
+        if (data != null) {
             categoryDataList.clear();
             categoryDataList.addAll(data);
             notifyDataSetChanged();
