@@ -17,8 +17,9 @@ public class RecipeUtils {
                         gson.toJson(recipe),
                         recipe.title,
                         String.join(",", recipe.dishTypes),
-                        recipe.image))
-                .collect(Collectors.toList());
+                        recipe.image,
+                        0)
+                ).collect(Collectors.toList());
     }
 }
 

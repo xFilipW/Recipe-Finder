@@ -14,7 +14,8 @@
             app:destination="@id/recipeDetailsFragment" />
     </fragment>
 
-    <fragment android:id="@+id/recipeDetailsFragment"
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
         android:name="com.example.recipefinder.ui.main.fragments.RecipeDetailsFragment"
         android:label="Recipe Details"
         tools:layout="@layout/fragment_recipe_details">
@@ -28,11 +29,11 @@
         android:id="@+id/mainRandomFragment"
         android:name="com.example.recipefinder.ui.main.fragments.MainRandomFragment"
         android:label="Random"
-        tools:layout="@layout/fragment_main_random" />
+        tools:layout="@layout/fragment_random" />
 
     <fragment
-        android:id="@+id/mainFavouriteFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.MainFavouriteFragment"
+        android:id="@+id/favouriteRecipesFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.FavouriteRecipesFragment"
         android:label="Favourite"
-        tools:layout="@layout/fragment_main_favourite" />
+        tools:layout="@layout/fragment_favourite_recipes" />
 </navigation>

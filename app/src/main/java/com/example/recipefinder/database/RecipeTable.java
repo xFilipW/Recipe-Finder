@@ -7,12 +7,13 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "recipe")
 public class RecipeTable {
 
-    public RecipeTable(long id, String json, String title, String dishTypes, String image) {
+    public RecipeTable(long id, String json, String title, String dishTypes, String image, int favourite) {
         this.id = id;
         this.json = json;
         this.title = title;
         this.dishTypes = dishTypes;
         this.image = image;
+        this.favourite = favourite;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -30,6 +31,9 @@ public class RecipeTable {
 
     @ColumnInfo(name = "image")
     private String image;
+
+    @ColumnInfo(name = "favourite", defaultValue = "0")
+    private int favourite;
 
     public long getId() {
         return id;
@@ -69,5 +73,13 @@ public class RecipeTable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(int favourite) {
+        this.favourite = favourite;
     }
 }

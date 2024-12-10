@@ -6,16 +6,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.recipefinder.R;
 import com.example.recipefinder.databinding.ActivityMainBinding;
-import com.example.recipefinder.ui.main.fragments.MainFavouriteFragment;
-import com.example.recipefinder.ui.main.fragments.MainHomeFragment;
-import com.example.recipefinder.ui.main.fragments.MainRandomFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.mainHomeFragment);
                     break;
                 case 3:
-                    navController.navigate(R.id.mainFavouriteFragment);
+                    navController.navigate(R.id.favouriteRecipesFragment);
                     break;
             }
         });
