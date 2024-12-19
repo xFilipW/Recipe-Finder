@@ -143,7 +143,7 @@
                 android:textColor="@color/grey"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvRecipes" />
+                app:layout_constraintTop_toBottomOf="@+id/tvRecipes" />
 
             <TextView
                 android:id="@+id/tvNoRecipeFound"
@@ -170,7 +170,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvAmountOfRecipes"
                 app:layout_constraintTop_toBottomOf="@+id/tvAmountOfRecipes"
                 app:spanCount="2"
                 tools:listitem="@layout/list_item_main_recipes" />

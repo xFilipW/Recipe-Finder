@@ -2,16 +2,21 @@
     <string name="app_name">Recipe Finder</string>
     <string name="api_key">a6666c7409514392aa1bff7004522f6f</string>
 
-    <!-- Main Home Fragment -->
+    <!-- Main Network Check Fragment -->
+    <string name="oops_there_was_a_problem_with_the_connection">Oops, there was a problem with the connection…</string>
+    <string name="check_your_internet_connection_and_try_again">Check your internet connection and try again.</string>
+    <string name="try_again">Try again</string>
+
+    <!-- Main -->
     <string name="your_gateway_to_culinary_delights">Your gateway to culinary delights</string>
     <string name="find_a_recipe">Find a recipe</string>
     <string name="categories">Categories</string>
     <string name="recipes">Recipes</string>
     <string name="no_recipes_found_for_this_category">No recipes in this category today :(\nPlease check again tomorrow</string>
     <string name="random_200_recipes_each_day">200 random recipes each day</string>
+    <string name="find_your_favorite_recipe">Find your favorite recipe</string>
+    <string name="favorite_recipes">Favorite Recipes</string>
+    <string name="your_favorite_flavors_all_in_one_place">Your favorite flavors all in one place</string>
+    <string name="no_favorites_yet_n_it_s_the_perfect_time_to_pick_something">No favorites yet?\n It\'s the perfect time to pick something!</string>
 
-    <!-- Main Network Check Fragment -->
-    <string name="oops_there_was_a_problem_with_the_connection">Oops, there was a problem with the connection…</string>
-    <string name="check_your_internet_connection_and_try_again">Check your internet connection and try again.</string>
-    <string name="try_again">Try again</string>
 </resources>

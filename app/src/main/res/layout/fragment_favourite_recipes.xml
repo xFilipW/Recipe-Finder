@@ -7,17 +7,109 @@
     android:background="@color/whiteFrost"
     tools:context=".ui.main.fragments.MainRandomFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecipes"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="12dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAmountOfRecipes"
-        app:spanCount="2"
-        tools:listitem="@layout/list_item_main_recipes" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="2dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_search_background"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="12dp"
+            android:elevation="8dp"
+            android:fontFamily="@font/inter"
+            android:hint="@string/find_your_favorite_recipe"
+            android:imeOptions="actionDone"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:singleLine="true"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFavoriteRecipes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/inter"
+            android:includeFontPadding="false"
+            android:text="@string/favorite_recipes"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/inter"
+            android:includeFontPadding="false"
+            android:text="@string/your_favorite_flavors_all_in_one_place"
+            android:textColor="@color/grey"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/tvFavoriteRecipes" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecipes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
+            app:spanCount="2"
+            tools:listitem="@layout/list_item_main_recipes" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <TextView
+            android:id="@+id/tvNoRecipeFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/inter"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/no_favorites_yet_n_it_s_the_perfect_time_to_pick_something"
+            android:textColor="@color/mainColor"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
