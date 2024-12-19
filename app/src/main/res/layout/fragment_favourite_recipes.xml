@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteFrost"
-    tools:context=".ui.main.fragments.MainRandomFragment">
+    tools:context=".ui.main.fragments.ShoppingCartFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,6 +26,7 @@
             android:imeOptions="actionDone"
             android:includeFontPadding="false"
             android:inputType="text"
+            android:maxLength="35"
             android:paddingStart="16dp"
             android:paddingTop="16dp"
             android:paddingEnd="16dp"
@@ -77,7 +78,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
             app:spanCount="2"
-            tools:listitem="@layout/list_item_main_recipes" />
+            tools:listitem="@layout/list_item_recipes" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"

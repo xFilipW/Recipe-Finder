@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteFrost"
-    tools:context=".ui.main.fragments.MainHomeFragment">
+    tools:context=".ui.main.fragments.HomeFragment">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
@@ -42,6 +42,7 @@
             android:imeOptions="actionDone"
             android:includeFontPadding="false"
             android:inputType="text"
+            android:maxLength="35"
             android:paddingStart="16dp"
             android:paddingTop="16dp"
             android:paddingEnd="16dp"
@@ -116,7 +117,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCategories"
-                tools:listitem="@layout/list_item_main_categories" />
+                tools:listitem="@layout/list_item_categories" />
 
             <TextView
                 android:id="@+id/tvRecipes"
@@ -173,7 +174,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvAmountOfRecipes"
                 app:layout_constraintTop_toBottomOf="@+id/tvAmountOfRecipes"
                 app:spanCount="2"
-                tools:listitem="@layout/list_item_main_recipes" />
+                tools:listitem="@layout/list_item_recipes" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

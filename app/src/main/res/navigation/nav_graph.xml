@@ -6,9 +6,9 @@
 
     <fragment
         android:id="@+id/mainHomeFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.MainHomeFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_main_home">
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_mainHomeFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
@@ -27,9 +27,9 @@
 
     <fragment
         android:id="@+id/mainRandomFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.MainRandomFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.ShoppingCartFragment"
         android:label="Random"
-        tools:layout="@layout/fragment_random" />
+        tools:layout="@layout/fragment_shopping_cart" />
 
     <fragment
         android:id="@+id/favouriteRecipesFragment"

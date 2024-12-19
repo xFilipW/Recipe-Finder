@@ -9,16 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.recipefinder.R;
-import com.example.recipefinder.databinding.FragmentMainNetworkCheckBinding;
+import com.example.recipefinder.databinding.FragmentNetworkCheckBinding;
 
-public class MainNetworkCheckFragment extends Fragment {
+public class NetworkCheckFragment extends Fragment {
 
-    private FragmentMainNetworkCheckBinding binding;
+    private FragmentNetworkCheckBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentMainNetworkCheckBinding.inflate(inflater, container, false);
+        binding = FragmentNetworkCheckBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

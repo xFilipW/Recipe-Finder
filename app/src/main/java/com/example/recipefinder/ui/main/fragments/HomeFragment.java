@@ -1,6 +1,6 @@
 package com.example.recipefinder.ui.main.fragments;
 
-import static com.example.recipefinder.ui.main.fragments.MainHomeFragmentDirections.*;
+import static com.example.recipefinder.ui.main.fragments.HomeFragmentDirections.*;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,10 +18,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.recipefinder.R;
 import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.database.RecipeTable;
-import com.example.recipefinder.databinding.FragmentMainHomeBinding;
+import com.example.recipefinder.databinding.FragmentHomeBinding;
 import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.ui.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.ui.main.adapters.RecipiesAdapter;
@@ -34,9 +33,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MainHomeFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private FragmentMainHomeBinding binding;
+    private FragmentHomeBinding binding;
     private RepositoryUseCase repositoryUseCase;
     private RecipiesAdapter recipiesAdapter;
     private NavController navController;
@@ -44,7 +43,7 @@ public class MainHomeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentMainHomeBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -82,41 +81,6 @@ public class MainHomeFragment extends Fragment {
         });
     }
 
-<<<<<<< Updated upstream
-    private void queryRecipesByPhraseAndCategory(String category, String phrase) {
-        if (phrase.isEmpty()) {
-            repositoryUseCase.queryRecipesByPhraseAndCategory(
-                    category,
-                    phrase,
-                    data -> {
-                        recipiesAdapter.setData(data);
-                        String searchMessage = getString(R.string.random_200_recipes_each_day);
-                        binding.tvAmountOfRecipes.setText(searchMessage);
-                    }
-            );
-        } else {
-            repositoryUseCase.queryRecipesByPhraseAndCategory(
-                    category,
-                    phrase,
-                    data -> {
-                        recipiesAdapter.setData(data);
-                        String searchMessage = String.format(
-                                Locale.getDefault(),
-                                "Amount of recipes for \"%s\": %d",
-                                phrase,
-                                data.size()
-                        );
-                        binding.tvAmountOfRecipes.setText(searchMessage);
-                    }
-            );
-<<<<<<< Updated upstream
-        }
-=======
-<<<<<<< Updated upstream
-//        }
-=======
-        }
-=======
     private void queryRecipesByPhraseAndCategory(String category, @NonNull String phrase) {
         String trimmedPhrase = phrase.trim();
 
@@ -146,9 +110,7 @@ public class MainHomeFragment extends Fragment {
                     binding.tvAmountOfRecipes.setText(searchMessage);
                 }
         );
->>>>>>> Stashed changes
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
     }
 
     /**
@@ -205,7 +167,7 @@ public class MainHomeFragment extends Fragment {
         recipiesAdapter = new RecipiesAdapter(new OnItemClickListenerEx() {
             @Override
             public void onItemClick(long id) {
-                ActionMainHomeFragmentToRecipeDetailsFragment navDirections = MainHomeFragmentDirections.actionMainHomeFragmentToRecipeDetailsFragment(id);
+                ActionMainHomeFragmentToRecipeDetailsFragment navDirections = HomeFragmentDirections.actionMainHomeFragmentToRecipeDetailsFragment(id);
                 //navDirections.setId(id);
                 navController.navigate(navDirections);
             }

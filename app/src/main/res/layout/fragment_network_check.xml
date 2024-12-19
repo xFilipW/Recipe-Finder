@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteFrost"
-    tools:context=".ui.main.fragments.MainNetworkCheckFragment">
+    tools:context=".ui.main.fragments.NetworkCheckFragment">
 
     <ImageView
         android:id="@+id/ivImage"

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.recipefinder.databinding.ListItemMainCategoriesBinding;
+import com.example.recipefinder.databinding.ListItemCategoriesBinding;
 import com.example.recipefinder.ui.main.models.CategoryData;
 import com.example.recipefinder.ui.main.viewHolders.CategoriesViewHolder;
 
@@ -37,7 +37,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesViewHolder
     @NonNull
     @Override
     public CategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CategoriesViewHolder(ListItemMainCategoriesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new CategoriesViewHolder(ListItemCategoriesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefinder.R;
 import com.example.recipefinder.database.RecipeTable;
-import com.example.recipefinder.databinding.ListItemMainRecipesBinding;
+import com.example.recipefinder.databinding.ListItemRecipesBinding;
 import com.example.recipefinder.ui.main.listeners.OnItemClickListenerEx;
 import com.example.recipefinder.ui.main.viewHolders.RecipiesViewHolder;
 import com.squareup.picasso.Picasso;
@@ -40,7 +40,7 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
     @NonNull
     @Override
     public RecipiesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ListItemMainRecipesBinding binding = ListItemMainRecipesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ListItemRecipesBinding binding = ListItemRecipesBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new RecipiesViewHolder(binding);
     }
 

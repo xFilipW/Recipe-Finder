@@ -1,13 +1,13 @@
 package com.example.recipefinder.ui.main.viewHolders;
 
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.recipefinder.databinding.ListItemMainCategoriesBinding;
+import com.example.recipefinder.databinding.ListItemCategoriesBinding;
 
 public class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
-    public final ListItemMainCategoriesBinding binding;
+    public final ListItemCategoriesBinding binding;
 
-    public CategoriesViewHolder(ListItemMainCategoriesBinding itemView) {
+    public CategoriesViewHolder(ListItemCategoriesBinding itemView) {
         super(itemView.getRoot());
         binding = itemView;
     }
