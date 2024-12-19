@@ -67,17 +67,16 @@ public class MainHomeFragment extends Fragment {
         binding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // left blank
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // left blank
             }
 
             @Override
             public void afterTextChanged(Editable phrase) {
                 queryRecipesByPhraseAndCategory(activeCategory, phrase.toString());
+                queryRecipesByCategory(activeCategory);
             }
         });
     }
@@ -101,11 +100,37 @@ public class MainHomeFragment extends Fragment {
                         recipiesAdapter.setData(data);
                         String searchMessage = String.format(
                                 Locale.getDefault(),
-                                "Amount of recipes for \"%s\": %d",
+                                "Recipes for \"%s\": %d",
                                 phrase,
                                 data.size()
                         );
                         binding.tvAmountOfRecipes.setText(searchMessage);
+                    }
+            );
+        }
+    }
+
+    private void queryRecipesByCategory(String category) {
+        if (!category.isEmpty()) {
+            repositoryUseCase.queryRecipesByCategory(
+                    category,
+                    data -> {
+                        recipiesAdapter.setData(data);
+                        binding.tvAmountOfRecipes.setText(
+                                String.format(
+                                        Locale.getDefault(),
+                                        "Recipes for category \"%s\": %d",
+                                        category,
+                                        data.size()
+                                )
+                        );
+                    }
+            );
+        } else {
+            repositoryUseCase.queryRecipes(
+                    data -> {
+                        recipiesAdapter.setData(data);
+                        binding.tvAmountOfRecipes.setText(getString(R.string.random_200_recipes_each_day));
                     }
             );
         }

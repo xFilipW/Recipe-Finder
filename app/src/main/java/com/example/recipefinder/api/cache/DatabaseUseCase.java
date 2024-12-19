@@ -79,6 +79,15 @@ public class DatabaseUseCase {
         });
     }
 
+    public void queryRecipesByCategory(String category, OnQueryCompleteListener<List<RecipeTable>> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            List<RecipeTable> recipeTables = appDatabase.recipeTableDao().queryRecipesByCategory(category);
+            handler.post(() -> listener.onComplete(recipeTables));
+        });
+    }
+
     public void isCacheExpired(OnServiceCompleteListener<Boolean> onServiceCompleteListener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());

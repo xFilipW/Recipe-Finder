@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             throw new IllegalArgumentException("NavController missing!");
         }
 
-        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_random));
+        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_shopping_cart));
         binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
         binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_favourite));
 

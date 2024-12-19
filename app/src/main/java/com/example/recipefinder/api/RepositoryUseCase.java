@@ -84,6 +84,10 @@ public class RepositoryUseCase {
         databaseUseCase.queryRecipesByPhraseAndCategory(phrase, category, listener);
     }
 
+    public void queryRecipesByCategory(String category, OnQueryCompleteListener<List<RecipeTable>> listener) {
+        databaseUseCase.queryRecipesByCategory(category, listener);
+    }
+
     private void fetchRecipesFromApi(String category, RandomRecipeResponseListener listener) {
         callGetRecipesRandom(category, new Callback<RandomRecipeApiResponse>() {
             @Override

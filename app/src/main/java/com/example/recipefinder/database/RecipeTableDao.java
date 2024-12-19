@@ -31,6 +31,9 @@ public interface RecipeTableDao {
     @Query("SELECT * FROM recipe WHERE recipe.title LIKE '%' || :phrase || '%' AND recipe.dishTypes LIKE '%' || :category || '%' ORDER BY recipe.title")
     List<RecipeTable> queryRecipesByPhraseAndCategory(String phrase, String category);
 
+    @Query("SELECT * FROM recipe WHERE recipe.dishTypes LIKE '%' || :category || '%' ORDER BY recipe.title")
+    List<RecipeTable> queryRecipesByCategory(String category);
+
     @Query("SELECT * FROM recipe ORDER BY recipe.title")
     List<RecipeTable> queryRecipes();
 

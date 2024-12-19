@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/itemRandom"
-        android:icon="@drawable/ic_random"
-        android:title="Random" />
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="Shopping Cart" />
 
     <item
         android:id="@+id/itemHome"
