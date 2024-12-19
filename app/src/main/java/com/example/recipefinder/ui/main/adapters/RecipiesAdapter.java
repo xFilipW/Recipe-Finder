@@ -98,7 +98,6 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
                     .filter(notNullNorEmpty)
                     .forEach(recipeList::add);
 
-            //notifyItemRangeChanged(0, recipeList.size());
             notifyDataSetChanged();
         }
     }

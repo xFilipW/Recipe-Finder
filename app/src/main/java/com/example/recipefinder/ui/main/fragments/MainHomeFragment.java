@@ -82,6 +82,7 @@ public class MainHomeFragment extends Fragment {
         });
     }
 
+<<<<<<< Updated upstream
     private void queryRecipesByPhraseAndCategory(String category, String phrase) {
         if (phrase.isEmpty()) {
             repositoryUseCase.queryRecipesByPhraseAndCategory(
@@ -108,7 +109,46 @@ public class MainHomeFragment extends Fragment {
                         binding.tvAmountOfRecipes.setText(searchMessage);
                     }
             );
+<<<<<<< Updated upstream
         }
+=======
+<<<<<<< Updated upstream
+//        }
+=======
+        }
+=======
+    private void queryRecipesByPhraseAndCategory(String category, @NonNull String phrase) {
+        String trimmedPhrase = phrase.trim();
+
+        repositoryUseCase.queryRecipesByPhraseAndCategory(
+                category,
+                trimmedPhrase,
+                data -> {
+                    recipiesAdapter.setData(data);
+
+                    String newPhrase;
+
+                    if (trimmedPhrase.isEmpty()) {
+                        newPhrase = (activeCategory == null || activeCategory.isEmpty())
+                                ? "200 random recipes each day"
+                                : "Recipes in " + activeCategory + ": " + data.size();
+                    } else {
+                        newPhrase = (activeCategory == null || activeCategory.isEmpty())
+                                ? "Recipes for \"" + trimmedPhrase + "\": " + data.size()
+                                : "Recipes for \"" + trimmedPhrase + "\" in " + activeCategory + ": " + data.size();
+                    }
+
+                    String searchMessage = String.format(
+                            Locale.getDefault(),
+                            "%s",
+                            newPhrase
+                    );
+                    binding.tvAmountOfRecipes.setText(searchMessage);
+                }
+        );
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
 
     /**
