@@ -83,17 +83,17 @@ public class MainHomeFragment extends Fragment {
     }
 
     private void queryRecipesByPhraseAndCategory(String category, String phrase) {
-        if (phrase.isEmpty()) {
-            repositoryUseCase.queryRecipesByPhraseAndCategory(
-                    category,
-                    phrase,
-                    data -> {
-                        recipiesAdapter.setData(data);
-                        String searchMessage = getString(R.string.random_200_recipes_each_day);
-                        binding.tvAmountOfRecipes.setText(searchMessage);
-                    }
-            );
-        } else {
+//        if (phrase.isEmpty()) {
+//            repositoryUseCase.queryRecipesByPhraseAndCategory(
+//                    category,
+//                    phrase,
+//                    data -> {
+//                        recipiesAdapter.setData(data);
+//                        String searchMessage = getString(R.string.random_200_recipes_each_day);
+//                        binding.tvAmountOfRecipes.setText(searchMessage);
+//                    }
+//            );
+//        } else {
             repositoryUseCase.queryRecipesByPhraseAndCategory(
                     category,
                     phrase,
@@ -108,7 +108,7 @@ public class MainHomeFragment extends Fragment {
                         binding.tvAmountOfRecipes.setText(searchMessage);
                     }
             );
-        }
+//        }
     }
 
     /**
