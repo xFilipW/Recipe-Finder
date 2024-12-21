@@ -80,7 +80,7 @@ public class RepositoryUseCase {
         databaseUseCase.queryRecipes(listener);
     }
 
-    public void queryRecipesByPhraseAndCategory(String phrase, String category, OnQueryCompleteListener<List<RecipeTable>> listener) {
+    public void queryRecipesByPhraseAndCategory(@NonNull String phrase, @NonNull String category, OnQueryCompleteListener<List<RecipeTable>> listener) {
         databaseUseCase.queryRecipesByPhraseAndCategory(phrase, category, listener);
     }
 

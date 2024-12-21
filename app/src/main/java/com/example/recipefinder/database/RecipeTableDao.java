@@ -1,5 +1,6 @@
 package com.example.recipefinder.database;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.ColumnInfo;
 import androidx.room.Dao;
@@ -29,7 +30,7 @@ public interface RecipeTableDao {
     List<RecipeTable> queryRecipesByTitle(String phrase);
 
     @Query("SELECT * FROM recipe WHERE recipe.title LIKE '%' || :phrase || '%' AND recipe.dishTypes LIKE '%' || :category || '%' ORDER BY recipe.title")
-    List<RecipeTable> queryRecipesByPhraseAndCategory(String phrase, String category);
+    List<RecipeTable> queryRecipesByPhraseAndCategory(@NonNull String phrase, @NonNull String category);
 
     @Query("SELECT * FROM recipe ORDER BY recipe.title")
     List<RecipeTable> queryRecipes();

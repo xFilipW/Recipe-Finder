@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
 
@@ -70,7 +72,7 @@ public class DatabaseUseCase {
         });
     }
 
-    public void queryRecipesByPhraseAndCategory(String category, String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
+    public void queryRecipesByPhraseAndCategory(@NonNull String category, @NonNull String phrase, OnQueryCompleteListener<List<RecipeTable>> listener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
