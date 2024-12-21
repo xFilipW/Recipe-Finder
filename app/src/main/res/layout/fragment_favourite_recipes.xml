@@ -94,22 +94,29 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_empty_plate"
+            app:layout_constraintBottom_toTopOf="@+id/tvNoRecipesFound"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1" />
+
         <TextView
-            android:id="@+id/tvNoRecipeFound"
+            android:id="@+id/tvNoRecipesFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:fontFamily="@font/inter"
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="@string/no_favorites_yet_n_it_s_the_perfect_time_to_pick_something"
-            android:textColor="@color/mainColor"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
+            app:layout_constraintTop_toTopOf="@+id/rvRecipes" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

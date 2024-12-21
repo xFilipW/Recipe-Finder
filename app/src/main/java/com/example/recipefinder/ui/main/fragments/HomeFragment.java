@@ -157,20 +157,16 @@ public class HomeFragment extends Fragment {
     }
 
     private void displayRecipes(List<RecipeTable> recipes) {
-        binding.tvNoRecipeFound.setVisibility(View.GONE);
+        binding.tvNoRecipesFound.setVisibility(View.GONE);
         recipiesAdapter.setData(recipes);
         binding.rvRecipes.setVisibility(View.VISIBLE);
     }
 
     private void setupRecipesRecyclerView() {
         binding.rvRecipes.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        recipiesAdapter = new RecipiesAdapter(new OnItemClickListenerEx() {
-            @Override
-            public void onItemClick(long id) {
-                ActionMainHomeFragmentToRecipeDetailsFragment navDirections = HomeFragmentDirections.actionMainHomeFragmentToRecipeDetailsFragment(id);
-                //navDirections.setId(id);
-                navController.navigate(navDirections);
-            }
+        recipiesAdapter = new RecipiesAdapter(id -> {
+            ActionMainHomeFragmentToRecipeDetailsFragment navDirections = HomeFragmentDirections.actionMainHomeFragmentToRecipeDetailsFragment(id);
+            navController.navigate(navDirections);
         });
         binding.rvRecipes.setAdapter(recipiesAdapter);
         binding.rvRecipes.addItemDecoration(new HorizontalSpaceItemDecoration(HorizontalSpaceItemDecoration.SpanCount.TWO, 16, requireContext()));
@@ -180,7 +176,7 @@ public class HomeFragment extends Fragment {
     private void displayNoRecipes() {
         binding.rvRecipes.setVisibility(View.GONE);
         recipiesAdapter.setData(Collections.emptyList());
-        binding.tvNoRecipeFound.setVisibility(View.VISIBLE);
+        binding.tvNoRecipesFound.setVisibility(View.VISIBLE);
     }
 
     private void displayError(String message) {
@@ -200,7 +196,7 @@ public class HomeFragment extends Fragment {
             binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
 
             if (isLoading) {
-                binding.tvNoRecipeFound.setVisibility(View.GONE);
+                binding.tvNoRecipesFound.setVisibility(View.GONE);
             }
         } else { // specific category
             if (isLoading) {
