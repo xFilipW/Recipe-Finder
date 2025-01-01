@@ -17,6 +17,17 @@
     <string name="find_your_favorite_recipe">Find your favorite recipe</string>
     <string name="favorite_recipes">Favorite Recipes</string>
     <string name="your_favorite_flavors_all_in_one_place">Your favorite flavors all in one place</string>
-    <string name="no_favorites_yet_n_it_s_the_perfect_time_to_pick_something">No favorites yet?\n It\'s the perfect time to pick something!</string>
+    <string name="no_favorites_yet_n_it_s_the_perfect_time_to_pick_something">No favorites yet?\nIt\'s the perfect time to pick something!</string>
+    <string name="silence_in_the_cart_pick_a_recipe_and_add_it_to_the_cart">Silence in the cart?\nPick a recipe and add it to the cart!</string>
+    <string name="shopping_list">Shopping list</string>
+    <string name="name_of_the_dish">Name of the dish</string>
+    <string name="preparation_time_label">Preparation Time</string>
+    <string name="preparation_time_result">15m</string>
+    <string name="cooking_time_label">Cooking Time</string>
+    <string name="cooking_time_result">10h 15m</string>
+    <string name="number_of_servings_label">Number Of Servings</string>
+    <string name="number_of_servings_result">4 servings</string>
+    <string name="rating_of_the_dish">4.5</string>
+    <string name="number_of_ratings">(2.4K)</string>
 
 </resources>

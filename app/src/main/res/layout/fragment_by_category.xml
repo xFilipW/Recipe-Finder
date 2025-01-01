@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.fragments.ByCategoryFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_empty_cart"
+            app:layout_constraintBottom_toTopOf="@+id/tvNoRecipesFound"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNoRecipesFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/silence_in_the_cart_pick_a_recipe_and_add_it_to_the_cart"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/round_button"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/mainColor"
+            app:cardCornerRadius="28dp"
+            android:foreground="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/icon_plus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -9,15 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.recipefinder.databinding.FragmentShoppingCartBinding;
+import com.example.recipefinder.databinding.FragmentByRecipeBinding;
 
-public class ShoppingCartFragment extends Fragment {
+public class ByRecipeFragment extends Fragment {
 
-    private FragmentShoppingCartBinding binding;
+    private FragmentByRecipeBinding binding;
 
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentShoppingCartBinding.inflate(inflater, container, false);
+        binding = FragmentByRecipeBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 

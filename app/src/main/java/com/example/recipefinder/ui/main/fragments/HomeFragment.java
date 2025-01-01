@@ -197,7 +197,7 @@ public class HomeFragment extends Fragment {
         binding.progressBar.setVisibility(visibleWhenLoading);
 
         if (isLoading) {
-            binding.tvNoRecipeFound.setVisibility(View.GONE);
+            binding.tvNoRecipesFound.setVisibility(View.GONE);
         }
     }
 

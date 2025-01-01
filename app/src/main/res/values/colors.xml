@@ -5,4 +5,5 @@
     <color name="whiteFrost">#FCFBFC</color>
     <color name="grey">#808080</color>
     <color name="mainColor">#68DAFF</color>
+    <color name="ripple_default">#FFE0E0E0</color>
 </resources>

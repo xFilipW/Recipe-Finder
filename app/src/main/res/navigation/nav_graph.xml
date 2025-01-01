@@ -27,9 +27,9 @@
 
     <fragment
         android:id="@+id/mainRandomFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.ShoppingCartFragment"
+        android:name="com.example.recipefinder.ui.main.fragments.ShoppingListFragment"
         android:label="Random"
-        tools:layout="@layout/fragment_shopping_cart" />
+        tools:layout="@layout/fragment_shopping_list" />
 
     <fragment
         android:id="@+id/favouriteRecipesFragment"
