@@ -12,7 +12,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.recipefinder.R;
 import com.example.recipefinder.databinding.FragmentShoppingListBinding;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class ShoppingListFragment extends Fragment {
@@ -33,6 +35,20 @@ public class ShoppingListFragment extends Fragment {
                 tab.setText("By recipe");
             }
         }).attach();
+
+
+        int itemSpacing = getResources().getDimensionPixelSize(R.dimen.tabItemSpacing);
+
+        binding.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        binding.tabLayout.setTabTextColors(getResources().getColorStateList(R.color.black, null));
+
+        for (int i = 0; i < binding.tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = binding.tabLayout.getTabAt(i);
+            if (tab != null) {
+                int startPadding = (i == 0) ? 0 : itemSpacing;
+                tab.view.setPadding(startPadding, 0, itemSpacing, 0);
+            }
+        }
 
         return binding.getRoot();
     }
