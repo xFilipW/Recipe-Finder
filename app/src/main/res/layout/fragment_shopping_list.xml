@@ -25,37 +25,18 @@
             app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@color/whiteFrost"
-            app:layout_constraintEnd_toEndOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/tvFavoriteRecipes"
-            app:tabIndicatorColor="@color/mainColor"
-            app:tabRippleColor="@null"
-            app:tabSelectedTextColor="@color/black"
-            app:tabTextColor="@color/grey" />
-
-        <View
+        <com.example.recipefinder.widgets.CustomTabView
+            android:id="@+id/customTabView"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            android:elevation="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvFavoriteRecipes" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+            app:layout_constraintTop_toBottomOf="@id/customTabView" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"

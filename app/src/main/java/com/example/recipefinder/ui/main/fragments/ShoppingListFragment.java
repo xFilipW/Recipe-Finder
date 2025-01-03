@@ -1,5 +1,8 @@
 package com.example.recipefinder.ui.main.fragments;
 
+import static com.example.recipefinder.ui.main.fragments.CustomViewPagerAdapter.ITEM_0_CATEGORY;
+import static com.example.recipefinder.ui.main.fragments.CustomViewPagerAdapter.ITEM_1_RECIPE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,75 +11,64 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.recipefinder.R;
 import com.example.recipefinder.databinding.FragmentShoppingListBinding;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import com.example.recipefinder.ui.main.listeners.ShoppingListListener;
 
 public class ShoppingListFragment extends Fragment {
 
     private FragmentShoppingListBinding binding;
+    private static final String TAG = "ShoppingListFragment";
+    private ViewPager2.OnPageChangeCallback onPageChangeCallback;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentShoppingListBinding.inflate(inflater, container, false);
-
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(), getLifecycle());
-        binding.viewPager.setAdapter(adapter);
-
-        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
-            if (position == 0) {
-                tab.setText("By category");
-            } else if (position == 1) {
-                tab.setText("By recipe");
-            }
-        }).attach();
-
-
-        int itemSpacing = getResources().getDimensionPixelSize(R.dimen.tabItemSpacing);
-
-        binding.tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        binding.tabLayout.setTabTextColors(getResources().getColorStateList(R.color.black, null));
-
-        for (int i = 0; i < binding.tabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = binding.tabLayout.getTabAt(i);
-            if (tab != null) {
-                int startPadding = (i == 0) ? 0 : itemSpacing;
-                tab.view.setPadding(startPadding, 0, itemSpacing, 0);
-            }
-        }
-
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        CustomViewPagerAdapter viewPagerAdapter = new CustomViewPagerAdapter(getChildFragmentManager(), getLifecycle());
+        binding.viewPager.setAdapter(viewPagerAdapter);
+        binding.viewPager.setOffscreenPageLimit(1);
+
+        binding.customTabView.setOnTabSelected(tabNumber -> {
+            binding.viewPager.setCurrentItem(tabNumber, false);
+        });
+
+        onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                Fragment nextFragment = viewPagerAdapter.getFragmentAtPosition(position + 1);
+                Fragment previousFragment = viewPagerAdapter.getFragmentAtPosition(position - 1);
+
+                switch (position) {
+                    case ITEM_0_CATEGORY:
+                        binding.viewPager.setUserInputEnabled(nextFragment == null
+                                || ((ShoppingListListener) nextFragment).getShoppingListCount() != 0);
+                        break;
+                    case ITEM_1_RECIPE:
+                        binding.viewPager.setUserInputEnabled(previousFragment == null
+                                || ((ShoppingListListener) previousFragment).getShoppingListCount() != 0);
+                        break;
+                }
+            }
+        };
+        binding.viewPager.registerOnPageChangeCallback(onPageChangeCallback);
+
+        binding.customTabView.selectTab(ITEM_0_CATEGORY);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        binding.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback);
         binding = null;
-    }
-
-    private static class ViewPagerAdapter extends FragmentStateAdapter {
-        public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
-            super(fragmentManager, lifecycle);
-        }
-
-        @NonNull
-        @Override
-        public Fragment createFragment(int position) {
-            if (position == 0) {
-                return new ByCategoryFragment();
-            } else {
-                return new ByRecipeFragment();
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return 2;
-        }
     }
 }

@@ -22,8 +22,8 @@ import com.example.recipefinder.databinding.FragmentHomeBinding;
 import com.example.recipefinder.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.ui.main.adapters.CategoriesAdapter;
 import com.example.recipefinder.ui.main.adapters.RecipiesAdapter;
-import com.example.recipefinder.ui.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
-import com.example.recipefinder.ui.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
+import com.example.recipefinder.ui.main.itemDecorators.HorizontalSpaceItemDecoration;
+import com.example.recipefinder.ui.main.itemDecorators.VerticalSpaceItemDecoration;
 import com.example.recipefinder.ui.main.listeners.SimpleTextWatcher;
 import com.example.recipefinder.ui.main.repository.Repository;
 
