@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.example.recipefinder.R;
 import com.example.recipefinder.ui.main.fragments.OnTabSelected;
@@ -45,8 +46,6 @@ public class CustomTabView extends ConstraintLayout {
         tab1Underline = findViewById(R.id.tab1Underline);
         tab2Underline = findViewById(R.id.tab2Underline);
 
-        //selectTab(1);
-
         tab1.setOnClickListener(v -> selectTab(0));
         tab2.setOnClickListener(v -> selectTab(1));
     }
@@ -55,19 +54,23 @@ public class CustomTabView extends ConstraintLayout {
         if (tabNumber == 0) {
             tab1Underline.setVisibility(View.VISIBLE);
             tab2Underline.setVisibility(View.INVISIBLE);
+
+            tab1Title.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+            tab2Title.setTextColor(ContextCompat.getColor(getContext(), R.color.grey));
+
             if (onTabSelectedListener != null) {
                 onTabSelectedListener.onTabSelected(tabNumber);
             }
-            //tab1Title.setTextColor(getResources().getColor(R.color.mainColor));
-            //tab2Title.setTextColor(getResources().getColor(R.color.black));
         } else if (tabNumber == 1) {
             tab1Underline.setVisibility(View.INVISIBLE);
             tab2Underline.setVisibility(View.VISIBLE);
+
+            tab1Title.setTextColor(ContextCompat.getColor(getContext(), R.color.grey));
+            tab2Title.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+
             if (onTabSelectedListener != null) {
                 onTabSelectedListener.onTabSelected(tabNumber);
             }
-            //tab1Title.setTextColor(getResources().getColor(R.color.black));
-            //tab2Title.setTextColor(getResources().getColor(R.color.mainColor));
         }
     }
 
