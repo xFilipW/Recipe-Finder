@@ -10,8 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.recipefinder.databinding.FragmentByCategoryBinding;
+import com.example.recipefinder.ui.main.listeners.ShoppingListListener;
 
-public class ByCategoryFragment extends Fragment {
+public class ByCategoryFragment extends Fragment implements ShoppingListListener {
 
     private FragmentByCategoryBinding binding;
 
@@ -19,7 +20,6 @@ public class ByCategoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentByCategoryBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
@@ -27,5 +27,10 @@ public class ByCategoryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public int getShoppingListCount() {
+        return 0;
     }
 }

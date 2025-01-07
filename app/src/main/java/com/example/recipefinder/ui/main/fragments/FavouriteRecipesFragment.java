@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.databinding.FragmentFavouriteRecipesBinding;
 import com.example.recipefinder.ui.main.adapters.RecipiesAdapter;
-import com.example.recipefinder.ui.main.fragments.itemDecorators.HorizontalSpaceItemDecoration;
-import com.example.recipefinder.ui.main.fragments.itemDecorators.VerticalSpaceItemDecoration;
+import com.example.recipefinder.ui.main.itemDecorators.HorizontalSpaceItemDecoration;
+import com.example.recipefinder.ui.main.itemDecorators.VerticalSpaceItemDecoration;
 
 public class FavouriteRecipesFragment extends Fragment {
 

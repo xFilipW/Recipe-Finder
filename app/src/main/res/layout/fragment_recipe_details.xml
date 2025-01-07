@@ -1,36 +1,346 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/whiteFrost">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clImageLayout"
+    <!--    <com.google.android.material.appbar.AppBarLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="300dp"-->
+    <!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+    <!--        app:layout_scrollFlags="scroll|enterAlways">-->
+
+    <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            app:collapsedTitleTextAppearance="@style/CollapsedToolbarTitle"-->
+    <!--            app:contentScrim="?attr/colorAccent"-->
+    <!--            app:expandedTitleMarginEnd="16dp"-->
+    <!--            app:expandedTitleMarginStart="16dp"-->
+    <!--            app:expandedTitleTextAppearance="@style/ExpandedToolbarTitle"-->
+    <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+    <!--            app:scrimVisibleHeightTrigger="150dp">-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:scaleType="centerCrop"-->
+    <!--                android:src="@drawable/png_app_logo"-->
+    <!--                app:layout_collapseMode="parallax" />-->
+
+    <!--            <androidx.appcompat.widget.Toolbar-->
+    <!--                android:id="@+id/toolbar"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="?attr/actionBarSize"-->
+    <!--                android:theme="@style/ExpandedToolbarTheme"-->
+    <!--                app:layout_collapseMode="pin"-->
+    <!--                app:popupTheme="@style/PopupTheme"-->
+    <!--                app:title="Test" />-->
+
+    <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+    <!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
-            android:id="@+id/ivDishPicture"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="center"
-            android:src="@drawable/jpg_introductory_bg"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clImageLayout"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivDishPicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="center"
+                    android:src="@drawable/jpg_introductory_bg"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clDishContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clImageLayout">
+
+                <TextView
+                    android:id="@+id/tvNameOfTheDish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:fontFamily="@font/inter"
+                    android:includeFontPadding="false"
+                    android:text="@string/name_of_the_dish"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_favorite_border"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvNameOfTheDish"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvNameOfTheDish" />
+
+                <ImageView
+                    android:id="@+id/ivStar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_star"
+                    app:layout_constraintStart_toStartOf="@+id/tvNameOfTheDish"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNameOfTheDish" />
+
+                <ImageView
+                    android:id="@+id/ivStar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivStar1"
+                    app:layout_constraintStart_toEndOf="@+id/ivStar1"
+                    app:layout_constraintTop_toTopOf="@+id/ivStar1" />
+
+                <ImageView
+                    android:id="@+id/ivStar3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivStar2"
+                    app:layout_constraintStart_toEndOf="@+id/ivStar2"
+                    app:layout_constraintTop_toTopOf="@+id/ivStar2" />
+
+                <ImageView
+                    android:id="@+id/ivStar4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivStar3"
+                    app:layout_constraintStart_toEndOf="@+id/ivStar3"
+                    app:layout_constraintTop_toTopOf="@+id/ivStar3" />
+
+                <ImageView
+                    android:id="@+id/ivStar5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star_half"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivStar4"
+                    app:layout_constraintStart_toEndOf="@+id/ivStar4"
+                    app:layout_constraintTop_toTopOf="@+id/ivStar4" />
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/inter"
+                    android:includeFontPadding="false"
+                    android:text="@string/rating_of_the_dish"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivStar5"
+                    app:layout_constraintStart_toEndOf="@+id/ivStar5"
+                    app:layout_constraintTop_toTopOf="@+id/ivStar5" />
+
+                <TextView
+                    android:id="@+id/tvAggregateLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/inter"
+                    android:includeFontPadding="false"
+                    android:text="@string/number_of_ratings"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+                    app:layout_constraintStart_toEndOf="@+id/tvRating"
+                    app:layout_constraintTop_toTopOf="@+id/tvRating" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/ivStar1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvPreparationTime"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_margin="12dp"
+                            app:cardCornerRadius="64dp"
+                            app:cardElevation="8dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_preparation_time" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvCookingTime"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_marginTop="12dp"
+                            app:cardCornerRadius="64dp"
+                            app:cardElevation="8dp"
+                            app:layout_constraintStart_toStartOf="@+id/cvPreparationTime"
+                            app:layout_constraintTop_toBottomOf="@+id/cvPreparationTime">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_cooking_time" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvNumberOfServings"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="64dp"
+                            app:cardElevation="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/cvCookingTime"
+                            app:layout_constraintTop_toBottomOf="@+id/cvCookingTime">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_number_of_servings" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/tvPreparationTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginBottom="24dp"
+                            android:fontFamily="@font/inter"
+                            android:includeFontPadding="false"
+                            android:text="@string/preparation_time_label"
+                            android:textColor="@color/grey"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/cvPreparationTime"
+                            app:layout_constraintStart_toEndOf="@+id/cvPreparationTime"
+                            app:layout_constraintTop_toTopOf="@+id/cvPreparationTime" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter"
+                            android:includeFontPadding="false"
+                            android:text="@string/preparation_time_result"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/tvPreparationTime"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPreparationTime" />
+
+                        <TextView
+                            android:id="@+id/tvCookingTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginBottom="24dp"
+                            android:fontFamily="@font/inter"
+                            android:includeFontPadding="false"
+                            android:text="@string/cooking_time_label"
+                            android:textColor="@color/grey"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/cvCookingTime"
+                            app:layout_constraintStart_toEndOf="@+id/cvCookingTime"
+                            app:layout_constraintTop_toTopOf="@+id/cvCookingTime" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter"
+                            android:includeFontPadding="false"
+                            android:text="@string/cooking_time_result"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/tvCookingTime"
+                            app:layout_constraintTop_toBottomOf="@+id/tvCookingTime" />
+
+                        <TextView
+                            android:id="@+id/tvNumberOfServings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginBottom="24dp"
+                            android:fontFamily="@font/inter"
+                            android:includeFontPadding="false"
+                            android:text="@string/number_of_servings_label"
+                            android:textColor="@color/grey"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/cvNumberOfServings"
+                            app:layout_constraintStart_toEndOf="@+id/cvNumberOfServings"
+                            app:layout_constraintTop_toTopOf="@+id/cvNumberOfServings" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter"
+                            android:includeFontPadding="false"
+                            android:text="@string/number_of_servings_result"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/tvNumberOfServings"
+                            app:layout_constraintTop_toBottomOf="@+id/tvNumberOfServings" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clToolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:layout_constraintLeft_toLeftOf="@+id/clImageLayout"
-        app:layout_constraintRight_toRightOf="@+id/clImageLayout"
-        app:layout_constraintTop_toTopOf="@+id/clImageLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/ivLeft"
@@ -67,267 +377,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clDishContent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clImageLayout">
-
-        <TextView
-            android:id="@+id/tvNameOfTheDish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/inter"
-            android:includeFontPadding="false"
-            android:text="@string/name_of_the_dish"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_favorite_border"
-            app:layout_constraintBottom_toBottomOf="@+id/tvNameOfTheDish"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvNameOfTheDish" />
-
-        <ImageView
-            android:id="@+id/ivStar1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_star"
-            app:layout_constraintStart_toStartOf="@+id/tvNameOfTheDish"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameOfTheDish" />
-
-        <ImageView
-            android:id="@+id/ivStar2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/ivStar1"
-            app:layout_constraintStart_toEndOf="@+id/ivStar1"
-            app:layout_constraintTop_toTopOf="@+id/ivStar1" />
-
-        <ImageView
-            android:id="@+id/ivStar3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/ivStar2"
-            app:layout_constraintStart_toEndOf="@+id/ivStar2"
-            app:layout_constraintTop_toTopOf="@+id/ivStar2" />
-
-        <ImageView
-            android:id="@+id/ivStar4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/ivStar3"
-            app:layout_constraintStart_toEndOf="@+id/ivStar3"
-            app:layout_constraintTop_toTopOf="@+id/ivStar3" />
-
-        <ImageView
-            android:id="@+id/ivStar5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_star_half"
-            app:layout_constraintBottom_toBottomOf="@+id/ivStar4"
-            app:layout_constraintStart_toEndOf="@+id/ivStar4"
-            app:layout_constraintTop_toTopOf="@+id/ivStar4" />
-
-        <TextView
-            android:id="@+id/tvRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:fontFamily="@font/inter"
-            android:includeFontPadding="false"
-            android:text="@string/rating_of_the_dish"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/ivStar5"
-            app:layout_constraintStart_toEndOf="@+id/ivStar5"
-            app:layout_constraintTop_toTopOf="@+id/ivStar5" />
-
-        <TextView
-            android:id="@+id/tvAggregateLikes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:fontFamily="@font/inter"
-            android:includeFontPadding="false"
-            android:text="@string/number_of_ratings"
-            android:textColor="@color/grey"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/tvRating"
-            app:layout_constraintStart_toEndOf="@+id/tvRating"
-            app:layout_constraintTop_toTopOf="@+id/tvRating" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/ivStar1">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvPreparationTime"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_margin="12dp"
-                    app:cardCornerRadius="64dp"
-                    app:cardElevation="8dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_preparation_time" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvCookingTime"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="12dp"
-                    app:cardCornerRadius="64dp"
-                    app:cardElevation="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/cvPreparationTime"
-                    app:layout_constraintTop_toBottomOf="@+id/cvPreparationTime">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_cooking_time" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvNumberOfServings"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    app:cardCornerRadius="64dp"
-                    app:cardElevation="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/cvCookingTime"
-                    app:layout_constraintTop_toBottomOf="@+id/cvCookingTime">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_number_of_servings" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/tvPreparationTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="24dp"
-                    android:fontFamily="@font/inter"
-                    android:includeFontPadding="false"
-                    android:text="@string/preparation_time_label"
-                    android:textColor="@color/grey"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cvPreparationTime"
-                    app:layout_constraintStart_toEndOf="@+id/cvPreparationTime"
-                    app:layout_constraintTop_toTopOf="@+id/cvPreparationTime" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:includeFontPadding="false"
-                    android:text="@string/preparation_time_result"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/tvPreparationTime"
-                    app:layout_constraintTop_toBottomOf="@+id/tvPreparationTime" />
-
-                <TextView
-                    android:id="@+id/tvCookingTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="24dp"
-                    android:fontFamily="@font/inter"
-                    android:includeFontPadding="false"
-                    android:text="@string/cooking_time_label"
-                    android:textColor="@color/grey"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cvCookingTime"
-                    app:layout_constraintStart_toEndOf="@+id/cvCookingTime"
-                    app:layout_constraintTop_toTopOf="@+id/cvCookingTime" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:includeFontPadding="false"
-                    android:text="@string/cooking_time_result"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/tvCookingTime"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCookingTime" />
-
-                <TextView
-                    android:id="@+id/tvNumberOfServings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="24dp"
-                    android:fontFamily="@font/inter"
-                    android:includeFontPadding="false"
-                    android:text="@string/number_of_servings_label"
-                    android:textColor="@color/grey"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cvNumberOfServings"
-                    app:layout_constraintStart_toEndOf="@+id/cvNumberOfServings"
-                    app:layout_constraintTop_toTopOf="@+id/cvNumberOfServings" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:includeFontPadding="false"
-                    android:text="@string/number_of_servings_result"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/tvNumberOfServings"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNumberOfServings" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

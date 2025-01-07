@@ -16,7 +16,6 @@
             android:src="@drawable/ic_empty_cart"
             app:layout_constraintBottom_toTopOf="@+id/tvNoRecipesFound"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -44,9 +43,9 @@
             android:clickable="true"
             android:elevation="4dp"
             android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             app:cardBackgroundColor="@color/mainColor"
             app:cardCornerRadius="28dp"
-            android:foreground="?attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
