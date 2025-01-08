@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.recipefinder.R;
-import com.example.recipefinder.ui.main.MainActivity;
 
 public class IntroductoryActivity extends AppCompatActivity {
 

@@ -1,6 +1,4 @@
-package com.example.recipefinder.ui.main;
-
-import static androidx.navigation.Navigation.findNavController;
+package com.example.recipefinder.ui;
 
 import android.os.Bundle;
 

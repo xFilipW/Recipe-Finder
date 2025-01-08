@@ -17,13 +17,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.FragmentHomeBinding;
+import com.example.recipefinder.repository.Repository;
+import com.example.recipefinder.shared.itemDecorators.HorizontalSpaceItemDecoration;
+import com.example.recipefinder.shared.itemDecorators.VerticalSpaceItemDecoration;
 import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.shared.watchers.SimpleTextWatcher;
 import com.example.recipefinder.ui.home.adapters.CategoriesAdapter;
 import com.example.recipefinder.ui.home.adapters.RecipiesAdapter;
-import com.example.recipefinder.shared.itemDecorators.HorizontalSpaceItemDecoration;
-import com.example.recipefinder.shared.itemDecorators.VerticalSpaceItemDecoration;
-import com.example.recipefinder.repository.Repository;
 
 import java.util.Collections;
 import java.util.List;
