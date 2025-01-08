@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainHomeFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.HomeFragment"
+        android:name="com.example.recipefinder.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/recipeDetailsFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.RecipeDetailsFragment"
+        android:name="com.example.recipefinder.ui.recipedetails.RecipeDetailsFragment"
         android:label="Recipe Details"
         tools:layout="@layout/fragment_recipe_details">
         <argument
@@ -27,13 +27,13 @@
 
     <fragment
         android:id="@+id/mainRandomFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.ShoppingListFragment"
+        android:name="com.example.recipefinder.ui.shoppinglist.ShoppingListFragment"
         android:label="Random"
         tools:layout="@layout/fragment_shopping_list" />
 
     <fragment
         android:id="@+id/favouriteRecipesFragment"
-        android:name="com.example.recipefinder.ui.main.fragments.FavouriteRecipesFragment"
+        android:name="com.example.recipefinder.ui.favouriterecipes.FavouriteRecipesFragment"
         android:label="Favourite"
         tools:layout="@layout/fragment_favourite_recipes" />
 </navigation>

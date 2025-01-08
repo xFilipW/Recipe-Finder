@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteFrost"
-    tools:context=".ui.main.fragments.ShoppingListFragment">
+    tools:context=".ui.shoppinglist.ShoppingListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.recipefinder.widgets.CustomTabView
+        <com.example.recipefinder.shared.widgets.CustomTabView
             android:id="@+id/customTabView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -14,8 +14,8 @@ import com.example.recipefinder.api.models.RandomRecipeApiResponse;
 import com.example.recipefinder.api.models.Recipe;
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
-import com.example.recipefinder.listeners.RandomRecipeResponseListener;
-import com.example.recipefinder.utils.RecipeUtils;
+import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
+import com.example.recipefinder.shared.utils.RecipeUtils;
 
 import java.util.ArrayList;
 import java.util.List;

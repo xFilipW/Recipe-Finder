@@ -11,7 +11,7 @@ import androidx.work.WorkerParameters;
 import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
-import com.example.recipefinder.listeners.RandomRecipeResponseListener;
+import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
