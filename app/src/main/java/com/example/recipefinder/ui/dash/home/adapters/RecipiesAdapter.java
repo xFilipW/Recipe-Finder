@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.home.adapters;
+package com.example.recipefinder.ui.dash.home.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.recipefinder.R;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.ListItemRecipesBinding;
-import com.example.recipefinder.ui.home.viewHolders.RecipiesViewHolder;
+import com.example.recipefinder.ui.dash.home.viewHolders.RecipiesViewHolder;
 import com.example.recipefinder.ui.recipedetails.OnItemClickListenerEx;
 import com.squareup.picasso.Picasso;
 

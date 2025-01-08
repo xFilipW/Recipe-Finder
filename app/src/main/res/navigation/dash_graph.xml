@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.recipefinder.ui.dash.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/shoppingListFragment"
+        android:name="com.example.recipefinder.ui.dash.shoppinglist.ShoppingListFragment"
+        android:label="Random"
+        tools:layout="@layout/fragment_shopping_list" />
+
+    <fragment
+        android:id="@+id/favouriteRecipesFragment"
+        android:name="com.example.recipefinder.ui.dash.favouriterecipes.FavouriteRecipesFragment"
+        android:label="Favourite"
+        tools:layout="@layout/fragment_favourite_recipes" />
+
+</navigation>

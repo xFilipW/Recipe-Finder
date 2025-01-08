@@ -1,7 +1,7 @@
-package com.example.recipefinder.ui.shoppinglist;
+package com.example.recipefinder.ui.dash.shoppinglist;
 
-import static com.example.recipefinder.ui.shoppinglist.CustomViewPagerAdapter.ITEM_0_CATEGORY;
-import static com.example.recipefinder.ui.shoppinglist.CustomViewPagerAdapter.ITEM_1_RECIPE;
+import static com.example.recipefinder.ui.dash.shoppinglist.CustomViewPagerAdapter.ITEM_0_CATEGORY;
+import static com.example.recipefinder.ui.dash.shoppinglist.CustomViewPagerAdapter.ITEM_1_RECIPE;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.recipefinder.databinding.FragmentShoppingListBinding;
-import com.example.recipefinder.ui.shoppinglist.listeners.ShoppingListListener;
+import com.example.recipefinder.ui.dash.shoppinglist.listeners.ShoppingListListener;
 
 public class ShoppingListFragment extends Fragment {
 

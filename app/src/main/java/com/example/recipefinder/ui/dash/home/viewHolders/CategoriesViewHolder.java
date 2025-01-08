@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.home.viewHolders;
+package com.example.recipefinder.ui.dash.home.viewHolders;
 
 import androidx.recyclerview.widget.RecyclerView;
 

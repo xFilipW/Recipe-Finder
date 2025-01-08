@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.home;
+package com.example.recipefinder.ui.dash.home;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,10 +10,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.example.recipefinder.R;
 import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.FragmentHomeBinding;
@@ -22,8 +25,8 @@ import com.example.recipefinder.shared.itemDecorators.HorizontalSpaceItemDecorat
 import com.example.recipefinder.shared.itemDecorators.VerticalSpaceItemDecoration;
 import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
 import com.example.recipefinder.shared.watchers.SimpleTextWatcher;
-import com.example.recipefinder.ui.home.adapters.CategoriesAdapter;
-import com.example.recipefinder.ui.home.adapters.RecipiesAdapter;
+import com.example.recipefinder.ui.dash.home.adapters.CategoriesAdapter;
+import com.example.recipefinder.ui.dash.home.adapters.RecipiesAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -160,12 +163,19 @@ public class HomeFragment extends Fragment {
         binding.rvRecipes.setVisibility(View.VISIBLE);
     }
 
+    private static final String TAG = "HomeFragment";
+
     private void setupRecipesRecyclerView() {
         binding.rvRecipes.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         recipiesAdapter = new RecipiesAdapter(id -> {
-            HomeFragmentDirections.ActionMainHomeFragmentToRecipeDetailsFragment navDirections = HomeFragmentDirections.actionMainHomeFragmentToRecipeDetailsFragment(id);
-            //navDirections.setId(id);
-            navController.navigate(navDirections);
+            FragmentActivity activity = requireActivity();
+            FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
+            Fragment mainFragmentContainer = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer);
+            NavController mainNavController = NavHostFragment.findNavController(mainFragmentContainer);
+
+            Bundle bundle = new Bundle();
+            bundle.putLong("id", id);
+            mainNavController.navigate(R.id.recipeDetailsFragment, bundle);
         });
         binding.rvRecipes.setAdapter(recipiesAdapter);
         binding.rvRecipes.addItemDecoration(new HorizontalSpaceItemDecoration(HorizontalSpaceItemDecoration.SpanCount.TWO, 16, requireContext()));

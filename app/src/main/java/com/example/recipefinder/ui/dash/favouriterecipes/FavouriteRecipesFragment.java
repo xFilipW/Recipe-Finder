@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.favouriterecipes;
+package com.example.recipefinder.ui.dash.favouriterecipes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.databinding.FragmentFavouriteRecipesBinding;
 import com.example.recipefinder.shared.itemDecorators.HorizontalSpaceItemDecoration;
 import com.example.recipefinder.shared.itemDecorators.VerticalSpaceItemDecoration;
-import com.example.recipefinder.ui.home.adapters.RecipiesAdapter;
+import com.example.recipefinder.ui.dash.home.adapters.RecipiesAdapter;
 
 public class FavouriteRecipesFragment extends Fragment {
 

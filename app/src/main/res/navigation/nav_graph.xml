@@ -2,17 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/mainHomeFragment">
+    app:startDestination="@id/dashFragment">
 
     <fragment
-        android:id="@+id/mainHomeFragment"
-        android:name="com.example.recipefinder.ui.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_mainHomeFragment_to_recipeDetailsFragment"
-            app:destination="@id/recipeDetailsFragment" />
-    </fragment>
+        android:id="@+id/dashFragment"
+        android:name="com.example.recipefinder.ui.dash.DashFragment"
+        android:label="Dash"
+        tools:layout="@layout/fragment_dash" />
 
     <fragment
         android:id="@+id/recipeDetailsFragment"
@@ -24,16 +20,4 @@
             app:argType="long" />
     </fragment>
 
-
-    <fragment
-        android:id="@+id/mainRandomFragment"
-        android:name="com.example.recipefinder.ui.shoppinglist.ShoppingListFragment"
-        android:label="Random"
-        tools:layout="@layout/fragment_shopping_list" />
-
-    <fragment
-        android:id="@+id/favouriteRecipesFragment"
-        android:name="com.example.recipefinder.ui.favouriterecipes.FavouriteRecipesFragment"
-        android:label="Favourite"
-        tools:layout="@layout/fragment_favourite_recipes" />
 </navigation>
