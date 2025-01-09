@@ -11,10 +11,10 @@ import com.example.recipefinder.R;
 import com.example.recipefinder.api.cache.DatabaseUseCase;
 import com.example.recipefinder.api.cache.OnQueryCompleteListener;
 import com.example.recipefinder.api.models.RandomRecipeApiResponse;
-import com.example.recipefinder.api.models.Recipe;
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
+import com.example.recipefinder.shared.listeners.RecipeDetailsResponseListener;
 import com.example.recipefinder.shared.utils.RecipeUtils;
 
 import java.util.ArrayList;
@@ -76,6 +76,10 @@ public class RepositoryUseCase {
         });
     }
 
+    public void getRecipeDetails(long id, RecipeDetailsResponseListener listener) {
+        fetchRecipeDetailsFromApi(id, listener);
+    }
+
     public void queryRecipes(OnQueryCompleteListener<List<RecipeTable>> listener) {
         databaseUseCase.queryRecipes(listener);
     }
@@ -108,6 +112,10 @@ public class RepositoryUseCase {
                 listener.onError(throwable.getMessage());
             }
         });
+    }
+
+    private void fetchRecipeDetailsFromApi(long id, RecipeDetailsResponseListener listener) {
+        callGetRecipeDetails(id, new Callback<>(RecipeDetailsApiResponse));
     }
 
     private void queryRemoveRecipes(OnQueryCompleteListener<Integer> listener) {

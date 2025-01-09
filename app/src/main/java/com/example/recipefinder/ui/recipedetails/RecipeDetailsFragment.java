@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.databinding.FragmentRecipeDetailsBinding;
 
 public class RecipeDetailsFragment extends Fragment {
 
     private FragmentRecipeDetailsBinding binding;
+    private RepositoryUseCase repositoryUseCase;
 
     @Nullable
     @Override
@@ -29,15 +31,20 @@ public class RecipeDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        long id = RecipeDetailsFragmentArgs.fromBundle(getArguments()).getId();
+        repositoryUseCase = new RepositoryUseCase(requireContext());
+
         requireActivity().getOnBackPressedDispatcher().addCallback(
                 getViewLifecycleOwner(),
-                new OnBackPressedCallback(true) { // Enable this callback
+                new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
                         NavHostFragment.findNavController(requireParentFragment()).popBackStack();
                     }
                 }
         );
+
+        repositoryUseCase.getRecipeDetails(id);
     }
 
     @Override

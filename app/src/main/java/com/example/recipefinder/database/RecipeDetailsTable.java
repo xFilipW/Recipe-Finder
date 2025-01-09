@@ -4,16 +4,21 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "recipe")
-public class RecipeTable {
+@Entity(tableName = "recipeDetails")
+public class RecipeDetailsTable {
 
-    public RecipeTable(long id, long recipeId, String json, String title, String dishTypes, String image) {
+    public RecipeDetailsTable(long id, long recipeId, String json, String title, String image,
+                              int favourite, String ingredients, String stepByStep, String nutritionValue, String tags) {
         this.id = id;
         this.recipeId = recipeId;
         this.json = json;
         this.title = title;
-        this.dishTypes = dishTypes;
+        this.ingredients = ingredients;
+        this.stepByStep = stepByStep;
+        this.nutritionValue = nutritionValue;
+        this.tags = tags;
         this.image = image;
+        this.favourite = favourite;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -29,11 +34,26 @@ public class RecipeTable {
     @ColumnInfo(name = "title")
     private String title;
 
+    @ColumnInfo(name = "ingredients")
+    private String ingredients;
+
+    @ColumnInfo(name = "stepByStep")
+    private String stepByStep;
+
+    @ColumnInfo(name = "nutritionValue")
+    private String nutritionValue;
+
+    @ColumnInfo(name = "tags")
+    private String tags;
+
     @ColumnInfo(name = "dishTypes")
     private String dishTypes;
 
     @ColumnInfo(name = "image")
     private String image;
+
+    @ColumnInfo(name = "favourite", defaultValue = "0")
+    private int favourite;
 
     public long getId() {
         return id;
@@ -59,20 +79,20 @@ public class RecipeTable {
         this.title = title;
     }
 
-    public String getDishTypes() {
-        return dishTypes;
-    }
-
-    public void setDishTypes(String dishTypes) {
-        this.dishTypes = dishTypes;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(int favourite) {
+        this.favourite = favourite;
     }
 
     public long getRecipeId() {

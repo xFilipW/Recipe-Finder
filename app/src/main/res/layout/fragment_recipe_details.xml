@@ -6,42 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/whiteFrost">
 
-    <!--    <com.google.android.material.appbar.AppBarLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="300dp"-->
-    <!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-    <!--        app:layout_scrollFlags="scroll|enterAlways">-->
-
-    <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            app:collapsedTitleTextAppearance="@style/CollapsedToolbarTitle"-->
-    <!--            app:contentScrim="?attr/colorAccent"-->
-    <!--            app:expandedTitleMarginEnd="16dp"-->
-    <!--            app:expandedTitleMarginStart="16dp"-->
-    <!--            app:expandedTitleTextAppearance="@style/ExpandedToolbarTitle"-->
-    <!--            app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
-    <!--            app:scrimVisibleHeightTrigger="150dp">-->
-
-    <!--            <ImageView-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent"-->
-    <!--                android:scaleType="centerCrop"-->
-    <!--                android:src="@drawable/png_app_logo"-->
-    <!--                app:layout_collapseMode="parallax" />-->
-
-    <!--            <androidx.appcompat.widget.Toolbar-->
-    <!--                android:id="@+id/toolbar"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="?attr/actionBarSize"-->
-    <!--                android:theme="@style/ExpandedToolbarTheme"-->
-    <!--                app:layout_collapseMode="pin"-->
-    <!--                app:popupTheme="@style/PopupTheme"-->
-    <!--                app:title="Test" />-->
-
-    <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
-    <!--    </com.google.android.material.appbar.AppBarLayout>-->
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -107,8 +71,8 @@
 
                 <ImageView
                     android:id="@+id/ivStar1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_star"
                     app:layout_constraintStart_toStartOf="@+id/tvNameOfTheDish"
@@ -116,8 +80,8 @@
 
                 <ImageView
                     android:id="@+id/ivStar2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_star"
                     app:layout_constraintBottom_toBottomOf="@+id/ivStar1"
                     app:layout_constraintStart_toEndOf="@+id/ivStar1"
@@ -125,8 +89,8 @@
 
                 <ImageView
                     android:id="@+id/ivStar3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_star"
                     app:layout_constraintBottom_toBottomOf="@+id/ivStar2"
                     app:layout_constraintStart_toEndOf="@+id/ivStar2"
@@ -134,8 +98,8 @@
 
                 <ImageView
                     android:id="@+id/ivStar4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_star"
                     app:layout_constraintBottom_toBottomOf="@+id/ivStar3"
                     app:layout_constraintStart_toEndOf="@+id/ivStar3"
@@ -143,9 +107,9 @@
 
                 <ImageView
                     android:id="@+id/ivStar5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_star_half"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_half_star"
                     app:layout_constraintBottom_toBottomOf="@+id/ivStar4"
                     app:layout_constraintStart_toEndOf="@+id/ivStar4"
                     app:layout_constraintTop_toTopOf="@+id/ivStar4" />
@@ -181,6 +145,7 @@
                     app:layout_constraintTop_toTopOf="@+id/tvRating" />
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cvDishInfo"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
                     android:layout_margin="16dp"
@@ -332,6 +297,103 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvIngredientsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:fontFamily="@font/inter"
+                    android:includeFontPadding="false"
+                    android:text="Ingredients"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cvDishInfo" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvIngredientsTitle" />
+
+                <TextView
+                    android:id="@+id/tvStepByStepTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:fontFamily="@font/inter"
+                    android:includeFontPadding="false"
+                    android:text="Step by step"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvIngredients" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvStepByStep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvStepByStepTitle" />
+
+                <TextView
+                    android:id="@+id/tvNutritionValuesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:fontFamily="@font/inter"
+                    android:includeFontPadding="false"
+                    android:text="Nutrition values"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvStepByStep" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvNutritionValues"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNutritionValuesTitle" />
+
+                <TextView
+                    android:id="@+id/tvTagsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:fontFamily="@font/inter"
+                    android:includeFontPadding="false"
+                    android:text="Tags"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvNutritionValues" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTagsTitle" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

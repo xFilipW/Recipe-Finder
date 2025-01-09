@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {RecipeTable.class}, version = 2)
+@Database(entities = {RecipeTable.class, RecipeDetailsTable.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
@@ -16,9 +16,7 @@ public abstract class AppDatabase extends RoomDatabase {
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            database.execSQL(
-                    "ALTER TABLE recipe ADD COLUMN favourite INTEGER NOT NULL DEFAULT 0"
-            );
+            database.execSQL("ALTER TABLE recipe ADD COLUMN favourite INTEGER NOT NULL DEFAULT 0");
         }
     };
 
@@ -26,11 +24,8 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            AppDatabase.class, "database")
-                            .addMigrations(MIGRATION_1_2)
-                            .build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            AppDatabase.class, "database").addMigrations(MIGRATION_1_2).build();
                 }
             }
         }

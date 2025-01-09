@@ -1,6 +1,5 @@
 package com.example.recipefinder.shared.utils;
 
-import com.example.recipefinder.api.models.Recipe;
 import com.example.recipefinder.database.RecipeTable;
 import com.google.gson.Gson;
 
@@ -14,6 +13,7 @@ public class RecipeUtils {
         return allRecipes.stream()
                 .map(recipe -> new RecipeTable(
                         0,
+                        recipe.id,
                         gson.toJson(recipe),
                         recipe.title,
                         String.join(",", recipe.dishTypes),
