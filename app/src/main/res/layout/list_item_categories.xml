@@ -13,7 +13,7 @@
         android:elevation="8dp"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/whiteFrost"
         app:cardCornerRadius="14dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

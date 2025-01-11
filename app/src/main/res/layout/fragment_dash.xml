@@ -24,7 +24,7 @@
             android:fontFamily="@font/write"
             android:includeFontPadding="false"
             android:text="@string/app_name"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteFrost"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +39,7 @@
             android:fontFamily="@font/inter"
             android:includeFontPadding="false"
             android:text="@string/your_gateway_to_culinary_delights"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteFrost"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvTitle"
@@ -61,12 +61,12 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/mewo_bottom_navigation_view"
+        app:layout_constraintBottom_toTopOf="@+id/mew_bottom_navigation_view"
         app:layout_constraintTop_toBottomOf="@+id/llWelcome"
         app:navGraph="@navigation/dash_graph" />
 
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
-        android:id="@+id/mewo_bottom_navigation_view"
+        android:id="@+id/mew_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/whiteFrost"
@@ -75,7 +75,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:mbn_backgroundBottomColor="@color/mainColor"
         app:mbn_circleColor="@color/mainColor"
-        app:mbn_defaultIconColor="@color/white"
-        app:mbn_selectedIconColor="@color/white" />
+        app:mbn_defaultIconColor="@color/whiteFrost"
+        app:mbn_selectedIconColor="@color/whiteFrost" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
