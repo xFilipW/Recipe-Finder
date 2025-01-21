@@ -11,7 +11,7 @@ import androidx.work.WorkerParameters;
 import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
-import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
+import com.example.recipefinder.shared.listeners.RandomRecipesResponseListener;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -54,7 +54,7 @@ public class CacheRefreshWorker extends Worker {
     }
 
     private void refreshCache() {
-        repositoryUseCase.getRecipes(new RandomRecipeResponseListener() {
+        repositoryUseCase.getRecipes(new RandomRecipesResponseListener() {
             @Override
             public void onComplete(@NonNull List<RecipeTable> allRecipes) {
                 // Left empty intentionally

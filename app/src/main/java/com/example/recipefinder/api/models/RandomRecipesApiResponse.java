@@ -2,6 +2,6 @@ package com.example.recipefinder.api.models;
 
 import java.util.ArrayList;
 
-public class RandomRecipeApiResponse {
+public class RandomRecipesApiResponse {
     public ArrayList<RecipeDetailsItem> recipes;
 }

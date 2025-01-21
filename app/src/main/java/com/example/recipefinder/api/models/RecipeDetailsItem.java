@@ -1,414 +1,427 @@
 package com.example.recipefinder.api.models;
 
 import java.util.List;
+
+import com.example.recipefinder.database.RecipeNutritionValue;
 import com.google.gson.annotations.SerializedName;
 
 public class RecipeDetailsItem {
 
-	@SerializedName("instructions")
-	private String instructions;
+    @SerializedName("instructions")
+    private String instructions;
 
-	@SerializedName("sustainable")
-	private boolean sustainable;
+    @SerializedName("sustainable")
+    private boolean sustainable;
 
-	@SerializedName("analyzedInstructions")
-	private List<AnalyzedInstructionsItem> analyzedInstructions;
+    @SerializedName("analyzedInstructions")
+    private List<AnalyzedInstructionsItem> analyzedInstructions;
 
-	@SerializedName("glutenFree")
-	private boolean glutenFree;
+    @SerializedName("glutenFree")
+    private boolean glutenFree;
 
-	@SerializedName("veryPopular")
-	private boolean veryPopular;
+    @SerializedName("veryPopular")
+    private boolean veryPopular;
 
-	@SerializedName("healthScore")
-	private int healthScore;
+    @SerializedName("healthScore")
+    private int healthScore;
 
-	@SerializedName("title")
-	private String title;
+    @SerializedName("nutrition")
+    private RecipeNutritionValue nutrition;
 
-	@SerializedName("diets")
-	private List<String> diets;
+    @SerializedName("title")
+    private String title;
 
-	@SerializedName("aggregateLikes")
-	private int aggregateLikes;
+    @SerializedName("diets")
+    private List<String> diets;
 
-	@SerializedName("creditsText")
-	private String creditsText;
+    @SerializedName("aggregateLikes")
+    private int aggregateLikes;
 
-	@SerializedName("readyInMinutes")
-	private int readyInMinutes;
+    @SerializedName("creditsText")
+    private String creditsText;
 
-	@SerializedName("sourceUrl")
-	private String sourceUrl;
+    @SerializedName("readyInMinutes")
+    private int readyInMinutes;
 
-	@SerializedName("dairyFree")
-	private boolean dairyFree;
+    @SerializedName("sourceUrl")
+    private String sourceUrl;
 
-	@SerializedName("servings")
-	private int servings;
+    @SerializedName("dairyFree")
+    private boolean dairyFree;
 
-	@SerializedName("vegetarian")
-	private boolean vegetarian;
+    @SerializedName("servings")
+    private int servings;
 
-	@SerializedName("id")
-	private int id;
+    @SerializedName("vegetarian")
+    private boolean vegetarian;
 
-	@SerializedName("preparationMinutes")
-	private Object preparationMinutes;
+    @SerializedName("id")
+    private int id;
 
-	@SerializedName("imageType")
-	private String imageType;
+    @SerializedName("preparationMinutes")
+    private int preparationMinutes;
 
-	@SerializedName("summary")
-	private String summary;
+    @SerializedName("imageType")
+    private String imageType;
 
-	@SerializedName("cookingMinutes")
-	private Object cookingMinutes;
+    @SerializedName("summary")
+    private String summary;
 
-	@SerializedName("image")
-	private String image;
+    @SerializedName("cookingMinutes")
+    private Object cookingMinutes;
 
-	@SerializedName("veryHealthy")
-	private boolean veryHealthy;
+    @SerializedName("image")
+    private String image;
 
-	@SerializedName("vegan")
-	private boolean vegan;
+    @SerializedName("veryHealthy")
+    private boolean veryHealthy;
 
-	@SerializedName("cheap")
-	private boolean cheap;
+    @SerializedName("vegan")
+    private boolean vegan;
 
-	@SerializedName("extendedIngredients")
-	private List<ExtendedIngredientsItem> extendedIngredients;
+    @SerializedName("cheap")
+    private boolean cheap;
 
-	@SerializedName("dishTypes")
-	private List<String> dishTypes;
+    @SerializedName("extendedIngredients")
+    private List<ExtendedIngredientsItem> extendedIngredients;
 
-	@SerializedName("gaps")
-	private String gaps;
+    @SerializedName("dishTypes")
+    private List<String> dishTypes;
 
-	@SerializedName("cuisines")
-	private List<Object> cuisines;
+    @SerializedName("gaps")
+    private String gaps;
 
-	@SerializedName("lowFodmap")
-	private boolean lowFodmap;
+    @SerializedName("cuisines")
+    private List<Object> cuisines;
 
-	@SerializedName("license")
-	private String license;
+    @SerializedName("lowFodmap")
+    private boolean lowFodmap;
 
-	@SerializedName("weightWatcherSmartPoints")
-	private int weightWatcherSmartPoints;
+    @SerializedName("license")
+    private String license;
 
-	@SerializedName("occasions")
-	private List<Object> occasions;
+    @SerializedName("weightWatcherSmartPoints")
+    private int weightWatcherSmartPoints;
 
-	@SerializedName("pricePerServing")
-	private Object pricePerServing;
+    @SerializedName("occasions")
+    private List<Object> occasions;
 
-	@SerializedName("spoonacularScore")
-	private Object spoonacularScore;
+    @SerializedName("pricePerServing")
+    private Object pricePerServing;
 
-	@SerializedName("sourceName")
-	private String sourceName;
+    @SerializedName("spoonacularScore")
+    private Object spoonacularScore;
 
-	@SerializedName("originalId")
-	private Object originalId;
+    @SerializedName("sourceName")
+    private String sourceName;
 
-	@SerializedName("spoonacularSourceUrl")
-	private String spoonacularSourceUrl;
+    @SerializedName("originalId")
+    private Object originalId;
 
-	public void setInstructions(String instructions){
-		this.instructions = instructions;
-	}
+    @SerializedName("spoonacularSourceUrl")
+    private String spoonacularSourceUrl;
 
-	public String getInstructions(){
-		return instructions;
-	}
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
 
-	public void setSustainable(boolean sustainable){
-		this.sustainable = sustainable;
-	}
+    public String getInstructions() {
+        return instructions;
+    }
 
-	public boolean isSustainable(){
-		return sustainable;
-	}
+    public void setSustainable(boolean sustainable) {
+        this.sustainable = sustainable;
+    }
 
-	public void setAnalyzedInstructions(List<AnalyzedInstructionsItem> analyzedInstructions){
-		this.analyzedInstructions = analyzedInstructions;
-	}
+    public boolean isSustainable() {
+        return sustainable;
+    }
 
-	public List<AnalyzedInstructionsItem> getAnalyzedInstructions(){
-		return analyzedInstructions;
-	}
+    public void setAnalyzedInstructions(List<AnalyzedInstructionsItem> analyzedInstructions) {
+        this.analyzedInstructions = analyzedInstructions;
+    }
 
-	public void setGlutenFree(boolean glutenFree){
-		this.glutenFree = glutenFree;
-	}
+    public List<AnalyzedInstructionsItem> getAnalyzedInstructions() {
+        return analyzedInstructions;
+    }
 
-	public boolean isGlutenFree(){
-		return glutenFree;
-	}
+    public void setGlutenFree(boolean glutenFree) {
+        this.glutenFree = glutenFree;
+    }
 
-	public void setVeryPopular(boolean veryPopular){
-		this.veryPopular = veryPopular;
-	}
+    public boolean isGlutenFree() {
+        return glutenFree;
+    }
 
-	public boolean isVeryPopular(){
-		return veryPopular;
-	}
+    public void setVeryPopular(boolean veryPopular) {
+        this.veryPopular = veryPopular;
+    }
 
-	public void setHealthScore(int healthScore){
-		this.healthScore = healthScore;
-	}
+    public boolean isVeryPopular() {
+        return veryPopular;
+    }
 
-	public int getHealthScore(){
-		return healthScore;
-	}
+    public void setHealthScore(int healthScore) {
+        this.healthScore = healthScore;
+    }
 
-	public void setTitle(String title){
-		this.title = title;
-	}
+    public int getHealthScore() {
+        return healthScore;
+    }
 
-	public String getTitle(){
-		return title;
-	}
+    public RecipeNutritionValue getNutrition() {
+        return nutrition;
+    }
 
-	public void setDiets(List<String> diets){
-		this.diets = diets;
-	}
+    public void setNutrition(RecipeNutritionValue nutrition) {
+        this.nutrition = nutrition;
+    }
 
-	public List<String> getDiets(){
-		return diets;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setAggregateLikes(int aggregateLikes){
-		this.aggregateLikes = aggregateLikes;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public int getAggregateLikes(){
-		return aggregateLikes;
-	}
+    public void setDiets(List<String> diets) {
+        this.diets = diets;
+    }
 
-	public void setCreditsText(String creditsText){
-		this.creditsText = creditsText;
-	}
+    public List<String> getDiets() {
+        return diets;
+    }
 
-	public String getCreditsText(){
-		return creditsText;
-	}
+    public void setAggregateLikes(int aggregateLikes) {
+        this.aggregateLikes = aggregateLikes;
+    }
 
-	public void setReadyInMinutes(int readyInMinutes){
-		this.readyInMinutes = readyInMinutes;
-	}
+    public int getAggregateLikes() {
+        return aggregateLikes;
+    }
 
-	public int getReadyInMinutes(){
-		return readyInMinutes;
-	}
+    public void setCreditsText(String creditsText) {
+        this.creditsText = creditsText;
+    }
 
-	public void setSourceUrl(String sourceUrl){
-		this.sourceUrl = sourceUrl;
-	}
+    public String getCreditsText() {
+        return creditsText;
+    }
 
-	public String getSourceUrl(){
-		return sourceUrl;
-	}
+    public void setReadyInMinutes(int readyInMinutes) {
+        this.readyInMinutes = readyInMinutes;
+    }
 
-	public void setDairyFree(boolean dairyFree){
-		this.dairyFree = dairyFree;
-	}
+    public int getReadyInMinutes() {
+        return readyInMinutes;
+    }
 
-	public boolean isDairyFree(){
-		return dairyFree;
-	}
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
+    }
 
-	public void setServings(int servings){
-		this.servings = servings;
-	}
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
 
-	public int getServings(){
-		return servings;
-	}
+    public void setDairyFree(boolean dairyFree) {
+        this.dairyFree = dairyFree;
+    }
 
-	public void setVegetarian(boolean vegetarian){
-		this.vegetarian = vegetarian;
-	}
+    public boolean isDairyFree() {
+        return dairyFree;
+    }
 
-	public boolean isVegetarian(){
-		return vegetarian;
-	}
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
 
-	public void setId(int id){
-		this.id = id;
-	}
+    public int getServings() {
+        return servings;
+    }
 
-	public int getId(){
-		return id;
-	}
+    public void setVegetarian(boolean vegetarian) {
+        this.vegetarian = vegetarian;
+    }
 
-	public void setPreparationMinutes(Object preparationMinutes){
-		this.preparationMinutes = preparationMinutes;
-	}
+    public boolean isVegetarian() {
+        return vegetarian;
+    }
 
-	public Object getPreparationMinutes(){
-		return preparationMinutes;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setImageType(String imageType){
-		this.imageType = imageType;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getImageType(){
-		return imageType;
-	}
+    public void setPreparationMinutes(int preparationMinutes) {
+        this.preparationMinutes = preparationMinutes;
+    }
 
-	public void setSummary(String summary){
-		this.summary = summary;
-	}
+    public int getPreparationMinutes() {
+        return preparationMinutes;
+    }
 
-	public String getSummary(){
-		return summary;
-	}
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
 
-	public void setCookingMinutes(Object cookingMinutes){
-		this.cookingMinutes = cookingMinutes;
-	}
+    public String getImageType() {
+        return imageType;
+    }
 
-	public Object getCookingMinutes(){
-		return cookingMinutes;
-	}
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
-	public void setImage(String image){
-		this.image = image;
-	}
+    public String getSummary() {
+        return summary;
+    }
 
-	public String getImage(){
-		return image;
-	}
+    public void setCookingMinutes(Object cookingMinutes) {
+        this.cookingMinutes = cookingMinutes;
+    }
 
-	public void setVeryHealthy(boolean veryHealthy){
-		this.veryHealthy = veryHealthy;
-	}
+    public Object getCookingMinutes() {
+        return cookingMinutes;
+    }
 
-	public boolean isVeryHealthy(){
-		return veryHealthy;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public void setVegan(boolean vegan){
-		this.vegan = vegan;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public boolean isVegan(){
-		return vegan;
-	}
+    public void setVeryHealthy(boolean veryHealthy) {
+        this.veryHealthy = veryHealthy;
+    }
 
-	public void setCheap(boolean cheap){
-		this.cheap = cheap;
-	}
+    public boolean isVeryHealthy() {
+        return veryHealthy;
+    }
 
-	public boolean isCheap(){
-		return cheap;
-	}
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
+    }
 
-	public void setExtendedIngredients(List<ExtendedIngredientsItem> extendedIngredients){
-		this.extendedIngredients = extendedIngredients;
-	}
+    public boolean isVegan() {
+        return vegan;
+    }
 
-	public List<ExtendedIngredientsItem> getExtendedIngredients(){
-		return extendedIngredients;
-	}
+    public void setCheap(boolean cheap) {
+        this.cheap = cheap;
+    }
 
-	public void setDishTypes(List<String> dishTypes){
-		this.dishTypes = dishTypes;
-	}
+    public boolean isCheap() {
+        return cheap;
+    }
 
-	public List<String> getDishTypes(){
-		return dishTypes;
-	}
+    public void setExtendedIngredients(List<ExtendedIngredientsItem> extendedIngredients) {
+        this.extendedIngredients = extendedIngredients;
+    }
 
-	public void setGaps(String gaps){
-		this.gaps = gaps;
-	}
+    public List<ExtendedIngredientsItem> getExtendedIngredients() {
+        return extendedIngredients;
+    }
 
-	public String getGaps(){
-		return gaps;
-	}
+    public void setDishTypes(List<String> dishTypes) {
+        this.dishTypes = dishTypes;
+    }
 
-	public void setCuisines(List<Object> cuisines){
-		this.cuisines = cuisines;
-	}
+    public List<String> getDishTypes() {
+        return dishTypes;
+    }
 
-	public List<Object> getCuisines(){
-		return cuisines;
-	}
+    public void setGaps(String gaps) {
+        this.gaps = gaps;
+    }
 
-	public void setLowFodmap(boolean lowFodmap){
-		this.lowFodmap = lowFodmap;
-	}
+    public String getGaps() {
+        return gaps;
+    }
 
-	public boolean isLowFodmap(){
-		return lowFodmap;
-	}
+    public void setCuisines(List<Object> cuisines) {
+        this.cuisines = cuisines;
+    }
 
-	public void setLicense(String license){
-		this.license = license;
-	}
+    public List<Object> getCuisines() {
+        return cuisines;
+    }
 
-	public String getLicense(){
-		return license;
-	}
+    public void setLowFodmap(boolean lowFodmap) {
+        this.lowFodmap = lowFodmap;
+    }
 
-	public void setWeightWatcherSmartPoints(int weightWatcherSmartPoints){
-		this.weightWatcherSmartPoints = weightWatcherSmartPoints;
-	}
+    public boolean isLowFodmap() {
+        return lowFodmap;
+    }
 
-	public int getWeightWatcherSmartPoints(){
-		return weightWatcherSmartPoints;
-	}
+    public void setLicense(String license) {
+        this.license = license;
+    }
 
-	public void setOccasions(List<Object> occasions){
-		this.occasions = occasions;
-	}
+    public String getLicense() {
+        return license;
+    }
 
-	public List<Object> getOccasions(){
-		return occasions;
-	}
+    public void setWeightWatcherSmartPoints(int weightWatcherSmartPoints) {
+        this.weightWatcherSmartPoints = weightWatcherSmartPoints;
+    }
 
-	public void setPricePerServing(Object pricePerServing){
-		this.pricePerServing = pricePerServing;
-	}
+    public int getWeightWatcherSmartPoints() {
+        return weightWatcherSmartPoints;
+    }
 
-	public Object getPricePerServing(){
-		return pricePerServing;
-	}
+    public void setOccasions(List<Object> occasions) {
+        this.occasions = occasions;
+    }
 
-	public void setSpoonacularScore(Object spoonacularScore){
-		this.spoonacularScore = spoonacularScore;
-	}
+    public List<Object> getOccasions() {
+        return occasions;
+    }
 
-	public Object getSpoonacularScore(){
-		return spoonacularScore;
-	}
+    public void setPricePerServing(Object pricePerServing) {
+        this.pricePerServing = pricePerServing;
+    }
 
-	public void setSourceName(String sourceName){
-		this.sourceName = sourceName;
-	}
+    public Object getPricePerServing() {
+        return pricePerServing;
+    }
 
-	public String getSourceName(){
-		return sourceName;
-	}
+    public void setSpoonacularScore(Object spoonacularScore) {
+        this.spoonacularScore = spoonacularScore;
+    }
 
-	public void setOriginalId(Object originalId){
-		this.originalId = originalId;
-	}
+    public Object getSpoonacularScore() {
+        return spoonacularScore;
+    }
 
-	public Object getOriginalId(){
-		return originalId;
-	}
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
 
-	public void setSpoonacularSourceUrl(String spoonacularSourceUrl){
-		this.spoonacularSourceUrl = spoonacularSourceUrl;
-	}
+    public String getSourceName() {
+        return sourceName;
+    }
 
-	public String getSpoonacularSourceUrl(){
-		return spoonacularSourceUrl;
-	}
+    public void setOriginalId(Object originalId) {
+        this.originalId = originalId;
+    }
+
+    public Object getOriginalId() {
+        return originalId;
+    }
+
+    public void setSpoonacularSourceUrl(String spoonacularSourceUrl) {
+        this.spoonacularSourceUrl = spoonacularSourceUrl;
+    }
+
+    public String getSpoonacularSourceUrl() {
+        return spoonacularSourceUrl;
+    }
 }

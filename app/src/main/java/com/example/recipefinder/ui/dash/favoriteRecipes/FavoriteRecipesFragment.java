@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.dash.favouriterecipes;
+package com.example.recipefinder.ui.dash.favoriteRecipes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,20 +11,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.recipefinder.api.RepositoryUseCase;
-import com.example.recipefinder.databinding.FragmentFavouriteRecipesBinding;
+import com.example.recipefinder.databinding.FragmentFavoriteRecipesBinding;
 import com.example.recipefinder.shared.itemDecorators.HorizontalSpaceItemDecoration;
 import com.example.recipefinder.shared.itemDecorators.VerticalSpaceItemDecoration;
 import com.example.recipefinder.ui.dash.home.adapters.RecipiesAdapter;
 
-public class FavouriteRecipesFragment extends Fragment {
+public class FavoriteRecipesFragment extends Fragment {
 
-    private FragmentFavouriteRecipesBinding binding;
+    private FragmentFavoriteRecipesBinding binding;
     private RecipiesAdapter recipiesAdapter;
     private RepositoryUseCase repositoryUseCase;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentFavouriteRecipesBinding.inflate(inflater, container, false);
+        binding = FragmentFavoriteRecipesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -33,13 +33,6 @@ public class FavouriteRecipesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupRepository();
         setupRecipesRecyclerView();
-
-//        repositoryUseCase.querySelectRecipesByTitle(
-//                SearchResultsFragmentArgs.fromBundle(getArguments()).getSearchQuery(),
-//                data -> {
-//                    recipiesAdapter.setData(data);
-//                }
-//        );
     }
 
     private void setupRepository() {

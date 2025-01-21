@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.dash.shoppinglist;
+package com.example.recipefinder.ui.dash.shoppingList;
 
 import android.util.SparseArray;
 
@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.recipefinder.ui.dash.shoppinglist.subfragments.ByCategoryFragment;
-import com.example.recipefinder.ui.dash.shoppinglist.subfragments.ByRecipeFragment;
+import com.example.recipefinder.ui.dash.shoppingList.subFragments.ByCategoryFragment;
+import com.example.recipefinder.ui.dash.shoppingList.subFragments.ByRecipeFragment;
 
 class CustomViewPagerAdapter extends FragmentStateAdapter {
     private final SparseArray<Fragment> fragmentMap = new SparseArray<>();

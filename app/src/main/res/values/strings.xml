@@ -23,11 +23,15 @@
     <string name="name_of_the_dish">Name of the dish</string>
     <string name="preparation_time_label">Preparation time</string>
     <string name="preparation_time_result">15m</string>
-    <string name="cooking_time_label">Cooking time</string>
+    <string name="ready_in_minutes_label">Ready in minutes</string>
     <string name="cooking_time_result">10h 15m</string>
     <string name="number_of_servings_label">Number of servings</string>
     <string name="number_of_servings_result">4 servings</string>
-    <string name="rating_of_the_dish">4.5</string>
-    <string name="number_of_ratings">(2.4K)</string>
+    <string name="rating_of_the_dish">3.5</string>
+    <string name="aggregate_likes">(200)</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="step_by_step">Step by step</string>
+    <string name="nutrition_values">Nutrition values</string>
+    <string name="tags">Tags</string>
 
 </resources>

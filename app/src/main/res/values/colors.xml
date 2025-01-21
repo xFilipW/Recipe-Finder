@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="mainColor">#68DAFF</color>
+    <color name="mainColorDarker">#53AECC</color>
+    <color name="mainColorLighter">#7CE1FF</color>
     <color name="black">#FF000000</color>
     <color name="whiteFrost">#FCFBFC</color>
     <color name="nearlyWhite">#F0F0F0</color>
     <color name="grey">#808080</color>
-    <color name="mainColor">#68DAFF</color>
-    <color name="ripple_default">#FFE0E0E0</color>
+    <color name="rippleDefaultColor">#FFE0E0E0</color>
+    <color name="emptyStarColor">#E6E6E6</color>
 </resources>

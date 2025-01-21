@@ -13,7 +13,7 @@ import com.example.recipefinder.R;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.databinding.ListItemRecipesBinding;
 import com.example.recipefinder.ui.dash.home.viewHolders.RecipiesViewHolder;
-import com.example.recipefinder.ui.recipedetails.OnItemClickListenerEx;
+import com.example.recipefinder.ui.recipeDetails.OnItemClickListenerEx;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/recipeDetailsFragment"
-        android:name="com.example.recipefinder.ui.recipedetails.RecipeDetailsFragment"
+        android:name="com.example.recipefinder.ui.recipeDetails.RecipeDetailsFragment"
         android:label="Recipe Details"
         tools:layout="@layout/fragment_recipe_details">
         <argument

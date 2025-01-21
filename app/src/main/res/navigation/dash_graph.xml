@@ -12,14 +12,14 @@
 
     <fragment
         android:id="@+id/shoppingListFragment"
-        android:name="com.example.recipefinder.ui.dash.shoppinglist.ShoppingListFragment"
+        android:name="com.example.recipefinder.ui.dash.shoppingList.ShoppingListFragment"
         android:label="Random"
         tools:layout="@layout/fragment_shopping_list" />
 
     <fragment
-        android:id="@+id/favouriteRecipesFragment"
-        android:name="com.example.recipefinder.ui.dash.favouriterecipes.FavouriteRecipesFragment"
-        android:label="Favourite"
-        tools:layout="@layout/fragment_favourite_recipes" />
+        android:id="@+id/favoriteRecipesFragment"
+        android:name="com.example.recipefinder.ui.dash.favoriteRecipes.FavoriteRecipesFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite_recipes" />
 
 </navigation>

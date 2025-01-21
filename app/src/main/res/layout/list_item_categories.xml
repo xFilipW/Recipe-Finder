@@ -30,7 +30,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:srcCompat="@drawable/ic_favourite" />
+                app:srcCompat="@drawable/ic_favorite" />
 
             <TextView
                 android:id="@+id/tvTitle"

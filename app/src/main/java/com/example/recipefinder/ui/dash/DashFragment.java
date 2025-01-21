@@ -40,21 +40,21 @@ public class DashFragment extends Fragment {
             throw new IllegalArgumentException("NavController missing!");
         }
 
-        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_shopping_cart));
-        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
-        binding.mewoBottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_favourite));
+        binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_shopping_cart));
+        binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
+        binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_favorite));
 
-        binding.mewoBottomNavigationView.setOnShowListener(item -> {
+        binding.mewBottomNavigationView.setOnShowListener(item -> {
             // TODO: 09/09/2024
         });
 
-        binding.mewoBottomNavigationView.setOnReselectListener(item -> {
+        binding.mewBottomNavigationView.setOnReselectListener(item -> {
             // TODO: 08/01/2025
         });
 
-        binding.mewoBottomNavigationView.show(2, true);
+        binding.mewBottomNavigationView.show(2, false);
 
-        binding.mewoBottomNavigationView.setOnClickMenuListener(model -> {
+        binding.mewBottomNavigationView.setOnClickMenuListener(model -> {
             switch (model.getId()) {
                 case 1:
                     navController.navigate(R.id.shoppingListFragment);
@@ -63,7 +63,7 @@ public class DashFragment extends Fragment {
                     navController.navigate(R.id.homeFragment);
                     break;
                 case 3:
-                    navController.navigate(R.id.favouriteRecipesFragment);
+                    navController.navigate(R.id.favoriteRecipesFragment);
                     break;
             }
         });

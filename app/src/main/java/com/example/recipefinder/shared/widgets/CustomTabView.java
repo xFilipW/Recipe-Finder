@@ -12,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.example.recipefinder.R;
-import com.example.recipefinder.ui.dash.shoppinglist.listeners.OnTabSelected;
+import com.example.recipefinder.ui.dash.shoppingList.listeners.OnTabSelected;
 
 public class CustomTabView extends ConstraintLayout {
 

@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.dash.shoppinglist.listeners;
+package com.example.recipefinder.ui.dash.shoppingList.listeners;
 
 public interface OnTabSelected {
     void onTabSelected(int tabNumber);

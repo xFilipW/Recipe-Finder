@@ -23,7 +23,7 @@ import com.example.recipefinder.databinding.FragmentHomeBinding;
 import com.example.recipefinder.repository.Repository;
 import com.example.recipefinder.shared.itemDecorators.HorizontalSpaceItemDecoration;
 import com.example.recipefinder.shared.itemDecorators.VerticalSpaceItemDecoration;
-import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
+import com.example.recipefinder.shared.listeners.RandomRecipesResponseListener;
 import com.example.recipefinder.shared.watchers.SimpleTextWatcher;
 import com.example.recipefinder.ui.dash.home.adapters.CategoriesAdapter;
 import com.example.recipefinder.ui.dash.home.adapters.RecipiesAdapter;
@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
 
         toggleLoadingState(true);
 
-        repositoryUseCase.getRecipes(new RandomRecipeResponseListener() {
+        repositoryUseCase.getRecipes(new RandomRecipesResponseListener() {
             @Override
             public void onComplete(@NonNull List<RecipeTable> allRecipes) {
                 if (allRecipes.isEmpty()) {

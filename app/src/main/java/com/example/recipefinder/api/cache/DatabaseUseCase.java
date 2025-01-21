@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.recipefinder.api.models.RecipeDetailsItem;
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
 
@@ -109,5 +110,22 @@ public class DatabaseUseCase {
         sharedPreferences.edit()
                 .putLong(LAST_UPDATE_TIME_KEY, System.currentTimeMillis())
                 .apply();
+    }
+
+    public void insertRecipeDetailsToFavorite(RecipeDetailsItem currentRecipeDetailsItem, OnQueryCompleteListener<Void> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            appDatabase.recipeTableDao().insertRecipeDetails(
+                    currentRecipeDetailsItem.getId(),
+                    currentRecipeDetailsItem.getTitle(),
+                    currentRecipeDetailsItem.getExtendedIngredients(),
+                    currentRecipeDetailsItem.getAnalyzedInstructions(),
+                    currentRecipeDetailsItem.getNutrition(),
+                    currentRecipeDetailsItem.getImage(),
+                    currentRecipeDetailsItem.
+            );
+            handler.post(() -> listener.onComplete(null));
+        });
     }
 }

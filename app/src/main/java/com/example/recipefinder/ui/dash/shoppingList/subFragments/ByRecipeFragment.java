@@ -1,4 +1,4 @@
-package com.example.recipefinder.ui.dash.shoppinglist.subfragments;
+package com.example.recipefinder.ui.dash.shoppingList.subFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.recipefinder.databinding.FragmentByRecipeBinding;
-import com.example.recipefinder.ui.dash.shoppinglist.listeners.ShoppingListListener;
+import com.example.recipefinder.ui.dash.shoppingList.listeners.ShoppingListListener;
 
 public class ByRecipeFragment extends Fragment implements ShoppingListListener {
 

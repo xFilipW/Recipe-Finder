@@ -7,18 +7,17 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "recipeDetails")
 public class RecipeDetailsTable {
 
-    public RecipeDetailsTable(long id, long recipeId, String json, String title, String image,
-                              int favourite, String ingredients, String stepByStep, String nutritionValue, String tags) {
+    public RecipeDetailsTable(long id, long recipeId, String title, String image,
+                              int favorite, String ingredients, String stepByStep, String nutritionValue, String tags) {
         this.id = id;
         this.recipeId = recipeId;
-        this.json = json;
         this.title = title;
         this.ingredients = ingredients;
         this.stepByStep = stepByStep;
         this.nutritionValue = nutritionValue;
         this.tags = tags;
         this.image = image;
-        this.favourite = favourite;
+        this.favorite = favorite;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -28,11 +27,48 @@ public class RecipeDetailsTable {
     @ColumnInfo(name = "recipeId")
     private long recipeId;
 
-    @ColumnInfo(name = "json")
-    private String json;
-
     @ColumnInfo(name = "title")
     private String title;
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public String getStepByStep() {
+        return stepByStep;
+    }
+
+    public void setStepByStep(String stepByStep) {
+        this.stepByStep = stepByStep;
+    }
+
+    public String getNutritionValue() {
+        return nutritionValue;
+    }
+
+    public void setNutritionValue(String nutritionValue) {
+        this.nutritionValue = nutritionValue;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getDishTypes() {
+        return dishTypes;
+    }
+
+    public void setDishTypes(String dishTypes) {
+        this.dishTypes = dishTypes;
+    }
 
     @ColumnInfo(name = "ingredients")
     private String ingredients;
@@ -52,8 +88,8 @@ public class RecipeDetailsTable {
     @ColumnInfo(name = "image")
     private String image;
 
-    @ColumnInfo(name = "favourite", defaultValue = "0")
-    private int favourite;
+    @ColumnInfo(name = "favorite" , defaultValue = "0")
+    private int favorite;
 
     public long getId() {
         return id;
@@ -61,14 +97,6 @@ public class RecipeDetailsTable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getJson() {
-        return json;
-    }
-
-    public void setJson(String json) {
-        this.json = json;
     }
 
     public String getTitle() {
@@ -87,12 +115,12 @@ public class RecipeDetailsTable {
         this.image = image;
     }
 
-    public int getFavourite() {
-        return favourite;
+    public int getFavorite() {
+        return favorite;
     }
 
-    public void setFavourite(int favourite) {
-        this.favourite = favourite;
+    public void setFavorite(int favorite) {
+        this.favorite = favorite;
     }
 
     public long getRecipeId() {

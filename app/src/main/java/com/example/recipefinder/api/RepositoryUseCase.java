@@ -10,10 +10,12 @@ import androidx.annotation.NonNull;
 import com.example.recipefinder.R;
 import com.example.recipefinder.api.cache.DatabaseUseCase;
 import com.example.recipefinder.api.cache.OnQueryCompleteListener;
-import com.example.recipefinder.api.models.RandomRecipeApiResponse;
+import com.example.recipefinder.api.models.RandomRecipesApiResponse;
+import com.example.recipefinder.api.models.RecipeDetailsApiResponse;
+import com.example.recipefinder.api.models.RecipeDetailsItem;
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
-import com.example.recipefinder.shared.listeners.RandomRecipeResponseListener;
+import com.example.recipefinder.shared.listeners.RandomRecipesResponseListener;
 import com.example.recipefinder.shared.listeners.RecipeDetailsResponseListener;
 import com.example.recipefinder.shared.utils.RecipeUtils;
 
@@ -26,6 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class RepositoryUseCase {
@@ -50,7 +53,7 @@ public class RepositoryUseCase {
                 .build();
     }
 
-    public void getRecipes(RandomRecipeResponseListener listener, String category) {
+    public void getRecipes(RandomRecipesResponseListener listener, String category) {
         Log.d(TAG, "getRandomRecipes: fetching recipes, category=[" + category + "]");
         queryRecipes(cachedRecipes -> {
             Log.d(TAG, "getRandomRecipes: cached recipes size: " + cachedRecipes.size());
@@ -59,10 +62,10 @@ public class RepositoryUseCase {
                     expired -> {
                         if (expired) {
                             Log.d(TAG, "getRandomRecipes: cache expired, fetching from API");
-                            fetchRecipesFromApi(category, listener);
+                            fetchRandomRecipesFromApi(category, listener);
                         } else if (cachedRecipes.isEmpty()) {
                             Log.d(TAG, "getRandomRecipes: cache empty, fetching from API");
-                            fetchRecipesFromApi(category, listener);
+                            fetchRandomRecipesFromApi(category, listener);
                         } else {
                             Log.d(TAG, "getRandomRecipes: cache not expired, fetching from cache");
                             if (category == null || category.equals(ALL_RECIPES)) {
@@ -88,18 +91,15 @@ public class RepositoryUseCase {
         databaseUseCase.queryRecipesByPhraseAndCategory(phrase, category, listener);
     }
 
-    private void fetchRecipesFromApi(String category, RandomRecipeResponseListener listener) {
-        callGetRecipesRandom(category, new Callback<RandomRecipeApiResponse>() {
+    private void fetchRandomRecipesFromApi(String category, RandomRecipesResponseListener listener) {
+        callGetRandomRecipes(category, new Callback<RandomRecipesApiResponse>() {
             @Override
-            public void onResponse(@NonNull Call<RandomRecipeApiResponse> call, @NonNull Response<RandomRecipeApiResponse> response) {
+            public void onResponse(@NonNull Call<RandomRecipesApiResponse> call, @NonNull Response<RandomRecipesApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "fetchRecipesFromApi: response successful");
-
-                    ArrayList<Recipe> allRecipes = new ArrayList<>();
+                    ArrayList<RecipeDetailsItem> allRecipes = new ArrayList<>();
                     if (response.body().recipes != null) {
                         allRecipes.addAll(response.body().recipes);
                     }
-                    Log.d(TAG, "fetchRecipesFromApi: after response, got " + allRecipes.size() + " recipes");
 
                     queryRemoveRecipes(data -> queryInsertRecipes(allRecipes, listener));
                 } else {
@@ -108,33 +108,57 @@ public class RepositoryUseCase {
             }
 
             @Override
-            public void onFailure(@NonNull Call<RandomRecipeApiResponse> call, @NonNull Throwable throwable) {
+            public void onFailure(@NonNull Call<RandomRecipesApiResponse> call, @NonNull Throwable throwable) {
                 listener.onError(throwable.getMessage());
             }
         });
     }
 
     private void fetchRecipeDetailsFromApi(long id, RecipeDetailsResponseListener listener) {
-        callGetRecipeDetails(id, new Callback<>(RecipeDetailsApiResponse));
+        callGetRecipeDetails(id, new Callback<RecipeDetailsApiResponse>() {
+            @Override
+            public void onResponse(Call<RecipeDetailsApiResponse> call, Response<RecipeDetailsApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    RecipeDetailsItem body = response.body();
+                    listener.onComplete(body);
+                } else {
+                    listener.onError("Response body or response body recipes is null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecipeDetailsApiResponse> call, Throwable throwable) {
+                listener.onError(throwable.getMessage());
+            }
+        });
     }
 
     private void queryRemoveRecipes(OnQueryCompleteListener<Integer> listener) {
         databaseUseCase.queryRemoveRecipes(listener);
     }
 
-    private void queryInsertRecipes(List<Recipe> recipes, RandomRecipeResponseListener listener) {
+    private void queryInsertRecipes(List<RecipeDetailsItem> recipes, RandomRecipesResponseListener listener) {
         databaseUseCase.queryInsertRecipes(RecipeUtils.mapList(recipes), longs -> {
             databaseUseCase.saveLastUpdate();
             listener.onComplete(RecipeUtils.mapList(recipes));
         });
     }
 
-    private void callGetRecipesRandom(String category, Callback<RandomRecipeApiResponse> callback) {
-        CallRandomRecipes callRandomRecipes = retrofit.create(CallRandomRecipes.class);
-        Call<RandomRecipeApiResponse> call = callRandomRecipes.getRecipesRandom(
+    private void callGetRandomRecipes(String category, Callback<RandomRecipesApiResponse> callback) {
+        RecipesAPI recipesAPI = retrofit.create(RecipesAPI.class);
+        Call<RandomRecipesApiResponse> call = recipesAPI.getRecipesRandom(
                 context.getString(R.string.api_key),
                 FETCH_RECIPES_COUNT,
                 category != null ? category : ""
+        );
+
+        call.enqueue(callback);
+    }
+
+    private void callGetRecipeDetails(long id, Callback<RecipeDetailsApiResponse> callback) {
+        RecipesAPI recipesAPI = retrofit.create(RecipesAPI.class);
+        Call<RecipeDetailsApiResponse> call = recipesAPI.getRecipeDetails(
+                String.valueOf(id), context.getString(R.string.api_key)
         );
 
         call.enqueue(callback);
@@ -151,12 +175,22 @@ public class RepositoryUseCase {
         return filteredRecipes;
     }
 
-    private interface CallRandomRecipes {
+    public void addRecipeDetailsToFavorite(RecipeDetailsItem currentRecipeDetailsItem) {
+        databaseUseCase.insertRecipeDetailsToFavorite(currentRecipeDetailsItem);
+    }
+
+    private interface RecipesAPI {
         @GET("recipes/random")
-        Call<RandomRecipeApiResponse> getRecipesRandom(
+        Call<RandomRecipesApiResponse> getRecipesRandom(
                 @Query("apiKey") String apiKey,
                 @Query("number") String number,
                 @Query("tags") String tags
+        );
+
+        @GET("recipes/{id}/information")
+        Call<RecipeDetailsApiResponse> getRecipeDetails(
+                @Path("id") String id,
+                @Query("apiKey") String apiKey
         );
     }
 }
