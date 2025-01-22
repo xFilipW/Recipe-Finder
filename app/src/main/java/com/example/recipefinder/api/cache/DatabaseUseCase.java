@@ -122,8 +122,7 @@ public class DatabaseUseCase {
                     currentRecipeDetailsItem.getExtendedIngredients(),
                     currentRecipeDetailsItem.getAnalyzedInstructions(),
                     currentRecipeDetailsItem.getNutrition(),
-                    currentRecipeDetailsItem.getImage(),
-                    currentRecipeDetailsItem.
+                    currentRecipeDetailsItem.getImage()
             );
             handler.post(() -> listener.onComplete(null));
         });

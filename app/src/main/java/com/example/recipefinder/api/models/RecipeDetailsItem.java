@@ -285,8 +285,8 @@ public class RecipeDetailsItem {
         this.cookingMinutes = cookingMinutes;
     }
 
-    public Object getCookingMinutes() {
-        return cookingMinutes;
+    public int getCookingMinutes() {
+        return (int) cookingMinutes;
     }
 
     public void setImage(String image) {

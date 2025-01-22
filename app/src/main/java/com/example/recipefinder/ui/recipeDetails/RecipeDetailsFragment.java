@@ -1,8 +1,6 @@
 package com.example.recipefinder.ui.recipeDetails;
 
-import static com.example.recipefinder.ui.recipeDetails.RecipeDetailsFragment.State.LOADING;
-import static com.example.recipefinder.ui.recipeDetails.RecipeDetailsFragment.State.READY;
-
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +30,7 @@ public class RecipeDetailsFragment extends Fragment {
     private Toast customToast;
     private RecipeDetailsItem currentRecipeDetailsItem;
 
-    enum State {
-        READY, LOADING, IDLE
-    }
+    private enum State { READY, LOADING, IDLE }
 
     private State currentState = State.IDLE;
 
@@ -52,28 +48,14 @@ public class RecipeDetailsFragment extends Fragment {
         long recipeId = RecipeDetailsFragmentArgs.fromBundle(getArguments()).getId();
         repositoryUseCase = new RepositoryUseCase(requireContext());
 
-        setupOnBackPressed();
+        setupBackNavigation();
         setupActionBarListeners();
-        setState(LOADING);
+        updateState(State.LOADING);
         fetchRecipeDetails(recipeId);
     }
 
-    private void setState(State state) {
-        switch (state) {
-            case READY:
-                binding.clLoading.setVisibility(View.GONE);
-                break;
-            case LOADING:
-                binding.clLoading.setVisibility(View.VISIBLE);
-                break;
-            case IDLE:
-                break;
-        }
-    }
-
-    private void setupOnBackPressed() {
-        requireActivity().getOnBackPressedDispatcher().addCallback(
-                getViewLifecycleOwner(),
+    private void setupBackNavigation() {
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
@@ -84,32 +66,8 @@ public class RecipeDetailsFragment extends Fragment {
     }
 
     private void setupActionBarListeners() {
-        binding.ivShoppingCart.setOnClickListener(v -> toggleCartStatus());
-        binding.ivFavorite.setOnClickListener(v -> toggleFavoriteStatus());
-    }
-
-    private void toggleCartStatus() {
-        isInCart = !isInCart;
-        int iconResId = isInCart ? R.drawable.ic_shopping_cart : R.drawable.ic_shopping_cart_outline;
-        String message = isInCart ? "Added to basket" : "Removed from basket";
-        int toastIconResId = isInCart ? R.drawable.ic_check_circle : R.drawable.ic_cancel;
-
-        binding.ivShoppingCart.setImageResource(iconResId);
-        showToast(message, toastIconResId);
-    }
-
-    private void toggleFavoriteStatus() {
-        isFavorite = !isFavorite;
-        int iconResId = isFavorite ? R.drawable.ic_favorite : R.drawable.ic_favorite_outline;
-        String message = isFavorite ? "Added to favorites" : "Removed from favorites";
-        int toastIconResId = isFavorite ? R.drawable.ic_check_circle : R.drawable.ic_cancel;
-
-        binding.ivFavorite.setImageResource(iconResId);
-
-        //zapis do bd
-        repositoryUseCase.addRecipeDetailsToFavorite(currentRecipeDetailsItem);
-
-        showToast(message, toastIconResId);
+        binding.ivShoppingCart.setOnClickListener(v -> updateCartStatus());
+        binding.ivFavorite.setOnClickListener(v -> updateFavoriteStatus());
     }
 
     private void fetchRecipeDetails(long id) {
@@ -117,54 +75,85 @@ public class RecipeDetailsFragment extends Fragment {
             @Override
             public void onComplete(@NonNull RecipeDetailsItem recipeDetailsItem) {
                 currentRecipeDetailsItem = recipeDetailsItem;
-                updatePreparationTime(recipeDetailsItem.getPreparationMinutes());
-                updateLikes(recipeDetailsItem.getAggregateLikes());
-                setState(READY);
+                displayRecipeDetails(recipeDetailsItem);
+                updateState(State.READY);
             }
 
             @Override
             public void onError(String message) {
-                // Handle error if needed
+                showErrorToast("Failed to fetch recipe details");
             }
         });
     }
 
-    private void updatePreparationTime(int preparationTime) {
-        String preparationTimeText = getPreparationTimeText(preparationTime);
-        binding.tvPreparationTimeValue.setText(preparationTimeText);
+    private void displayRecipeDetails(RecipeDetailsItem recipeDetailsItem) {
+        updateView(binding.ivDishPicture, recipeDetailsItem.getImage());
+        updateText(binding.tvNameOfTheDish, recipeDetailsItem.getTitle());
+        updateText(binding.tvReadyInMinutes, recipeDetailsItem.getCookingMinutes() + " min");
+        updateText(binding.tvNumberOfServings, recipeDetailsItem.getServings() + " servings");
+        updateText(binding.tvPreparationTimeValue, getPreparationTimeText(recipeDetailsItem.getPreparationMinutes()));
+        updateText(binding.tvAggregateLikes, "(" + recipeDetailsItem.getAggregateLikes() + ")");
+    }
+
+    private void updateState(State state) {
+        currentState = state;
+        binding.clLoading.setVisibility(state == State.LOADING ? View.VISIBLE : View.GONE);
+    }
+
+    private void updateCartStatus() {
+        toggleState("basket", isInCart = !isInCart, R.drawable.ic_shopping_cart, R.drawable.ic_shopping_cart_outline);
+    }
+
+    private void updateFavoriteStatus() {
+        toggleState("favorites", isFavorite = !isFavorite, R.drawable.ic_favorite, R.drawable.ic_favorite_outline);
+        repositoryUseCase.addRecipeDetailsToFavorite(currentRecipeDetailsItem);
+    }
+
+    private void toggleState(String itemType, boolean isAdded, int addedIconResId, int removedIconResId) {
+        int iconResId = isAdded ? addedIconResId : removedIconResId;
+        String message = isAdded ? "Added to " + itemType : "Removed from " + itemType;
+        int toastIconResId = isAdded ? R.drawable.ic_check_circle : R.drawable.ic_cancel;
+
+        if (itemType.equals("basket")) {
+            binding.ivShoppingCart.setImageResource(iconResId);
+        } else if (itemType.equals("favorites")) {
+            binding.ivFavorite.setImageResource(iconResId);
+        }
+
+        showToast(message, toastIconResId);
+    }
+
+    private void updateText(TextView textView, String text) {
+        textView.setText(text);
+    }
+
+    private void updateView(ImageView imageView, String imageUrl) {
+        imageView.setImageURI(Uri.parse(imageUrl));
     }
 
     private String getPreparationTimeText(int preparationTime) {
-        if (preparationTime < 10) {
-            return "Short";
-        } else if (preparationTime < 20) {
-            return "Medium";
-        } else {
-            return "Long";
-        }
-    }
-
-    private void updateLikes(int aggregateLikes) {
-        binding.tvAggregateLikes.setText("(" + aggregateLikes + ")");
+        if (preparationTime < 10) return "Short";
+        if (preparationTime < 20) return "Medium";
+        return "Long";
     }
 
     private void showToast(String message, int iconResId) {
-        if (customToast != null)
-            customToast.cancel();
+        if (customToast != null) customToast.cancel();
 
         LayoutInflater inflater = getLayoutInflater();
-        View customToastView = inflater.inflate(R.layout.wiget_custom_toast, (ViewGroup) getView(), false);
+        View customToastView = inflater.inflate(R.layout.widget_custom_toast, (ViewGroup) getView(), false);
 
-        TextView toastMessage = customToastView.findViewById(R.id.tvToastMessage);
-        toastMessage.setText(message);
-
-        ImageView toastIcon = customToastView.findViewById(R.id.ivToastIcon);
-        toastIcon.setImageResource(iconResId);
+        ((TextView) customToastView.findViewById(R.id.tvToastMessage)).setText(message);
+        ((ImageView) customToastView.findViewById(R.id.ivToastIcon)).setImageResource(iconResId);
 
         customToast = new Toast(requireContext());
         customToast.setDuration(Toast.LENGTH_SHORT);
         customToast.setView(customToastView);
         customToast.show();
+    }
+
+    private void showErrorToast(String message) {
+        showToast(message, R.drawable.ic_cancel);
     }
 
     @Override

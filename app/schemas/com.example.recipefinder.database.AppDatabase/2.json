@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "d77a575834b6f40805825c90e882d18a",
+    "identityHash": "fa58c472a825fed9a1fe940fee22e3c2",
     "entities": [
       {
         "tableName": "recipe",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "recipeDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `json` TEXT, `title` TEXT, `ingredients` TEXT, `stepByStep` TEXT, `nutritionValue` TEXT, `tags` TEXT, `dishTypes` TEXT, `image` TEXT, `favorite` INTEGER NOT NULL DEFAULT 0)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `title` TEXT, `ingredients` TEXT, `stepByStep` TEXT, `nutritionValue` TEXT, `tags` TEXT, `dishTypes` TEXT, `image` TEXT, `favorite` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "id",
@@ -69,12 +69,6 @@
             "columnName": "recipeId",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "json",
-            "columnName": "json",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "title",
@@ -139,7 +133,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd77a575834b6f40805825c90e882d18a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fa58c472a825fed9a1fe940fee22e3c2')"
     ]
   }
 }
