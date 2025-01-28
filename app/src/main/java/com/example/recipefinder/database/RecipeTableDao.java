@@ -35,8 +35,8 @@ public interface RecipeTableDao {
     @Query("SELECT * FROM recipe ORDER BY recipe.title")
     List<RecipeTable> queryRecipes();
 
-    @Query("INSERT INTO recipeDetails (id, recipeId, title, ingredients, stepByStep, nutritionValue, tags, image, favorite) " +
-            "VALUES (:recipeId, :title, :ingredients, :stepByStep, :nutritionValue, :tags, :image, :favorite)")
+    @Query("INSERT INTO recipeDetails (recipeId, title, ingredients, stepByStep, nutritionValue, tags, image, dishTypes, favorite) " +
+            "VALUES (:recipeId, :title, :ingredients, :stepByStep, :nutritionValue, :tags, :image, :dishTypes, :favorite)")
     void insertRecipeDetails(
             long recipeId,
             String title,
@@ -45,8 +45,15 @@ public interface RecipeTableDao {
             String nutritionValue,
             String tags,
             String image,
+            String dishTypes,
             int favorite
     );
+
+    @Query("SELECT * FROM recipeDetails WHERE recipeDetails.id = :id")
+    int isFavorite(long id);
+
+    @Query("DELETE FROM recipeDetails WHERE recipeDetails.id = :id")
+    int deleteFavorite(long id);
 
     @Entity
     class RecipeTableUpdate {

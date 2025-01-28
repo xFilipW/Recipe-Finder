@@ -3,6 +3,7 @@ package com.example.recipefinder.api.cache;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.recipefinder.api.models.RecipeDetailsItem;
 import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.List;
@@ -20,6 +22,7 @@ public class DatabaseUseCase {
     public static final String PREFS_NAME = "RecipeCache";
 
     private static final String LAST_UPDATE_TIME_KEY = "LastUpdateTime";
+    public static final int MARK_AS_FAVORITE = 1;
 
     private final SharedPreferences sharedPreferences;
     private final AppDatabase appDatabase;
@@ -119,12 +122,32 @@ public class DatabaseUseCase {
             appDatabase.recipeTableDao().insertRecipeDetails(
                     currentRecipeDetailsItem.getId(),
                     currentRecipeDetailsItem.getTitle(),
-                    currentRecipeDetailsItem.getExtendedIngredients(),
-                    currentRecipeDetailsItem.getAnalyzedInstructions(),
-                    currentRecipeDetailsItem.getNutrition(),
-                    currentRecipeDetailsItem.getImage()
+                    new Gson().toJson(currentRecipeDetailsItem.getExtendedIngredients()),
+                    new Gson().toJson(currentRecipeDetailsItem.getAnalyzedInstructions()),
+                    new Gson().toJson(currentRecipeDetailsItem.getNutrition()),
+                    buildTags(currentRecipeDetailsItem),
+                    currentRecipeDetailsItem.getImage(),
+                    TextUtils.join(", ", currentRecipeDetailsItem.getDishTypes()),
+                    MARK_AS_FAVORITE
             );
             handler.post(() -> listener.onComplete(null));
         });
+    }
+
+    private String buildTags(RecipeDetailsItem currentRecipeDetailsItem) {
+        StringBuilder sb = new StringBuilder();
+        if (currentRecipeDetailsItem.isVegetarian())
+            sb.append("vegetarian").append(", ");
+        if (currentRecipeDetailsItem.isVegan())
+            sb.append("vegan").append(", ");
+        if (currentRecipeDetailsItem.isGlutenFree())
+            sb.append("glutenFree").append(", ");
+        if (currentRecipeDetailsItem.isDairyFree())
+            sb.append("dairyFree").append(", ");
+
+        if (sb.length() >= ", ".length())
+            sb.setLength(sb.length() - ", ".length());
+
+        return sb.toString();
     }
 }

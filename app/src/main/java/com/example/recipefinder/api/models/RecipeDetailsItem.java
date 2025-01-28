@@ -68,7 +68,7 @@ public class RecipeDetailsItem {
     private String summary;
 
     @SerializedName("cookingMinutes")
-    private Object cookingMinutes;
+    private double cookingMinutes;
 
     @SerializedName("image")
     private String image;
@@ -281,12 +281,12 @@ public class RecipeDetailsItem {
         return summary;
     }
 
-    public void setCookingMinutes(Object cookingMinutes) {
+    public void setCookingMinutes(double cookingMinutes) {
         this.cookingMinutes = cookingMinutes;
     }
 
-    public int getCookingMinutes() {
-        return (int) cookingMinutes;
+    public double getCookingMinutes() {
+        return cookingMinutes;
     }
 
     public void setImage(String image) {

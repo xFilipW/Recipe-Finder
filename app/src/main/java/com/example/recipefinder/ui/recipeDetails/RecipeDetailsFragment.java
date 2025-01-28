@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.recipefinder.R;
 import com.example.recipefinder.api.RepositoryUseCase;
+import com.example.recipefinder.api.cache.OnQueryCompleteListener;
 import com.example.recipefinder.api.models.RecipeDetailsItem;
 import com.example.recipefinder.databinding.FragmentRecipeDetailsBinding;
 import com.example.recipefinder.shared.listeners.RecipeDetailsResponseListener;
@@ -26,11 +27,11 @@ public class RecipeDetailsFragment extends Fragment {
     private FragmentRecipeDetailsBinding binding;
     private RepositoryUseCase repositoryUseCase;
     private boolean isInCart = false;
-    private boolean isFavorite = false;
+    private final boolean isFavorite = false;
     private Toast customToast;
     private RecipeDetailsItem currentRecipeDetailsItem;
 
-    private enum State { READY, LOADING, IDLE }
+    private enum State {READY, LOADING, IDLE}
 
     private State currentState = State.IDLE;
 
@@ -105,8 +106,18 @@ public class RecipeDetailsFragment extends Fragment {
     }
 
     private void updateFavoriteStatus() {
-        toggleState("favorites", isFavorite = !isFavorite, R.drawable.ic_favorite, R.drawable.ic_favorite_outline);
-        repositoryUseCase.addRecipeDetailsToFavorite(currentRecipeDetailsItem);
+        //toggleState("favorites", isFavorite = !isFavorite, R.drawable.ic_favorite, R.drawable.ic_favorite_outline);
+        if (!isFavorite)
+            repositoryUseCase.addRecipeDetailsToFavorite(
+                    currentRecipeDetailsItem,
+                    data -> toggleState("favorites", true, R.drawable.ic_favorite, R.drawable.ic_favorite_outline)
+            );
+        else {
+//            repositoryUseCase.removeRecipeDetailsToFavorite(
+//                    currentRecipeDetailsItem,
+//                    data -> toggleState("favorites", false, R.drawable.ic_favorite, R.drawable.ic_favorite_outline)
+//            );
+        }
     }
 
     private void toggleState(String itemType, boolean isAdded, int addedIconResId, int removedIconResId) {

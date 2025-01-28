@@ -175,8 +175,13 @@ public class RepositoryUseCase {
         return filteredRecipes;
     }
 
-    public void addRecipeDetailsToFavorite(RecipeDetailsItem currentRecipeDetailsItem) {
-        databaseUseCase.insertRecipeDetailsToFavorite(currentRecipeDetailsItem);
+    public void addRecipeDetailsToFavorite(RecipeDetailsItem currentRecipeDetailsItem, OnQueryCompleteListener<Void> listener ) {
+        databaseUseCase.insertRecipeDetailsToFavorite(currentRecipeDetailsItem, new OnQueryCompleteListener<Void>() {
+            @Override
+            public void onComplete(Void data) {
+                listener.onComplete(data);
+            }
+        });
     }
 
     private interface RecipesAPI {
