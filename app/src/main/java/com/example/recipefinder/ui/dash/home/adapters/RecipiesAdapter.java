@@ -53,7 +53,7 @@ public class RecipiesAdapter extends RecyclerView.Adapter<RecipiesViewHolder> {
         holder.biding.recipeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onItemClick(recipe.getId());
+                onItemClickListener.onItemClick(recipe.getRecipeId());
             }
         });
     }

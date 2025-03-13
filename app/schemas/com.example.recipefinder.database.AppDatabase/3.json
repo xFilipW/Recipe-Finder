@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "9e87cbc6e03c78c1f18155201f28fd09",
+    "version": 3,
+    "identityHash": "756e96bf7a0c1aa49ab3f33139c7e1e7",
     "entities": [
       {
         "tableName": "recipe",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "recipeDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `title` TEXT, `aisle` TEXT, `ingredients` TEXT, `stepByStep` TEXT, `nutritionValue` TEXT, `tags` TEXT, `dishTypes` TEXT, `image` TEXT, `favorite` INTEGER NOT NULL DEFAULT 0)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `title` TEXT, `ingredients` TEXT, `stepByStep` TEXT, `nutritionValue` TEXT, `tags` TEXT, `dishTypes` TEXT, `image` TEXT, `favorite` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "id",
@@ -73,12 +73,6 @@
           {
             "fieldPath": "title",
             "columnName": "title",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "aisle",
-            "columnName": "aisle",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -132,14 +126,24 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_recipeDetails_recipeId",
+            "unique": true,
+            "columnNames": [
+              "recipeId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_recipeDetails_recipeId` ON `${TABLE_NAME}` (`recipeId`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9e87cbc6e03c78c1f18155201f28fd09')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '756e96bf7a0c1aa49ab3f33139c7e1e7')"
     ]
   }
 }

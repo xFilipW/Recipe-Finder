@@ -175,13 +175,35 @@ public class RepositoryUseCase {
         return filteredRecipes;
     }
 
-    public void addRecipeDetailsToFavorite(RecipeDetailsItem currentRecipeDetailsItem, OnQueryCompleteListener<Void> listener ) {
-        databaseUseCase.insertRecipeDetailsToFavorite(currentRecipeDetailsItem, new OnQueryCompleteListener<Void>() {
+    public void addRecipeToRecipeDetailsIfNotExists(RecipeDetailsItem currentRecipeDetailsItem, OnQueryCompleteListener<Void> listener) {
+        databaseUseCase.insertRecipeToDetailsIfNotExists(currentRecipeDetailsItem, new OnQueryCompleteListener<Void>() {
             @Override
             public void onComplete(Void data) {
                 listener.onComplete(data);
             }
         });
+    }
+
+    public void isFavorite(long id, OnQueryCompleteListener<Integer> onQueryCompleteListener) {
+        databaseUseCase.isRecipeFavorite(id, new OnQueryCompleteListener<Integer>() {
+            @Override
+            public void onComplete(Integer data) {
+                onQueryCompleteListener.onComplete(data);
+            }
+        });
+    }
+
+    public void setFavorite(long id, int isFavorite, OnQueryCompleteListener<Integer> onQueryCompleteListener) {
+        databaseUseCase.setRecipeFavorite(id, isFavorite, new OnQueryCompleteListener<Integer>() {
+            @Override
+            public void onComplete(Integer data) {
+                onQueryCompleteListener.onComplete(data);
+            }
+        });
+    }
+
+    public void getFavoriteRecipes(OnQueryCompleteListener<List<RecipeTable>> listOnQueryCompleteListener) {
+        databaseUseCase.getFavoriteRecipes(listOnQueryCompleteListener);
     }
 
     private interface RecipesAPI {

@@ -11,9 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+//import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.recipefinder.R;
 import com.example.recipefinder.databinding.FragmentDashBinding;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import meow.bottomnavigation.MeowBottomNavigation;
 
 public class DashFragment extends Fragment {
 
@@ -44,17 +48,13 @@ public class DashFragment extends Fragment {
         binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
         binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_favorite));
 
-        binding.mewBottomNavigationView.setOnShowListener(item -> {
-            // TODO: 09/09/2024
-        });
+        binding.mewBottomNavigationView.setOnShowListener(model -> null);
 
-        binding.mewBottomNavigationView.setOnReselectListener(item -> {
-            // TODO: 08/01/2025
-        });
+        binding.mewBottomNavigationView.setOnReselectListener(model -> null);
 
         binding.mewBottomNavigationView.show(2, false);
 
-        binding.mewBottomNavigationView.setOnClickMenuListener(model -> {
+        binding.mewBottomNavigationView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
             switch (model.getId()) {
                 case 1:
                     navController.navigate(R.id.shoppingListFragment);
@@ -66,6 +66,7 @@ public class DashFragment extends Fragment {
                     navController.navigate(R.id.favoriteRecipesFragment);
                     break;
             }
+            return null;
         });
     }
 }

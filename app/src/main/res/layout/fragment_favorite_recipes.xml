@@ -72,13 +72,17 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
+            app:layout_constraintVertical_bias="0.0"
             app:spanCount="2"
-            tools:listitem="@layout/list_item_recipes" />
+            tools:listitem="@layout/list_item_recipes"
+            tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"
@@ -94,7 +98,15 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/grEmptyList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="ivNoFavoritesYet,tvNoRecipesFound" />
+
         <ImageView
+            android:id="@+id/ivNoFavoritesYet"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/ic_empty_plate"

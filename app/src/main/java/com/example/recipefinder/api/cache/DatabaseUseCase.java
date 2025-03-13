@@ -115,11 +115,11 @@ public class DatabaseUseCase {
                 .apply();
     }
 
-    public void insertRecipeDetailsToFavorite(RecipeDetailsItem currentRecipeDetailsItem, OnQueryCompleteListener<Void> listener) {
+    public void insertRecipeToDetailsIfNotExists(RecipeDetailsItem currentRecipeDetailsItem, OnQueryCompleteListener<Void> listener) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
-            appDatabase.recipeTableDao().insertRecipeDetails(
+            appDatabase.recipeTableDao().insertRecipeDetailsIfNotExists(
                     currentRecipeDetailsItem.getId(),
                     currentRecipeDetailsItem.getTitle(),
                     new Gson().toJson(currentRecipeDetailsItem.getExtendedIngredients()),
@@ -128,7 +128,7 @@ public class DatabaseUseCase {
                     buildTags(currentRecipeDetailsItem),
                     currentRecipeDetailsItem.getImage(),
                     TextUtils.join(", ", currentRecipeDetailsItem.getDishTypes()),
-                    MARK_AS_FAVORITE
+                    0
             );
             handler.post(() -> listener.onComplete(null));
         });
@@ -149,5 +149,32 @@ public class DatabaseUseCase {
             sb.setLength(sb.length() - ", ".length());
 
         return sb.toString();
+    }
+
+    public void isRecipeFavorite(long id, OnQueryCompleteListener<Integer> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            int favorite = appDatabase.recipeTableDao().isFavorite(id);
+            handler.post(() -> listener.onComplete(favorite));
+        });
+    }
+
+    public void setRecipeFavorite(long id, int favorite, OnQueryCompleteListener<Integer> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            appDatabase.recipeTableDao().setFavorite(id, favorite);
+            handler.post(() -> listener.onComplete(favorite));
+        });
+    }
+
+    public void getFavoriteRecipes(OnQueryCompleteListener<List<RecipeTable>> listener) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(() -> {
+            List<RecipeTable> favoriteRecipes = appDatabase.recipeTableDao().getFavoriteRecipes();
+            handler.post(() -> listener.onComplete(favoriteRecipes));
+        });
     }
 }

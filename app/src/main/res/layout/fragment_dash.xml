@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/llWelcome"
         app:navGraph="@navigation/dash_graph" />
 
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+    <meow.bottomnavigation.MeowBottomNavigation
         android:id="@+id/mew_bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

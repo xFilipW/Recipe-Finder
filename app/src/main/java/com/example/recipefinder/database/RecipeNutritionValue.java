@@ -23,7 +23,7 @@ public class RecipeNutritionValue {
         @SerializedName("amount")
         private double amount;
         @SerializedName("unit")
-        private String unit; //
+        private String unit;
 
         public String getName() {
             return name;

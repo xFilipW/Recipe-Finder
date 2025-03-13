@@ -24,6 +24,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
     buildTypes {
         release {
@@ -38,7 +39,8 @@ android {
 }
 
 dependencies {
-    implementation(name: 'meow-bottom-navigation-java-1.2.0', ext: 'aar')
+//    implementation(name: 'meow-bottom-navigation-java-1.2.0', ext: 'aar')
+    implementation(name: 'meow-bottom-navigation-1.3.1', ext: 'aar')
 
     implementation libs.room.runtime
     implementation libs.navigation.fragment
@@ -53,6 +55,8 @@ dependencies {
     implementation libs.converter.gson
     implementation libs.picasso
     implementation libs.lottie
+
+    implementation libs.kotlin.stdlib.jdk7
 
     implementation libs.work.runtime
     implementation libs.concurrent.futures

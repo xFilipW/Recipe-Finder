@@ -2,9 +2,13 @@ package com.example.recipefinder.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "recipeDetails")
+@Entity(
+        tableName = "recipeDetails",
+        indices = {@Index(value = {"recipeId"}, unique = true)}
+)
 public class RecipeDetailsTable {
 
     public RecipeDetailsTable(long id, long recipeId, String title, String image,
