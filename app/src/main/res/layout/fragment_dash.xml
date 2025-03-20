@@ -61,21 +61,26 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/mew_bottom_navigation_view"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
         app:layout_constraintTop_toBottomOf="@+id/llWelcome"
         app:navGraph="@navigation/dash_graph" />
 
-    <meow.bottomnavigation.MeowBottomNavigation
-        android:id="@+id/mew_bottom_navigation_view"
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
+        android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/whiteFrost"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:mbn_backgroundBottomColor="@color/mainColor"
-        app:mbn_circleColor="@color/mainColor"
-        app:mbn_defaultIconColor="@color/whiteFrost"
-        app:mbn_selectedIconColor="@color/whiteFrost" />
+        android:background="@drawable/shape_custom_bottom_nav_bar"
+        android:elevation="16dp"
+        android:padding="8dp"
+        app:cnb_addBottomInset="true"
+        app:cnb_addLeftInset="true"
+        app:cnb_addRightInset="true"
+        app:cnb_animationDuration="175"
+        app:cnb_badgeColor="@color/whiteFrost"
+        app:cnb_menuResource="@menu/bottom_nav_menu"
+        app:cnb_orientationMode="horizontal"
+        app:cnb_radius="16dp"
+        app:cnb_unselectedColor="@color/whiteFrost"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

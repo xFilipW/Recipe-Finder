@@ -2,6 +2,7 @@ package com.example.recipefinder.ui.recipeDetails;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,9 @@ import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.api.cache.OnQueryCompleteListener;
 import com.example.recipefinder.api.models.RecipeDetailsItem;
 import com.example.recipefinder.databinding.FragmentRecipeDetailsBinding;
+import com.example.recipefinder.processing.RatioTransformation;
 import com.example.recipefinder.shared.listeners.RecipeDetailsResponseListener;
+import com.squareup.picasso.Picasso;
 
 public class RecipeDetailsFragment extends Fragment {
 
@@ -185,7 +188,14 @@ public class RecipeDetailsFragment extends Fragment {
     }
 
     private void updateView(ImageView imageView, String imageUrl) {
-        imageView.setImageURI(Uri.parse(imageUrl));
+        DisplayMetrics metrics = requireContext().getResources().getDisplayMetrics();
+        int screenWidth = metrics.widthPixels;
+        int targetHeight = (screenWidth * 2) / 3;
+
+        Picasso.get()
+                .load(imageUrl)
+                .transform(new RatioTransformation(screenWidth))
+                .into(imageView);
     }
 
     private String getPreparationTimeText(int preparationTime) {

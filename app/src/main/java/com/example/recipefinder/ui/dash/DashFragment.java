@@ -7,17 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-//import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.recipefinder.R;
 import com.example.recipefinder.databinding.FragmentDashBinding;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
-import meow.bottomnavigation.MeowBottomNavigation;
 
 public class DashFragment extends Fragment {
 
@@ -44,29 +40,20 @@ public class DashFragment extends Fragment {
             throw new IllegalArgumentException("NavController missing!");
         }
 
-        binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_shopping_cart));
-        binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
-        binding.mewBottomNavigationView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_favorite));
+        binding.bottomNavBar.setMenuResource(R.menu.bottom_nav_menu);
 
-        binding.mewBottomNavigationView.setOnShowListener(model -> null);
+        binding.bottomNavBar.setItemSelected(R.id.itemHome, true);
 
-        binding.mewBottomNavigationView.setOnReselectListener(model -> null);
+        binding.bottomNavBar.setOnItemSelectedListener(id -> {
+            if (navController == null) return;
 
-        binding.mewBottomNavigationView.show(2, false);
-
-        binding.mewBottomNavigationView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
-            switch (model.getId()) {
-                case 1:
-                    navController.navigate(R.id.shoppingListFragment);
-                    break;
-                case 2:
-                    navController.navigate(R.id.homeFragment);
-                    break;
-                case 3:
-                    navController.navigate(R.id.favoriteRecipesFragment);
-                    break;
+            if (id == R.id.itemShoppingCart) {
+                navController.navigate(R.id.shoppingListFragment);
+            } else if (id == R.id.itemHome) {
+                navController.navigate(R.id.homeFragment);
+            } else if (id == R.id.itemFavorite) {
+                navController.navigate(R.id.favoriteRecipesFragment);
             }
-            return null;
         });
     }
 }

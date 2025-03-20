@@ -15,7 +15,7 @@
     <string name="no_recipes_found_for_this_category">No recipes in this category today :(\nPlease check again tomorrow</string>
     <string name="random_200_recipes_each_day">200 random recipes each day</string>
     <string name="find_your_favorite_recipe">Find your favorite recipe</string>
-    <string name="favorite_recipes">Favorite Recipes</string>
+    <string name="favorite_recipes">Favorite recipes</string>
     <string name="your_favorite_flavors_all_in_one_place">Your favorite flavors all in one place</string>
     <string name="no_favorites_yet_n_it_s_the_perfect_time_to_pick_something">No favorites yet?\nIt\'s the perfect time to pick something!</string>
     <string name="silence_in_the_cart_pick_a_recipe_and_add_it_to_the_cart">Silence in the cart?\nPick a recipe and add it to the cart!</string>

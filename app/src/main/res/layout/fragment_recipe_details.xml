@@ -28,11 +28,13 @@
                     android:id="@+id/ivDishPicture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/jpg_introductory_bg"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_favorite"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_favorite" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -68,9 +70,9 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_shopping_cart_outline"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvNameOfTheDish"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvAggregateLikes"
                     app:layout_constraintRight_toLeftOf="@+id/ivFavorite"
-                    app:layout_constraintTop_toTopOf="@+id/tvNameOfTheDish"
+                    app:layout_constraintTop_toTopOf="@+id/tvAggregateLikes"
                     app:tint="@color/mainColor" />
 
                 <ImageView
@@ -81,9 +83,9 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_favorite_outline"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvNameOfTheDish"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivShoppingCart"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvNameOfTheDish"
+                    app:layout_constraintTop_toTopOf="@+id/ivShoppingCart"
                     app:tint="@color/mainColor" />
 
                 <ImageView
@@ -481,7 +483,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/whiteFrost"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:visibility="gone">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/progressBar"

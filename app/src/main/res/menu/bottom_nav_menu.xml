@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/itemRandom"
+        android:id="@+id/itemShoppingCart"
         android:icon="@drawable/ic_shopping_cart"
-        android:title="Shopping Cart" />
+        app:cnb_iconColor="@color/whiteFrost"
+        android:title="Shopping list" />
 
     <item
         android:id="@+id/itemHome"
         android:icon="@drawable/ic_home"
+        app:cnb_iconColor="@color/whiteFrost"
         android:title="Home" />
 
     <item
         android:id="@+id/itemFavorite"
         android:icon="@drawable/ic_favorite"
+        app:cnb_iconColor="@color/whiteFrost"
         android:title="Favorite" />
 </menu>
