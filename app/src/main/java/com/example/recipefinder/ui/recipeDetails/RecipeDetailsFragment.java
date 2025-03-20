@@ -194,7 +194,8 @@ public class RecipeDetailsFragment extends Fragment {
 
         Picasso.get()
                 .load(imageUrl)
-                .transform(new RatioTransformation(screenWidth))
+                .resize(screenWidth, targetHeight)
+                .centerCrop()
                 .into(imageView);
     }
 
