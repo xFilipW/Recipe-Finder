@@ -37,12 +37,19 @@ public class CacheRefreshWorker extends Worker {
     public Result doWork() {
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        cacheManager.isCacheExpired(expired -> {
-            if (expired) {
-                refreshCache();
-            }
-            countDownLatch.countDown();
-        });
+        if (cacheManager.isCacheExpired()) {
+            refreshCache(new RandomRecipesResponseListener() {
+                @Override
+                public void onComplete(@NonNull List<RecipeTable> allRecipes) {
+                    countDownLatch.countDown();
+                }
+
+                @Override
+                public void onError(String message) {
+                    countDownLatch.countDown();
+                }
+            });
+        }
 
         try {
             countDownLatch.await();
@@ -53,17 +60,7 @@ public class CacheRefreshWorker extends Worker {
         return Result.success();
     }
 
-    private void refreshCache() {
-        repositoryUseCase.getRecipes(new RandomRecipesResponseListener() {
-            @Override
-            public void onComplete(@NonNull List<RecipeTable> allRecipes) {
-                // Left empty intentionally
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                // Left empty intentionally
-            }
-        }, null);
+    private void refreshCache(RandomRecipesResponseListener randomRecipesResponseListener) {
+        repositoryUseCase.getRecipes(randomRecipesResponseListener, null);
     }
 }
