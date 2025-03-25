@@ -85,27 +85,21 @@ public class DatabaseUseCase {
         });
     }
 
-    public void isCacheExpired(OnServiceCompleteListener<Boolean> onServiceCompleteListener) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-        executor.execute(() -> {
-            long lastUpdateTime = sharedPreferences.getLong(LAST_UPDATE_TIME_KEY, 0);
+    public boolean isCacheExpired() {
+        long lastUpdateTime = sharedPreferences.getLong(LAST_UPDATE_TIME_KEY, 0);
 
-            Calendar lastCalendar = Calendar.getInstance();
-            lastCalendar.setTimeInMillis(lastUpdateTime);
-            Log.d(TAG, "lastUpdateTime: " + lastCalendar.getTime());
+        Calendar lastCalendar = Calendar.getInstance();
+        lastCalendar.setTimeInMillis(lastUpdateTime);
+        Log.d(TAG, "lastUpdateTime: " + lastCalendar.getTime());
 
-            Calendar midnight = Calendar.getInstance();
-            midnight.set(Calendar.HOUR_OF_DAY, 0);
-            midnight.set(Calendar.MINUTE, 0);
-            midnight.set(Calendar.SECOND, 0);
-            midnight.set(Calendar.MILLISECOND, 0);
-            Log.d(TAG, "midnight: " + midnight.getTime());
+        Calendar midnight = Calendar.getInstance();
+        midnight.set(Calendar.HOUR_OF_DAY, 0);
+        midnight.set(Calendar.MINUTE, 0);
+        midnight.set(Calendar.SECOND, 0);
+        midnight.set(Calendar.MILLISECOND, 0);
+        Log.d(TAG, "midnight: " + midnight.getTime());
 
-            handler.post(() -> onServiceCompleteListener.onComplete(
-                    lastUpdateTime < midnight.getTimeInMillis()
-            ));
-        });
+        return lastUpdateTime < midnight.getTimeInMillis();
     }
 
     public void saveLastUpdate() {

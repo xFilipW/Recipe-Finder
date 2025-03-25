@@ -1,9 +1,9 @@
 package com.example.recipefinder.api.models;
 
-import java.util.List;
-
 import com.example.recipefinder.database.RecipeNutritionValue;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class RecipeDetailsItem {
 

@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class HorizontalSpaceItemDecoration extends RecyclerView.ItemDecoration {
 
-    private SpanCount spanCount;
-    private int spacing;
+    private final SpanCount spanCount;
+    private final int spacing;
 
     public enum SpanCount {
         TWO,

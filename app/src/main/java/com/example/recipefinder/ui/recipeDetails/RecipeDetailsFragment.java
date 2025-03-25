@@ -1,6 +1,5 @@
 package com.example.recipefinder.ui.recipeDetails;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import com.example.recipefinder.api.RepositoryUseCase;
 import com.example.recipefinder.api.cache.OnQueryCompleteListener;
 import com.example.recipefinder.api.models.RecipeDetailsItem;
 import com.example.recipefinder.databinding.FragmentRecipeDetailsBinding;
-import com.example.recipefinder.processing.RatioTransformation;
 import com.example.recipefinder.shared.listeners.RecipeDetailsResponseListener;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +27,7 @@ public class RecipeDetailsFragment extends Fragment {
 
     private FragmentRecipeDetailsBinding binding;
     private RepositoryUseCase repositoryUseCase;
-    private boolean isInCart = false;
+    private final boolean isInCart = false;
     private final boolean isFavorite = false;
     private Toast customToast;
     private RecipeDetailsItem currentRecipeDetailsItem;

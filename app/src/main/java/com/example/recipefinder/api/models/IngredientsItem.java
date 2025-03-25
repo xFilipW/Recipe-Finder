@@ -2,49 +2,49 @@ package com.example.recipefinder.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class IngredientsItem{
+public class IngredientsItem {
 
-	@SerializedName("image")
-	private String image;
+    @SerializedName("image")
+    private String image;
 
-	@SerializedName("localizedName")
-	private String localizedName;
+    @SerializedName("localizedName")
+    private String localizedName;
 
-	@SerializedName("name")
-	private String name;
+    @SerializedName("name")
+    private String name;
 
-	@SerializedName("id")
-	private int id;
+    @SerializedName("id")
+    private int id;
 
-	public void setImage(String image){
-		this.image = image;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public String getImage(){
-		return image;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public void setLocalizedName(String localizedName){
-		this.localizedName = localizedName;
-	}
+    public void setLocalizedName(String localizedName) {
+        this.localizedName = localizedName;
+    }
 
-	public String getLocalizedName(){
-		return localizedName;
-	}
+    public String getLocalizedName() {
+        return localizedName;
+    }
 
-	public void setName(String name){
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName(){
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setId(int id){
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getId(){
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 }

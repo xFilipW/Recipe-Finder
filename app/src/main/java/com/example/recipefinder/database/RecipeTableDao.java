@@ -57,6 +57,7 @@ public interface RecipeTableDao {
 
     @Query("DELETE FROM recipeDetails WHERE recipeId = :id")
     int deleteFavorite(long id);
+
     @Query("SELECT * FROM recipeDetails WHERE favorite = 1")
     List<RecipeTable> getFavoriteRecipes();
 

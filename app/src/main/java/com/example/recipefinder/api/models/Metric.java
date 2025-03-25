@@ -2,38 +2,38 @@ package com.example.recipefinder.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Metric{
+public class Metric {
 
-	@SerializedName("amount")
-	private Object amount;
+    @SerializedName("amount")
+    private Object amount;
 
-	@SerializedName("unitShort")
-	private String unitShort;
+    @SerializedName("unitShort")
+    private String unitShort;
 
-	@SerializedName("unitLong")
-	private String unitLong;
+    @SerializedName("unitLong")
+    private String unitLong;
 
-	public void setAmount(Object amount){
-		this.amount = amount;
-	}
+    public void setAmount(Object amount) {
+        this.amount = amount;
+    }
 
-	public Object getAmount(){
-		return amount;
-	}
+    public Object getAmount() {
+        return amount;
+    }
 
-	public void setUnitShort(String unitShort){
-		this.unitShort = unitShort;
-	}
+    public void setUnitShort(String unitShort) {
+        this.unitShort = unitShort;
+    }
 
-	public String getUnitShort(){
-		return unitShort;
-	}
+    public String getUnitShort() {
+        return unitShort;
+    }
 
-	public void setUnitLong(String unitLong){
-		this.unitLong = unitLong;
-	}
+    public void setUnitLong(String unitLong) {
+        this.unitLong = unitLong;
+    }
 
-	public String getUnitLong(){
-		return unitLong;
-	}
+    public String getUnitLong() {
+        return unitLong;
+    }
 }

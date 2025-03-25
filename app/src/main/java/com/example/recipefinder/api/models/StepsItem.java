@@ -1,62 +1,63 @@
 package com.example.recipefinder.api.models;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class StepsItem{
+import java.util.List;
 
-	@SerializedName("number")
-	private int number;
+public class StepsItem {
 
-	@SerializedName("length")
-	private Length length;
+    @SerializedName("number")
+    private int number;
 
-	@SerializedName("ingredients")
-	private List<Object> ingredients;
+    @SerializedName("length")
+    private Length length;
 
-	@SerializedName("equipment")
-	private List<EquipmentItem> equipment;
+    @SerializedName("ingredients")
+    private List<Object> ingredients;
 
-	@SerializedName("step")
-	private String step;
+    @SerializedName("equipment")
+    private List<EquipmentItem> equipment;
 
-	public void setNumber(int number){
-		this.number = number;
-	}
+    @SerializedName("step")
+    private String step;
 
-	public int getNumber(){
-		return number;
-	}
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
-	public void setLength(Length length){
-		this.length = length;
-	}
+    public int getNumber() {
+        return number;
+    }
 
-	public Length getLength(){
-		return length;
-	}
+    public void setLength(Length length) {
+        this.length = length;
+    }
 
-	public void setIngredients(List<Object> ingredients){
-		this.ingredients = ingredients;
-	}
+    public Length getLength() {
+        return length;
+    }
 
-	public List<Object> getIngredients(){
-		return ingredients;
-	}
+    public void setIngredients(List<Object> ingredients) {
+        this.ingredients = ingredients;
+    }
 
-	public void setEquipment(List<EquipmentItem> equipment){
-		this.equipment = equipment;
-	}
+    public List<Object> getIngredients() {
+        return ingredients;
+    }
 
-	public List<EquipmentItem> getEquipment(){
-		return equipment;
-	}
+    public void setEquipment(List<EquipmentItem> equipment) {
+        this.equipment = equipment;
+    }
 
-	public void setStep(String step){
-		this.step = step;
-	}
+    public List<EquipmentItem> getEquipment() {
+        return equipment;
+    }
 
-	public String getStep(){
-		return step;
-	}
+    public void setStep(String step) {
+        this.step = step;
+    }
+
+    public String getStep() {
+        return step;
+    }
 }

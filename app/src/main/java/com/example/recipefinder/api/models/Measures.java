@@ -2,27 +2,27 @@ package com.example.recipefinder.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Measures{
+public class Measures {
 
-	@SerializedName("metric")
-	private Metric metric;
+    @SerializedName("metric")
+    private Metric metric;
 
-	@SerializedName("us")
-	private Us us;
+    @SerializedName("us")
+    private Us us;
 
-	public void setMetric(Metric metric){
-		this.metric = metric;
-	}
+    public void setMetric(Metric metric) {
+        this.metric = metric;
+    }
 
-	public Metric getMetric(){
-		return metric;
-	}
+    public Metric getMetric() {
+        return metric;
+    }
 
-	public void setUs(Us us){
-		this.us = us;
-	}
+    public void setUs(Us us) {
+        this.us = us;
+    }
 
-	public Us getUs(){
-		return us;
-	}
+    public Us getUs() {
+        return us;
+    }
 }

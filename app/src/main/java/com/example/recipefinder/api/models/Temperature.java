@@ -2,27 +2,27 @@ package com.example.recipefinder.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Temperature{
+public class Temperature {
 
-	@SerializedName("number")
-	private Object number;
+    @SerializedName("number")
+    private Object number;
 
-	@SerializedName("unit")
-	private String unit;
+    @SerializedName("unit")
+    private String unit;
 
-	public void setNumber(Object number){
-		this.number = number;
-	}
+    public void setNumber(Object number) {
+        this.number = number;
+    }
 
-	public Object getNumber(){
-		return number;
-	}
+    public Object getNumber() {
+        return number;
+    }
 
-	public void setUnit(String unit){
-		this.unit = unit;
-	}
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
 
-	public String getUnit(){
-		return unit;
-	}
+    public String getUnit() {
+        return unit;
+    }
 }

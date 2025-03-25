@@ -92,7 +92,7 @@ public class RecipeDetailsTable {
     @ColumnInfo(name = "image")
     private String image;
 
-    @ColumnInfo(name = "favorite" , defaultValue = "0")
+    @ColumnInfo(name = "favorite", defaultValue = "0")
     private int favorite;
 
     public long getId() {
