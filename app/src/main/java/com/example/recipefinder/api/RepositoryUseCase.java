@@ -3,6 +3,10 @@ package com.example.recipefinder.api;
 import static com.example.recipefinder.api.cache.DatabaseUseCase.PREFS_NAME;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,10 +21,16 @@ import com.example.recipefinder.database.AppDatabase;
 import com.example.recipefinder.database.RecipeTable;
 import com.example.recipefinder.shared.listeners.RandomRecipesResponseListener;
 import com.example.recipefinder.shared.listeners.RecipeDetailsResponseListener;
+import com.example.recipefinder.shared.utils.PixelUtils;
 import com.example.recipefinder.shared.utils.RecipeUtils;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +51,14 @@ public class RepositoryUseCase {
 
     private static final String TAG = "RequestManager";
 
+    /**
+     * @noinspection MismatchedQueryAndUpdateOfCollection
+     * Created for strong reference.
+     */
+    private final List<Target> picassoTargets = new ArrayList<>();
+    private final ExecutorService picassoExecutor = Executors.newSingleThreadExecutor();
+    private final Handler picassoMainHandler = new Handler(Looper.getMainLooper());
+
     public RepositoryUseCase(Context context) {
         this.context = context;
         this.databaseUseCase = new DatabaseUseCase(
@@ -55,27 +73,23 @@ public class RepositoryUseCase {
 
     public void getRecipes(RandomRecipesResponseListener listener, String category) {
         Log.d(TAG, "getRandomRecipes: fetching recipes, category=[" + category + "]");
-        queryRecipes(cachedRecipes -> {
-            Log.d(TAG, "getRandomRecipes: cached recipes size: " + cachedRecipes.size());
+        queryRecipes(databaseRecipes -> {
+            Log.d(TAG, "getRandomRecipes: cached recipes size: " + databaseRecipes.size());
 
-            databaseUseCase.isCacheExpired(
-                    expired -> {
-                        if (expired) {
-                            Log.d(TAG, "getRandomRecipes: cache expired, fetching from API");
-                            fetchRandomRecipesFromApi(category, listener);
-                        } else if (cachedRecipes.isEmpty()) {
-                            Log.d(TAG, "getRandomRecipes: cache empty, fetching from API");
-                            fetchRandomRecipesFromApi(category, listener);
-                        } else {
-                            Log.d(TAG, "getRandomRecipes: cache not expired, fetching from cache");
-                            if (category == null || category.equals(ALL_RECIPES)) {
-                                listener.onComplete(cachedRecipes);
-                            } else {
-                                listener.onComplete(filterRecipesByCategory(cachedRecipes, category));
-                            }
-                        }
-                    }
-            );
+            if (databaseUseCase.isCacheExpired()) {
+                Log.d(TAG, "getRandomRecipes: cache expired, fetching from API");
+                fetchRandomRecipesFromApi(category, listener);
+            } else if (databaseRecipes.isEmpty()) {
+                Log.d(TAG, "getRandomRecipes: cache empty, fetching from API");
+                fetchRandomRecipesFromApi(category, listener);
+            } else {
+                Log.d(TAG, "getRandomRecipes: cache not expired, fetching from cache");
+                if (category == null || category.equals(ALL_RECIPES)) {
+                    listener.onComplete(databaseRecipes);
+                } else {
+                    listener.onComplete(filterRecipesByCategory(databaseRecipes, category));
+                }
+            }
         });
     }
 
@@ -97,11 +111,62 @@ public class RepositoryUseCase {
             public void onResponse(@NonNull Call<RandomRecipesApiResponse> call, @NonNull Response<RandomRecipesApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ArrayList<RecipeDetailsItem> allRecipes = new ArrayList<>();
+                    List<RecipeDetailsItem> filteredRecipes = new ArrayList<>();
+
                     if (response.body().recipes != null) {
                         allRecipes.addAll(response.body().recipes);
                     }
 
-                    queryRemoveRecipes(data -> queryInsertRecipes(allRecipes, listener));
+                    // Thread-safe incrementation!
+                    AtomicInteger processedCount = new AtomicInteger(0);
+
+                    for (RecipeDetailsItem recipe : allRecipes) {
+                        Target target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                picassoExecutor.execute(() -> {
+                                    boolean hasWhiteFrame = PixelUtils.hasWhiteFrame(bitmap);
+
+                                    picassoMainHandler.post(() -> {
+                                        if (!hasWhiteFrame) {
+                                            Log.d(TAG, "onBitmapLoaded: recipe does not have white frame, adding: " + recipe.getImage());
+                                            filteredRecipes.add(recipe);
+                                        } else {
+                                            Log.w(TAG, "onBitmapLoaded: recipe has white frame, skipping: " + recipe.getImage());
+                                        }
+                                        checkIfAllProcessed();
+                                    });
+                                });
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                checkIfAllProcessed();
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                // left blank intentionally
+                            }
+
+                            private void checkIfAllProcessed() {
+                                if (processedCount.incrementAndGet() == allRecipes.size()) {
+                                    picassoTargets.clear();
+                                    
+                                    queryRemoveRecipes(onQueryComplete -> {
+                                        queryInsertRecipes(filteredRecipes, listener);
+                                    });
+                                }
+                            }
+                        };
+
+                        picassoTargets.add(target);
+
+                        Picasso.get()
+                                .load(recipe.getImage())
+                                .config(Bitmap.Config.ARGB_8888)
+                                .into(target);
+                    }
                 } else {
                     listener.onError("Response body or response body recipes is null");
                 }
@@ -113,6 +178,8 @@ public class RepositoryUseCase {
             }
         });
     }
+
+    // Helper method to determine if a pixel is considered "white" with a small tolerance.
 
     private void fetchRecipeDetailsFromApi(long id, RecipeDetailsResponseListener listener) {
         callGetRecipeDetails(id, new Callback<RecipeDetailsApiResponse>() {
